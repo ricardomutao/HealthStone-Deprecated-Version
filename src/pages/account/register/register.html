@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title>
+        Sign In
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-card padding> 
+      <ion-card-content>
+        <img src="../../assets/imgs/Logo.png" />
+
+        <form (ngSubmit)="register()">
+          <ion-item-group>
+            <ion-item>  
+              <ion-icon name='person' item-left></ion-icon>
+              <ion-input clearInput autocomplete="on" type="text" placeholder="Nome Completo" name="nome" [(ngModel)]="nome"></ion-input>
+            </ion-item>
+
+            <ion-item>  
+              <ion-icon name='person' item-left></ion-icon>
+              <ion-input clearInput type="text" autocomplete="on" placeholder="Username" name="username" [(ngModel)]="username"></ion-input>
+            </ion-item>
+
+            <ion-item>  
+              <ion-icon name='mail' item-left></ion-icon>
+              <ion-input clearInput autocomplete="on" type="text" placeholder="E-mail" name="email" [(ngModel)]="email"></ion-input>
+            </ion-item>
+
+            <ion-item>  
+                <ion-icon name='lock' item-left></ion-icon>
+              <ion-input clearInput type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>
+            </ion-item>
+
+            <ion-item>  
+                <ion-icon name='lock' item-left></ion-icon>
+              <ion-input clearInput type="password" placeholder="Confirmar Senha" name="senhaConfirm" [(ngModel)]="senhaConfirm"></ion-input>
+            </ion-item>
+          </ion-item-group>
+          <button ion-button block type="submit">Cadastar</button>
+        </form>
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card-content class="align-center">  
+      <span>Já possui conta? <a (click)="goLogin()">Entrar</a></span>
+    </ion-card-content>
+    
+  </ion-content>

@@ -1,5 +1,8 @@
 {
-  "name": "HealthStone",
-  "app_id": "",
-  "type": "ionic-angular"
+  "name": "healthStone",
+  "app_id": "41cefd08",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
