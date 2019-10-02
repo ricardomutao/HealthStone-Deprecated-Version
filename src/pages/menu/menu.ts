@@ -3,10 +3,10 @@ import { } from 'ionic-angular';
 import { NavController, App, MenuController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-menu',
+  templateUrl: 'menu.html'
 })
-export class HomePage {
+export class MenuPage {
 
   constructor(public navCtrl: NavController, app: App, menu: MenuController) {
     menu.enable(true);
