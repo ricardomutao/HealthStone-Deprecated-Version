@@ -1,15 +1,27 @@
 import { Component } from '@angular/core';
-import { } from 'ionic-angular';
-import { NavController, App, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+/**
+ * Generated class for the HomePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, app: App, menu: MenuController) {
-    menu.enable(true);
+  tileMenu: string = 'Missões';
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-  
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad HomePage');
+  }
+
 }

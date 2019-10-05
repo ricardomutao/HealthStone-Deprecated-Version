@@ -91,7 +91,7 @@ export class RegisterPage {
       this.user = new User();
       this.user.nomeCompleto = this.nome;
       this.user.userNme = this.username;
-      this.user.email = this.email;
+      this.user.email = this.email.trim();
       this.user.password = this.senha;
 
       /*CRIACAO DO ALERTA*/

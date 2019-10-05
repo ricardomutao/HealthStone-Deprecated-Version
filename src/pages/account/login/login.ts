@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Alert } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
+import { HomePage } from '../../home/home';
 import * as firebase from 'firebase';
 
 /**
@@ -73,11 +74,9 @@ export class LoginPage {
       
       loading.present();
 
-      firebase.auth().signInWithEmailAndPassword(this.email, this.senha).then(() => {
+      firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
         loading.dismiss();
-
-        this.alert.setSubTitle('Logado com sucesso!');
-        this.alert.present();
+        this.navCtrl.setRoot(HomePage.name);
 
       }).catch((error:Error) => {
         loading.dismiss();
