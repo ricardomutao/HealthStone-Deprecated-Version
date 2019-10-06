@@ -6,12 +6,26 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>
-        <ion-icon name='exit' item-left></ion-icon>
-        <button ion-item (click)="logOut()">
-          Sair
-        </button>
-      </ion-item>
+      <button ion-item>
+        <ion-icon name="person" item-start></ion-icon>
+        Perfil
+      </button>
+      <button ion-item>
+        <ion-icon name="book" item-start></ion-icon>
+        Missões
+      </button>
+      <button ion-item>
+        <ion-icon name="logo-usd" item-start></ion-icon>
+        Recompensas
+      </button>
+      <button ion-item>
+        <ion-icon name="settings" item-start></ion-icon>
+        Configurações
+      </button>
+      <button ion-item (click)="logOut()">
+        <ion-icon name="exit" item-start></ion-icon>
+        Sair
+      </button>
     </ion-list>
   </ion-content>
 </ion-menu>
