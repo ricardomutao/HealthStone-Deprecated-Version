@@ -1,0 +1,31 @@
+<!--
+  Generated template for the CreateQuestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="maintheme">
+    <ion-title>
+      Criar Missão
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+      <ion-card-content>
+          <ion-list>
+              <ion-item>
+                <ion-label>Alimentos</ion-label>
+                <ion-select [(ngModel)]="questAlimentos">
+                  <ion-option value="{{alimento.descricao}}" *ngFor="let alimento of alimentos">{{alimento.descricao}}</ion-option>
+   
+                </ion-select>
+              </ion-item>
+            </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    
+  </ion-content>

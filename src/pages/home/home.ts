@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { CreateQuestPage } from '../create-quest/create-quest'
 /**
  * Generated class for the HomePage page.
  *
@@ -23,6 +23,10 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+  }
+
+  goCreateQuest(){
+    this.navCtrl.push(CreateQuestPage.name);
   }
 
 }
