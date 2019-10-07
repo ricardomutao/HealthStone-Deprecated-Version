@@ -39,13 +39,16 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  maintheme:   #ff8300
-);
+  maintheme:  #ff8300,
+  lightdark:  #363636,
+  tabtheme:   #1ca812
+  );
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+$searchbar-ios-input-background-color: color($colors, lightdark);
 
 
 
@@ -53,7 +56,9 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+$searchbar-md-input-background-color: color($colors, lightdark);
+$searchbar-md-input-border-radius:	10px;
+$searchbar-md-input-text-color:	color($colors, light);
 
 
 

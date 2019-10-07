@@ -13,19 +13,36 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
-      <ion-card-content>
-          <ion-list>
-              <ion-item>
-                <ion-label>Alimentos</ion-label>
-                <ion-select [(ngModel)]="questAlimentos">
-                  <ion-option value="{{alimento.descricao}}" *ngFor="let alimento of alimentos">{{alimento.descricao}}</ion-option>
+
+  <div padding>
+    <ion-segment [(ngModel)]="tab" color="tabtheme">
+      <ion-segment-button value="alimentos">
+        Alimentos
+      </ion-segment-button>
+      <ion-segment-button value="detalhes">
+        Mais Detalhes
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="tab">
+    <ion-card *ngSwitchCase="'alimentos'">
    
-                </ion-select>
-              </ion-item>
-            </ion-list>
-      </ion-card-content>
+        <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
+        <ion-list style="overflow-y: auto;max-height: 100px;">
+          <button ion-item *ngFor="let alimento of filterAlimentos">
+            <ion-icon name="add" item-end></ion-icon>
+            {{ alimento.descricao }}
+          </button>
+        </ion-list>
+      
     </ion-card>
 
+    <ion-card *ngSwitchCase="'detalhes'">
+      <ion-card-content>
+
+      </ion-card-content>  
+    </ion-card>
+  </div>
     
-  </ion-content>
+</ion-content>
