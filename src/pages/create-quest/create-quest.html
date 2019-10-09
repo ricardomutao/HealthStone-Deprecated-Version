@@ -30,11 +30,27 @@
    
         <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
         <ion-list style="overflow-y: auto;max-height: 100px;">
-          <button ion-item *ngFor="let alimento of filterAlimentos">
+          <button ion-item *ngFor="let alimento of filterAlimentos" (click)="setQtd(alimento)">
             <ion-icon name="add" item-end></ion-icon>
             {{ alimento.descricao }}
           </button>
         </ion-list>
+
+
+        <ion-card *ngIf="questAlimentos.length > 0" style="margin-top: 10%;">
+          <ion-card-header color="light">
+            Selecionados
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-item-group>
+              <ion-item *ngFor="let qAlimento of questAlimentos">
+                {{qAlimento.alimento.descricao}} - Quantidade: {{qAlimento.qtd}} ({{qAlimento.alimento.unidade}})
+              </ion-item>
+            </ion-item-group>
+          </ion-card-content>  
+
+        </ion-card>
       
     </ion-card>
 
@@ -44,5 +60,9 @@
       </ion-card-content>  
     </ion-card>
   </div>
+
+  <ion-fab bottom right>
+    <button ion-fab mini color="tabtheme"><ion-icon name="checkmark-circle"></ion-icon></button>
+  </ion-fab>
     
 </ion-content>

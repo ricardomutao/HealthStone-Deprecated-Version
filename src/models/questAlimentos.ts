@@ -1,4 +1,6 @@
+import { Alimento } from "./alimento";
+
 export class QuestAlimentos{
-    descricao:string;
+    alimento:Alimento;
     qtd:number;
 }
