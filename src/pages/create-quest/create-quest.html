@@ -26,8 +26,9 @@
   </div>
 
   <div [ngSwitch]="tab">
-    <ion-card *ngSwitchCase="'alimentos'">
+    <div *ngSwitchCase="'alimentos'">
    
+      <ion-card>
         <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
         <ion-list style="overflow-y: auto;max-height: 100px;">
           <button ion-item *ngFor="let alimento of filterAlimentos" (click)="setQtd(alimento)">
@@ -35,29 +36,30 @@
             {{ alimento.descricao }}
           </button>
         </ion-list>
+      </ion-card>
 
+        <div *ngIf="questAlimentos.length > 0">
+          <ion-title style="margin-top: 10%;">Selecionados:</ion-title>      
+          <div *ngFor="let qAlimento of questAlimentos">
+            <ion-card style="border: 1px #ff8300 solid;">
+              <ion-list>
+                <ion-item>
+                  {{qAlimento.alimento.descricao}}
+                  <button ion-button item-end icon-only clear>
+                    <ion-icon name="close" color="danger"></ion-icon>
+                  </button>
+                </ion-item>
+                <ion-item>
+                  Quantidade: {{qAlimento.qtd}} ({{qAlimento.alimento.unidade}})
+                </ion-item>
+              </ion-list>     
+            </ion-card>
+          </div>
+        </div>      
+     
+      </div>
 
-        <ion-card *ngIf="questAlimentos.length > 0" style="margin-top: 10%;">
-          <ion-card-header color="light">
-            Selecionados
-          </ion-card-header>
-
-          <ion-card-content>
-            <ion-item-group>
-              <ion-item *ngFor="let qAlimento of questAlimentos">
-                {{qAlimento.alimento.descricao}} - Quantidade: {{qAlimento.qtd}} ({{qAlimento.alimento.unidade}})
-              </ion-item>
-            </ion-item-group>
-          </ion-card-content>  
-
-        </ion-card>
-      
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'detalhes'">
-      <ion-card-content>
-
-      </ion-card-content>  
+    <ion-card *ngSwitchCase="'detalhes'">  
     </ion-card>
   </div>
 

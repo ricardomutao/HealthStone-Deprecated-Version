@@ -102,4 +102,8 @@ export class CreateQuestPage{
     })
   }
 
+  removeAlimento(alimento:QuestAlimentos){
+    
+  }
+
 }
