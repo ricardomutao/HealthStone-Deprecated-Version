@@ -103,7 +103,8 @@ export class CreateQuestPage{
   }
 
   removeAlimento(alimento:QuestAlimentos){
-    
+    let posicao = this.questAlimentos.indexOf(alimento);
+    this.questAlimentos.splice(posicao,1);
   }
 
 }

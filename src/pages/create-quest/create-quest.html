@@ -45,7 +45,7 @@
               <ion-list>
                 <ion-item>
                   {{qAlimento.alimento.descricao}}
-                  <button ion-button item-end icon-only clear>
+                  <button ion-button item-end icon-only clear (click)="removeAlimento(qAlimento)">
                     <ion-icon name="close" color="danger"></ion-icon>
                   </button>
                 </ion-item>
