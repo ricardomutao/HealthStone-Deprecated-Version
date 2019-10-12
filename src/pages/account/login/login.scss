@@ -4,40 +4,41 @@ page-login {
         text-align: center;
     }
 
+    .card-md{
+        background-color: color($colors, lightdark);
+        box-shadow: none;
+    }
+    
+    .item-input{
+        background-color: color($colors, light);
+        color: color($colors, lightdark);
+        height: 32px;
+        min-height: 0;
+        margin: 30px 0;
+        font-size: 12px;
+    }
+    
+    .item > ion-icon{
+        font-size: 20px;
+        min-height: 0;
+    }
+    
+    .item-md ion-icon[item-left] + .item-inner{
+        margin-left: 0;
+    }
+    
+    ion-card-content span a{
+        color: color($colors, maintheme);
+    }
+    
+    .card-content-md{
+        padding: 13px 0px;
+    }
+    
+    ion-card img {
+        width: 80%;
+        margin: auto;
+    }
+
 }
 
-.card-md{
-    background-color: color($colors, lightdark);
-    box-shadow: none;
-}
-
-.item-input{
-    background-color: color($colors, light);
-    color: color($colors, lightdark);
-    height: 32px;
-    min-height: 0;
-    margin: 30px 0;
-    font-size: 12px;
-}
-
-.item > ion-icon{
-    font-size: 20px;
-    min-height: 0;
-}
-
-.item-md ion-icon[item-left] + .item-inner{
-    margin-left: 0;
-}
-
-ion-card-content span a{
-    color: color($colors, maintheme);
-}
-
-.card-content-md{
-    padding: 13px 0px;
-}
-
-ion-card img {
-    width: 80%;
-    margin: auto;
-}
