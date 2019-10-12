@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Alert, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { Alimento } from '../../models/alimento';
 import { QuestAlimentos } from '../../models/questAlimentos';
 import { Quest } from '../../models/quest';
+import { HomePage } from '../home/home';
+import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 
 /**
  * Generated class for the CreateQuestPage page.
@@ -38,13 +40,14 @@ export class CreateQuestPage{
 
   alert: Alert;
 
+  data = new Date();
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertCtrl: AlertController,
-    private toastCtrl: ToastController,
     public alertController: AlertController,
-    private loadingController: LoadingController) {
+    private utils: UtilsServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -118,57 +121,59 @@ export class CreateQuestPage{
   }
 
   criarQuest(){
-    let toast = this.toastCtrl.create({
-      message: '',
-      position: 'top',
-      showCloseButton: true,
-      closeButtonText: 'Fechar',
-      cssClass: 'changeToast'
-
-    });
 
     if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
-      toast.setMessage('Informe o título para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe o título para prosseguir!');
       return false;
     }else if(this.periodo == '' || this.periodo == null || this.periodo == undefined){
-      toast.setMessage('Informe o período para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe o período para prosseguir!');
       return false;
     }else if(this.dias == null || this.dias == undefined || this.dias.length == 0){
-      toast.setMessage('Informe o(s) dia(s) para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe o(s) dia(s) para prosseguir!');
       return false;
     }else if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
-      toast.setMessage('Informe o(s) alimento(s) para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
       return false;
     }else{
+
+      let data = new Date();
+
       this.usuario = firebase.auth().currentUser;
       this.quest = new Quest();
       this.quest.alimentos = this.questAlimentos;
       this.quest.periodo = this.periodo;
       this.quest.evitar = this.evitar;
       this.quest.dias = this.dias;
-      this.quest.usuario = this.usuario;
-
-      /*CRIACAO DO ALERTA*/
+      this.quest.usuario = btoa(this.usuario);
+      this.quest.dataCriacao = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
+      this.quest.id = btoa(data.getTime().toString());
+     
       this.alert = this.alertController.create({
-        title:'',
+        subTitle:'',
         buttons: [
           { text: 'Ok',
             handler: () => {
-              this.navCtrl.setRoot('teste');
+              this.navCtrl.setRoot(HomePage.name);
             }
           }
         ]
       });
-      /*CRIACAO DO LOADING*/
-      let loading = this.loadingController.create({
-        content: 'Aguarde...'
-      });
-      
-      loading.present();
+     
+      this.utils.loadingShow();
+
+      firebase.database().ref(`quests/${btoa(this.quest.id)}`).set(this.quest).then(() => {
+
+        this.utils.loadingHide();
+
+        this.alert.setSubTitle('Missão criada com sucesso!');
+        this.alert.present();
+
+      }).catch((error: Error) => {
+        this.utils.loadingHide();
+        this.alert.setSubTitle('Erro na operação!');
+        this.alert.present();
+      })
+
     }
     
   }

@@ -7,7 +7,10 @@ import { CreateQuestPage } from './create-quest';
     CreateQuestPage,
   ],
   imports: [
-    IonicPageModule.forChild(CreateQuestPage),
+    IonicPageModule.forChild(CreateQuestPage)
   ],
+  exports:[
+    CreateQuestPage
+  ]
 })
 export class CreateQuestPageModule {}

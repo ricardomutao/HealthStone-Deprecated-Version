@@ -8,4 +8,5 @@ export class Quest{
     evitar:boolean;
     usuario:string;
     dataCriacao:string;
+    id:string;
 }

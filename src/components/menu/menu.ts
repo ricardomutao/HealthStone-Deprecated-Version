@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { NavController, LoadingController, Alert, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
+import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 
 /**
  * Generated class for the MenuComponent component.
@@ -16,37 +17,24 @@ import * as firebase from 'firebase';
 export class MenuComponent {
 
   @Input() tileMenu: string = '';
-  alert: Alert;
 
   constructor( 
     public navCtrl: NavController,
-    private loadingController: LoadingController,
-    public alertController: AlertController) {
+    public utils: UtilsServiceProvider) {
   }
 
   logOut(){
-    /*CRIACAO DO LOADING*/
-    let loading = this.loadingController.create({
-      content: 'Aguarde...'
-    });
     
-    loading.present();
+    this.utils.loadingShow();
 
     firebase.auth().signOut().then(() => {
-      loading.dismiss();
+      
+      this.utils.loadingHide();
       this.navCtrl.setRoot(LoginPage.name);
 
     }).catch((error:Error)=>{
-      loading.dismiss();
-      /*CRIACAO DO ALERTA*/
-      this.alert = this.alertController.create({
-        title:'',
-        buttons: [
-          { text: 'Ok'}
-        ]
-      });
-      this.alert.setSubTitle('Erro na operação!');
-      this.alert.present();
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação!');
     });
   }
 

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController, Alert, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Alert} from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { User } from '../../../models/user';
 import * as firebase from 'firebase';
+import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
 
 
 /**
@@ -31,13 +32,11 @@ export class RegisterPage {
 
   alert: Alert;
 
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private toastCtrl: ToastController, 
     public alertController: AlertController,
-    private loadingController: LoadingController) {
+    public utils: UtilsServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -49,44 +48,27 @@ export class RegisterPage {
   }
 
   register(){
-    /*CRIACAO DO TOAST DE ERRO*/
-    let toast = this.toastCtrl.create({
-      message: '',
-      position: 'top',
-      showCloseButton: true,
-      closeButtonText: 'Fechar',
-      cssClass: 'changeToast'
-
-    });
-
     /*VALIDACAO DO FORMULARIO*/
     if(this.nome == '' || this.nome == null || this.nome == undefined){
-      toast.setMessage('Campo "Nome Completo" é obrigatório!');
-      toast.present();
+      this.utils.creatToast('Campo "Nome Completo" é obrigatório!');
       return false;
     }else if(this.username == '' || this.username == null || this.username == undefined){
-      toast.setMessage('Campo "Username" é obrigatório!');
-      toast.present();
+      this.utils.creatToast('Campo "Username" é obrigatório!');
       return false;
     }else if(this.email == '' || this.email == null || this.email == undefined){
-      toast.setMessage('Campo "E-mail" é obrigatório!');
-      toast.present();
+      this.utils.creatToast('Campo "E-mail" é obrigatório!');
       return false;
     }else if(this.senha == '' || this.senha == null || this.senha == undefined){
-      toast.setMessage('Campo "Senha" é obrigatório!');
-      toast.present();
+      this.utils.creatToast('Campo "Senha" é obrigatório!');
       return false;
     }else if(this.senhaConfirm == '' || this.senhaConfirm == null || this.senhaConfirm == undefined){
-      toast.setMessage('Campo "Confirmar Senha" é obrigatório!');
-      toast.present();
+      this.utils.creatToast('Campo "Confirmar Senha" é obrigatório!');
       return false;
     }else if(!(this.senhaConfirm === this.senha)){
-      toast.setMessage('Os campos de senha devem ser iguais!');
-      toast.present();
+      this.utils.creatToast('Os campos de senha devem ser iguais!');
       return false;
     }else if(this.senha.length < 6){
-      toast.setMessage('A senha deve ter no mínimo 6 caracteres!');
-      toast.present();
+      this.utils.creatToast('A senha deve ter no mínimo 6 caracteres!');
     }else{
       this.user = new User();
       this.user.nomeCompleto = this.nome;
@@ -106,13 +88,8 @@ export class RegisterPage {
         ]
       });
 
-      /*CRIACAO DO LOADING*/
-      let loading = this.loadingController.create({
-        content: 'Aguarde...'
-      });
+      this.utils.loadingShow();
       
-      loading.present();
-
       firebase.auth().createUserWithEmailAndPassword(this.user.email = this.email,this.user.password)
       .then(() => {
         //remover o atributo senha do objeto usuario
@@ -121,13 +98,13 @@ export class RegisterPage {
         //Para desconverter usar atob()
         firebase.database().ref(`usuarios/${btoa(this.user.email)}`).set(this.user);
 
-        loading.dismiss();
+        this.utils.loadingHide();
 
         this.alert.setSubTitle('Registrado com sucesso!');
         this.alert.present();
 
       }).catch((error:Error) => {
-        loading.dismiss();
+        this.utils.loadingHide();
         this.alert.setSubTitle('Erro na operação!');
         this.alert.present();
       })

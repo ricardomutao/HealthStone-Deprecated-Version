@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Alert } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../../home/home';
 import * as firebase from 'firebase';
+import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -22,18 +23,13 @@ export class LoginPage {
   email:string = '';
   senha:string = '';
 
-  alert: Alert;
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private toastCtrl: ToastController, 
-    public alertController: AlertController,
-    private loadingController: LoadingController) {
+    public utils: UtilsServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
   }
 
   goRegister(){
@@ -41,47 +37,24 @@ export class LoginPage {
   }
 
   login(){
-    /*CRIACAO DO TOAST DE ERRO*/
-    let toast = this.toastCtrl.create({
-      message: '',
-      position: 'top',
-      showCloseButton: true,
-      closeButtonText: 'Fechar',
-      cssClass: 'changeToast'
-
-    });
     /*VALIDACAO DO FORMULARIO*/
     if(this.email == '' || this.email == null || this.email == undefined){
-      toast.setMessage('Informe o e-mail para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe o e-mail para prosseguir!');
       return false;
     }else if(this.senha == '' || this.senha == null || this.senha == undefined){
-      toast.setMessage('Informe a senha para prosseguir!');
-      toast.present();
+      this.utils.creatToast('Informe a senha para prosseguir!');
       return false;
     }else{
-      /*CRIACAO DO ALERTA*/
-      this.alert = this.alertController.create({
-        title:'',
-        buttons: [
-          { text: 'Ok'}
-        ]
-      });
-      /*CRIACAO DO LOADING*/
-      let loading = this.loadingController.create({
-        content: 'Aguarde...'
-      });
       
-      loading.present();
+      this.utils.loadingShow();
 
       firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
-        loading.dismiss();
+        this.utils.loadingHide();
         this.navCtrl.setRoot(HomePage.name);
 
       }).catch((error:Error) => {
-        loading.dismiss();
-        this.alert.setSubTitle('Erro na operação!');
-        this.alert.present();
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro na operação!');
       })
 
     }
