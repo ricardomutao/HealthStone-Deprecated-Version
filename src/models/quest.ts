@@ -6,7 +6,8 @@ export class Quest{
     titulo:string;
     dias:any;
     evitar:boolean;
-    usuario:string;
+    usuario:any;
     dataCriacao:string;
     id:string;
+    dificuldade:number;
 }

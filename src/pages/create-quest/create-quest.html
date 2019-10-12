@@ -26,7 +26,7 @@
   </div>
 
   <div [ngSwitch]="tab">
-    <form (ngSubmit)="criarQuest()">
+    <form (ngSubmit)="showConfirm()">
       
       <div *ngSwitchCase="'alimentos'">
         <ion-card>
@@ -63,41 +63,58 @@
       <div *ngSwitchCase="'detalhes'">
         <ion-card>
           <ion-card-content>
-              <ion-list>
+            <ion-list inset>
 
-                <ion-item>
-                  <ion-label stacked>Título</ion-label>
-                  <ion-input type="text" clearInput autocomplete="on" placeholder="HealthStone" name="titulo" [(ngModel)]="titulo"></ion-input>
-                </ion-item>
+              <ion-item>
+                <ion-label color="light">Título:</ion-label>
+                <ion-input type="text" clearInput autocomplete="on" placeholder="HealthStone" name="titulo" [(ngModel)]="titulo"></ion-input>
+              </ion-item>
 
-                <ion-item>
-                  <ion-label>Período</ion-label>
-                  <ion-select [(ngModel)]="periodo" name="periodo">
-                    <ion-option value="manha">Manhã</ion-option>
-                    <ion-option value="tarde">Tarde</ion-option>
-                    <ion-option value="noite">Noite</ion-option>
-                  </ion-select>
-                </ion-item>
-          
-                <ion-item>
-                  <ion-label>Dias</ion-label>
-                  <ion-select [(ngModel)]="dias" multiple="true" name="dias">
-                    <ion-option value="segunda">Segunda</ion-option>
-                    <ion-option value="terca">Terça</ion-option>
-                    <ion-option value="quarta">Quarta</ion-option>
-                    <ion-option value="quinta">Quinta</ion-option>
-                    <ion-option value="sexta">Sexta</ion-option>
-                    <ion-option value="sabado">Sábado</ion-option>
-                    <ion-option value="domingo">Domingo</ion-option>
-                  </ion-select>
-                </ion-item>
-
-                <ion-item>
-                  <ion-label>Evitar Comer</ion-label>
-                  <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
-                </ion-item>
+              <ion-item>
+                <ion-label color="light">Período</ion-label>
+                <ion-select [(ngModel)]="periodo" name="periodo">
+                  <ion-option value="manha">Manhã</ion-option>
+                  <ion-option value="tarde">Tarde</ion-option>
+                  <ion-option value="noite">Noite</ion-option>
+                </ion-select>
+              </ion-item>
         
-              </ion-list>
+              <ion-item>
+                <ion-label color="light">Dias</ion-label>
+                <ion-select [(ngModel)]="dias" multiple="true" name="dias">
+                  <ion-option value="segunda">Segunda</ion-option>
+                  <ion-option value="terca">Terça</ion-option>
+                  <ion-option value="quarta">Quarta</ion-option>
+                  <ion-option value="quinta">Quinta</ion-option>
+                  <ion-option value="sexta">Sexta</ion-option>
+                  <ion-option value="sabado">Sábado</ion-option>
+                  <ion-option value="domingo">Domingo</ion-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label color="light">Evitar Comer</ion-label>
+                <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
+              </ion-item>
+            </ion-list>
+
+            <ion-list>
+              <ion-list-header>
+                 Nivel de Dificuldade (1 a 5)
+                <ionic3-star-rating #rating 
+                  activeIcon = "ios-star"
+                  defaultIcon = "ios-star-outline"
+                  activeColor = "#FE8400"
+                  defaultColor = "#aaaaaa"
+                  readonly = "false"
+                  fontSize = "32px"
+                  [(ngModel)]="starRating"
+                  name="starRating">
+                </ionic3-star-rating>
+              </ion-list-header>
+             
+            </ion-list>  
+
           </ion-card-content>
           
         </ion-card>

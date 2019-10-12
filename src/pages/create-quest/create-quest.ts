@@ -34,6 +34,7 @@ export class CreateQuestPage{
   dias:any = [];
   periodo:string = '';
   evitar:boolean = false;
+  starRating:number;
 
   /*objeto para gravar a quest*/
   quest:Quest;
@@ -122,6 +123,51 @@ export class CreateQuestPage{
 
   criarQuest(){
 
+    let data = new Date();
+
+    this.usuario = firebase.auth().currentUser.email;
+    this.quest = new Quest();
+    this.quest.alimentos = this.questAlimentos;
+    this.quest.periodo = this.periodo;
+    this.quest.evitar = this.evitar;
+    this.quest.dias = this.dias;
+    this.quest.usuario = btoa(this.usuario);
+    this.quest.dataCriacao = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
+    this.quest.id = btoa(data.getTime().toString());
+    this.quest.dificuldade = this.starRating;
+    
+    this.alert = this.alertController.create({
+      subTitle:'',
+      buttons: [
+        { text: 'Ok',
+          handler: () => {
+            this.navCtrl.setRoot(HomePage.name);
+          }
+        }
+      ]
+    });
+    
+    this.utils.loadingShow();
+
+    firebase.database().ref(`quests/${btoa(this.quest.id)}`).set(this.quest).then(() => {
+
+      this.utils.loadingHide();
+
+      this.alert.setSubTitle('Missão criada com sucesso!');
+      this.alert.present();
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.alert.setSubTitle('Erro na operação!');
+      this.alert.present();
+    })
+
+    
+    
+  }
+
+  showConfirm() {
+
     if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
       this.utils.creatToast('Informe o título para prosseguir!');
       return false;
@@ -134,47 +180,30 @@ export class CreateQuestPage{
     }else if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
       this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
       return false;
+    }else if(this.starRating == null || this.starRating == undefined || this.starRating == 0){
+      this.utils.creatToast('Informe a dificuldade para prosseguir!');
+      return false;
     }else{
 
-      let data = new Date();
-
-      this.usuario = firebase.auth().currentUser;
-      this.quest = new Quest();
-      this.quest.alimentos = this.questAlimentos;
-      this.quest.periodo = this.periodo;
-      this.quest.evitar = this.evitar;
-      this.quest.dias = this.dias;
-      this.quest.usuario = btoa(this.usuario);
-      this.quest.dataCriacao = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
-      this.quest.id = btoa(data.getTime().toString());
-     
-      this.alert = this.alertController.create({
-        subTitle:'',
+      const confirm = this.alertCtrl.create({
+        title: 'Confirmar Missão',
+        message: 'Tem certeza que deseja confirmar e finalizar a criação dessa missão?',
         buttons: [
-          { text: 'Ok',
+          {
+            text: 'Confirmar',
             handler: () => {
-              this.navCtrl.setRoot(HomePage.name);
+              this.criarQuest();
             }
+          },
+          {
+            text: 'Cancelar'
           }
         ]
       });
-     
-      this.utils.loadingShow();
-
-      firebase.database().ref(`quests/${btoa(this.quest.id)}`).set(this.quest).then(() => {
-
-        this.utils.loadingHide();
-
-        this.alert.setSubTitle('Missão criada com sucesso!');
-        this.alert.present();
-
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.alert.setSubTitle('Erro na operação!');
-        this.alert.present();
-      })
+      confirm.present();
 
     }
+
     
   }
 
