@@ -74,7 +74,6 @@ export class RegisterPage {
       this.user.nomeCompleto = this.nome;
       this.user.userNme = this.username;
       this.user.email = this.email.trim();
-      this.user.password = this.senha;
 
       /*CRIACAO DO ALERTA*/
       this.alert = this.alertController.create({
@@ -90,10 +89,8 @@ export class RegisterPage {
 
       this.utils.loadingShow();
       
-      firebase.auth().createUserWithEmailAndPassword(this.user.email = this.email,this.user.password)
+      firebase.auth().createUserWithEmailAndPassword(this.user.email, this.senha)
       .then(() => {
-        //remover o atributo senha do objeto usuario
-        delete this.user.password;
         //registrando dados complementares do usuario no path email na base64
         //Para desconverter usar atob()
         firebase.database().ref(`usuarios/${btoa(this.user.email)}`).set(this.user);
