@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
+import { ProfilePage } from '../../pages/profile/profile';
 
 /**
  * Generated class for the MenuComponent component.
@@ -37,5 +38,10 @@ export class MenuComponent {
       this.utils.creatSimpleAlert('Erro na operação!');
     });
   }
+
+  goProfile(){
+    this.navCtrl.push(ProfilePage.name);
+  }
+
 
 }
