@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase';
-import { Alimento } from '../../models/alimento';
-import { QuestAlimentos } from '../../models/questAlimentos';
 import { User } from '../../models/user';
 
 /**

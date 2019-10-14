@@ -31,7 +31,7 @@
       <div *ngSwitchCase="'alimentos'">
         <ion-card>
           <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
-          <ion-list style="overflow-y: auto;max-height: 100px;">
+          <ion-list style="overflow-y: scroll;max-height: 100px;">
             <button ion-item *ngFor="let alimento of filterAlimentos" type="button" (click)="setQtd(alimento)">
               <ion-icon name="add" item-end></ion-icon>
               {{ alimento.descricao }}
