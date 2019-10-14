@@ -44,4 +44,8 @@ export class ProfilePage{
     return false;
   }
 
+  dismiss(){
+    this.navCtrl.pop();
+  }
+
 }
