@@ -10,4 +10,5 @@ export class Quest{
     dataCriacao:string;
     id:string;
     dificuldade:number;
+    horario:string;
 }

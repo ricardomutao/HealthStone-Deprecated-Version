@@ -93,6 +93,11 @@
               </ion-item>
 
               <ion-item>
+                <ion-label color="light">Horário</ion-label>
+                <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="time" name="time"></ion-datetime>
+              </ion-item>
+
+              <ion-item>
                 <ion-label color="light">Evitar Comer</ion-label>
                 <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
               </ion-item>

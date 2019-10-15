@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
 import { ComponentsModule } from '../../components/components.module';
+import { StarRatingModule } from 'ionic3-star-rating';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { ComponentsModule } from '../../components/components.module';
   ],
   imports: [
     ComponentsModule,
-    IonicPageModule.forChild(HomePage)
+    IonicPageModule.forChild(HomePage),
+    StarRatingModule
   ],
   exports:[
     HomePage

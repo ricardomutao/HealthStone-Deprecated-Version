@@ -81,7 +81,7 @@ export class RegisterPage {
         buttons: [
           { text: 'Ok',
             handler: () => {
-              this.navCtrl.setRoot(LoginPage.name);
+              this.navCtrl.pop();
             }
           }
         ]

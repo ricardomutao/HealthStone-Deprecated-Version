@@ -6,17 +6,31 @@
 -->
 <menu [tileMenu]="tileMenu"></menu>
 <ion-content>
-  <ion-slides pager>
+  <ion-slides pager *ngIf="listQuestManha.length > 0 || listQuestTarde.length > 0 || listQuestNoite.length > 0">
 
-    <ion-slide>
-      <h2>Slide 1</h2>
+    <ion-slide *ngIf="listQuestManha.length > 0">
+      <div *ngFor="let questManha of listQuestManha">
+        <ion-card style="border: 1px #ff8300 solid;">
+          <ion-card-header color="light">
+            {{questManha.titulo}}
+            <button ion-button item-end icon-only clear>
+              <ion-icon name="close" color="danger"></ion-icon>
+            </button>
+          </ion-card-header>
+          <ion-list>
+            <ion-item>
+
+            </ion-item>
+          </ion-list>     
+        </ion-card>
+      </div>
     </ion-slide>
   
-    <ion-slide>
+    <ion-slide *ngIf="listQuestTarde.length > 0">
       <h2>Slide 2</h2>
     </ion-slide>
   
-    <ion-slide>
+    <ion-slide *ngIf="listQuestNoite.length > 0">
       <h2>Slide 3</h2>
     </ion-slide>
   

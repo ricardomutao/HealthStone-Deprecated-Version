@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 import { Alimento } from '../../models/alimento';
 import { QuestAlimentos } from '../../models/questAlimentos';
 import { Quest } from '../../models/quest';
-import { HomePage } from '../home/home';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 
 /**
@@ -35,6 +34,7 @@ export class CreateQuestPage{
   periodo:string = '';
   evitar:boolean = false;
   starRating:number;
+  time:string = '00:00';
 
   /*objeto para gravar a quest*/
   quest:Quest;
@@ -71,6 +71,7 @@ export class CreateQuestPage{
   }
 
   initializeItems(){
+    this.utils.loadingShow();
     let alimento: Alimento;
     //Pegando todos alimentos do banco de dados alimentado
     firebase.database().ref(`alimentos`).once('value', (snapshot: any) => {
@@ -80,6 +81,7 @@ export class CreateQuestPage{
       });
       this.filterAlimentos = this.alimentos;
     });
+    this.utils.loadingHide();
   }
 
   setQtd(alimento:Alimento){
@@ -135,13 +137,14 @@ export class CreateQuestPage{
     this.quest.dataCriacao = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
     this.quest.id = btoa(data.getTime().toString());
     this.quest.dificuldade = this.starRating;
+    this.quest.horario = this.time;
     
     this.alert = this.alertController.create({
       subTitle:'',
       buttons: [
         { text: 'Ok',
           handler: () => {
-            this.navCtrl.setRoot(HomePage.name);
+            this.navCtrl.pop();
           }
         }
       ]
@@ -161,49 +164,76 @@ export class CreateQuestPage{
       this.alert.setSubTitle('Erro na operação!');
       this.alert.present();
     })
-
-    
     
   }
 
   showConfirm() {
+    console.log(this.time);
 
-    if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
-      this.utils.creatToast('Informe o título para prosseguir!');
-      return false;
-    }else if(this.periodo == '' || this.periodo == null || this.periodo == undefined){
-      this.utils.creatToast('Informe o período para prosseguir!');
-      return false;
-    }else if(this.dias == null || this.dias == undefined || this.dias.length == 0){
-      this.utils.creatToast('Informe o(s) dia(s) para prosseguir!');
-      return false;
-    }else if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
-      this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
-      return false;
-    }else if(this.starRating == null || this.starRating == undefined || this.starRating == 0){
-      this.utils.creatToast('Informe a dificuldade para prosseguir!');
-      return false;
+    if(this.tab == 'alimentos'){
+      if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
+        this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
+        return false;
+      }else if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
+        this.utils.creatToast('Informe o título para prosseguir!');
+        this.tab = 'detalhes';
+        return false;
+      }else if(this.periodo == '' || this.periodo == null || this.periodo == undefined){
+        this.utils.creatToast('Informe o período para prosseguir!');
+        this.tab = 'detalhes';
+        return false;
+      }else if(this.dias == null || this.dias == undefined || this.dias.length == 0){
+        this.utils.creatToast('Informe o(s) dia(s) para prosseguir!');
+        this.tab = 'detalhes';
+        return false;
+      }else if(this.starRating == null || this.starRating == undefined || this.starRating == 0){
+        this.utils.creatToast('Informe a dificuldade para prosseguir!');
+        this.tab = 'detalhes';
+        return false;
+      }else if(this.time == '' || this.time == undefined || this.time == null){
+        this.utils.creatToast('Informe o horário para prosseguir!');
+        this.tab = 'detalhes';
+        return false;
+      }
     }else{
-
-      const confirm = this.alertCtrl.create({
-        title: 'Confirmar Missão',
-        message: 'Tem certeza que deseja confirmar e finalizar a criação dessa missão?',
-        buttons: [
-          {
-            text: 'Confirmar',
-            handler: () => {
-              this.criarQuest();
-            }
-          },
-          {
-            text: 'Cancelar'
-          }
-        ]
-      });
-      confirm.present();
-
+      if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
+        this.utils.creatToast('Informe o título para prosseguir!');
+        return false;
+      }else if(this.periodo == '' || this.periodo == null || this.periodo == undefined){
+        this.utils.creatToast('Informe o período para prosseguir!');
+        return false;
+      }else if(this.dias == null || this.dias == undefined || this.dias.length == 0){
+        this.utils.creatToast('Informe o(s) dia(s) para prosseguir!');
+        return false;
+      }else if(this.starRating == null || this.starRating == undefined || this.starRating == 0){
+        this.utils.creatToast('Informe a dificuldade para prosseguir!');
+        return false;
+      }else if(this.time == '' || this.time == undefined || this.time == null){
+        this.utils.creatToast('Informe o horário para prosseguir!');
+        return false;
+      }else if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
+        this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
+        this.tab = 'alimentos';
+        return false;
+      }
     }
 
+    const confirm = this.alertCtrl.create({
+      title: 'Confirmar Missão',
+      message: 'Tem certeza que deseja confirmar e finalizar a criação dessa missão?',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.criarQuest();
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    });
+    confirm.present(); 
     
   }
 
