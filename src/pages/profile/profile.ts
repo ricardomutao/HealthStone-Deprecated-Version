@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { User } from '../../models/user';
+import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 
 /**
  * Generated class for the ProfilePage page.
@@ -17,13 +18,17 @@ import { User } from '../../models/user';
 })
 export class ProfilePage{
   usuario: User = {email:'', nomeCompleto:'', userNme:''};
-
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl: AlertController,
+    private utils: UtilsServiceProvider) {
   }
 
   ionViewDidLoad() {
+    this.utils.loadingShow();
     this.findUserDatabase();
+    this.utils.loadingHide();
     //this.usuario = this.findUserDatabase(userAuth);
     
   }
