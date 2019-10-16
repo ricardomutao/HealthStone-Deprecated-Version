@@ -1,5 +1,6 @@
 export class Alimento{
     descricao:string;
-    cal:number;
+    kcal:number;
     unidade:string;
+    baseQtd:number;
 }

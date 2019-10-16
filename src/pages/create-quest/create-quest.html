@@ -16,28 +16,28 @@
 
   <div padding>
     <ion-segment [(ngModel)]="tab" color="greentheme">
-      <ion-segment-button value="alimentos">
+      <ion-segment-button value="alimentos" (click)="changeSlide()">
         Alimentos
       </ion-segment-button>
-      <ion-segment-button value="detalhes">
+      <ion-segment-button value="detalhes" (click)="changeSlide()"> 
         Mais Detalhes
       </ion-segment-button>
     </ion-segment>
   </div>
 
-  <div [ngSwitch]="tab">
-    <form (ngSubmit)="showConfirm()">
-      
-      <div *ngSwitchCase="'alimentos'">
-        <ion-card>
-          <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
-          <ion-list style="overflow-y: scroll;max-height: 100px;">
-            <button ion-item *ngFor="let alimento of filterAlimentos" type="button" (click)="setQtd(alimento)">
-              <ion-icon name="add" item-end></ion-icon>
-              {{ alimento.descricao }}
-            </button>
-          </ion-list>
-        </ion-card>
+  <form (ngSubmit)="showConfirm()">
+    <ion-slides #Slides (ionSlideDidChange)="changeTab()">
+      <ion-slide>
+        <div>
+          <ion-card>
+            <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
+            <ion-list style="overflow-y: scroll;max-height: 137px;">
+              <button ion-item *ngFor="let alimento of filterAlimentos" type="button" (click)="setQtd(alimento)">
+                <ion-icon name="add" item-end></ion-icon>
+                {{ alimento.descricao }}
+              </button>
+            </ion-list>
+          </ion-card>
 
           <div *ngIf="questAlimentos.length > 0">
             <ion-title style="margin-top: 10%;">Selecionados:</ion-title>      
@@ -56,83 +56,82 @@
                 </ion-list>     
               </ion-card>
             </div>
-          </div>      
+          </div>  
+        </div>  
+      </ion-slide>
       
-        </div>
 
-      <div *ngSwitchCase="'detalhes'">
-        <ion-card>
-          <ion-card-content>
-            <ion-list inset>
+      <ion-slide>
+        <div>
+          <ion-card>
+            <ion-card-content>
+              <ion-list inset>
 
-              <ion-item>
-                <ion-label color="light">Título:</ion-label>
-                <ion-input type="text" clearInput autocomplete="on" placeholder="HealthStone" name="titulo" [(ngModel)]="titulo"></ion-input>
-              </ion-item>
+                <ion-item>
+                  <ion-label color="light">Título:</ion-label>
+                  <ion-input type="text" clearInput autocomplete="on" placeholder="HealthStone" name="titulo" [(ngModel)]="titulo"></ion-input>
+                </ion-item>
 
-              <ion-item>
-                <ion-label color="light">Período</ion-label>
-                <ion-select [(ngModel)]="periodo" name="periodo">
-                  <ion-option value="manha">Manhã</ion-option>
-                  <ion-option value="tarde">Tarde</ion-option>
-                  <ion-option value="noite">Noite</ion-option>
-                </ion-select>
-              </ion-item>
-        
-              <ion-item>
-                <ion-label color="light">Dias</ion-label>
-                <ion-select [(ngModel)]="dias" multiple="true" name="dias">
-                  <ion-option value="segunda">Segunda</ion-option>
-                  <ion-option value="terca">Terça</ion-option>
-                  <ion-option value="quarta">Quarta</ion-option>
-                  <ion-option value="quinta">Quinta</ion-option>
-                  <ion-option value="sexta">Sexta</ion-option>
-                  <ion-option value="sabado">Sábado</ion-option>
-                  <ion-option value="domingo">Domingo</ion-option>
-                </ion-select>
-              </ion-item>
-
-              <ion-item>
-                <ion-label color="light">Horário</ion-label>
-                <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="time" name="time"></ion-datetime>
-              </ion-item>
-
-              <ion-item>
-                <ion-label color="light">Evitar Comer</ion-label>
-                <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
-              </ion-item>
-            </ion-list>
-
-            <ion-list>
-              <ion-list-header>
-                 Nivel de Dificuldade (1 a 5)
-                <ionic3-star-rating #rating 
-                  activeIcon = "ios-star"
-                  defaultIcon = "ios-star-outline"
-                  activeColor = "#FE8400"
-                  defaultColor = "#aaaaaa"
-                  readonly = "false"
-                  fontSize = "32px"
-                  [(ngModel)]="starRating"
-                  name="starRating">
-                </ionic3-star-rating>
-              </ion-list-header>
-             
-            </ion-list>  
-
-          </ion-card-content>
+                <ion-item>
+                  <ion-label color="light">Período</ion-label>
+                  <ion-select [(ngModel)]="periodo" name="periodo">
+                    <ion-option value="manha">Manhã</ion-option>
+                    <ion-option value="tarde">Tarde</ion-option>
+                    <ion-option value="noite">Noite</ion-option>
+                  </ion-select>
+                </ion-item>
           
-        </ion-card>
+                <ion-item>
+                  <ion-label color="light">Dias</ion-label>
+                  <ion-select [(ngModel)]="dias" multiple="true" name="dias">
+                    <ion-option value="segunda">Segunda</ion-option>
+                    <ion-option value="terca">Terça</ion-option>
+                    <ion-option value="quarta">Quarta</ion-option>
+                    <ion-option value="quinta">Quinta</ion-option>
+                    <ion-option value="sexta">Sexta</ion-option>
+                    <ion-option value="sabado">Sábado</ion-option>
+                    <ion-option value="domingo">Domingo</ion-option>
+                  </ion-select>
+                </ion-item>
 
-      </div>
+                <ion-item>
+                  <ion-label color="light">Horário</ion-label>
+                  <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="time" name="time"></ion-datetime>
+                </ion-item>
 
-      <ion-fab bottom right>
-        <button ion-fab mini color="greentheme" type="submit"><ion-icon name="checkmark-circle"></ion-icon></button>
-      </ion-fab>
+                <ion-item>
+                  <ion-label color="light">Evitar Comer</ion-label>
+                  <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
+                </ion-item>
+              </ion-list>
 
-    </form>
-  </div>
+              <ion-list>
+                <ion-item>
+                  <label color="light">Nivel de Dificuldade (1 a 5)</label>                
+                  <ionic3-star-rating #rating 
+                    activeIcon = "ios-star"
+                    defaultIcon = "ios-star-outline"
+                    activeColor = "#FE8400"
+                    defaultColor = "#aaaaaa"
+                    readonly = "false"
+                    fontSize = "32px"
+                    [(ngModel)]="starRating"
+                    name="starRating">
+                  </ionic3-star-rating>
+                </ion-item>
+              </ion-list>  
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
 
+    <ion-fab bottom right>
+      <button ion-fab mini color="greentheme" type="submit"><ion-icon name="checkmark-circle"></ion-icon></button>
+    </ion-fab>
+  </form>
+
+  
   
     
 </ion-content>

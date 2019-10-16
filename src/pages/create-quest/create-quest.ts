@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Alert, Slides } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { Alimento } from '../../models/alimento';
 import { QuestAlimentos } from '../../models/questAlimentos';
 import { Quest } from '../../models/quest';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
+import { CreatQuestServiceProvider } from '../../providers/creat-quest-service/creat-quest-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Generated class for the CreateQuestPage page.
@@ -19,6 +21,9 @@ import { UtilsServiceProvider } from '../../providers/utils/utils-service';
   templateUrl: 'create-quest.html',
 })
 export class CreateQuestPage{
+
+  @ViewChild(Slides) slides: Slides;
+
   alimentos: Alimento[] = [];
   filterAlimentos: Alimento [];
   questAlimentos: QuestAlimentos[] = [];
@@ -48,7 +53,8 @@ export class CreateQuestPage{
     public navParams: NavParams, 
     public alertCtrl: AlertController,
     public alertController: AlertController,
-    private utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public creatQuestService: CreatQuestServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -72,16 +78,33 @@ export class CreateQuestPage{
 
   initializeItems(){
     this.utils.loadingShow();
-    let alimento: Alimento;
+    let that = this;
     //Pegando todos alimentos do banco de dados alimentado
-    firebase.database().ref(`alimentos`).once('value', (snapshot: any) => {
-      snapshot.forEach((childSnapshot: any) => {
-        alimento = childSnapshot.val();
-        this.alimentos.push(alimento);
-      });
-      this.filterAlimentos = this.alimentos;
-    });
-    this.utils.loadingHide();
+    this.creatQuestService.getAlimentos().subscribe(
+      (alimento:any) => {
+        alimento.forEach(function(obj){
+
+          let objAlimento = {
+            descricao: obj.description,
+            unidade: obj.base_unit,
+            kcal: obj.attributes.energy.kcal,
+            baseQtd:  obj.base_qty
+          }
+  
+          that.alimentos.push(objAlimento);
+        });
+
+        this.filterAlimentos = this.alimentos;
+        
+        this.utils.loadingHide();
+      },
+      (err:HttpErrorResponse) => {
+        console.log(err);
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro ao listar os alimentos');
+      }
+    )
+   
   }
 
   setQtd(alimento:Alimento){
@@ -168,31 +191,35 @@ export class CreateQuestPage{
   }
 
   showConfirm() {
-    console.log(this.time);
 
-    if(this.tab == 'alimentos'){
+    if(this.slides.isBeginning()){
       if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
         this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
         return false;
       }else if(this.titulo == '' || this.titulo == null || this.titulo == undefined){
         this.utils.creatToast('Informe o título para prosseguir!');
         this.tab = 'detalhes';
+        this.slides.slideNext();
         return false;
       }else if(this.periodo == '' || this.periodo == null || this.periodo == undefined){
         this.utils.creatToast('Informe o período para prosseguir!');
         this.tab = 'detalhes';
+        this.slides.slideNext();
         return false;
       }else if(this.dias == null || this.dias == undefined || this.dias.length == 0){
         this.utils.creatToast('Informe o(s) dia(s) para prosseguir!');
         this.tab = 'detalhes';
+        this.slides.slideNext();
         return false;
       }else if(this.starRating == null || this.starRating == undefined || this.starRating == 0){
         this.utils.creatToast('Informe a dificuldade para prosseguir!');
         this.tab = 'detalhes';
+        this.slides.slideNext();
         return false;
       }else if(this.time == '' || this.time == undefined || this.time == null){
         this.utils.creatToast('Informe o horário para prosseguir!');
         this.tab = 'detalhes';
+        this.slides.slideNext();
         return false;
       }
     }else{
@@ -214,6 +241,7 @@ export class CreateQuestPage{
       }else if(this.questAlimentos == null || this.questAlimentos == undefined || this.questAlimentos.length == 0){
         this.utils.creatToast('Informe o(s) alimento(s) para prosseguir!');
         this.tab = 'alimentos';
+        this.slides.slidePrev();
         return false;
       }
     }
@@ -235,6 +263,22 @@ export class CreateQuestPage{
     });
     confirm.present(); 
     
+  }
+
+  changeTab(){
+    if(this.slides.isEnd()){
+      this.tab = 'detalhes';
+    }else if(this.slides.isBeginning()){
+      this.tab = 'alimentos';
+    }
+  }
+
+  changeSlide(){
+    if(this.slides.isEnd()){
+      this.slides.slidePrev();
+    }else if(this.slides.isBeginning()){
+      this.slides.slideNext();
+    }
   }
 
 }
