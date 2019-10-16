@@ -9,29 +9,60 @@
   <ion-slides pager *ngIf="listQuestManha.length > 0 || listQuestTarde.length > 0 || listQuestNoite.length > 0">
 
     <ion-slide *ngIf="listQuestManha.length > 0">
+      <ion-title>Manhã</ion-title>  
       <div *ngFor="let questManha of listQuestManha">
         <ion-card style="border: 1px #ff8300 solid;">
-          <ion-card-header color="light">
-            {{questManha.titulo}}
-            <button ion-button item-end icon-only clear>
-              <ion-icon name="close" color="danger"></ion-icon>
-            </button>
-          </ion-card-header>
           <ion-list>
             <ion-item>
-
+              {{questManha.titulo}}
+              <button ion-button item-end icon-only clear>
+                <ion-icon name="more" color="danger"></ion-icon>
+              </button>
             </ion-item>
-          </ion-list>     
+            <ion-item>
+              Horario: {{questManha.horario}}
+            </ion-item>
+          </ion-list>       
         </ion-card>
       </div>
     </ion-slide>
   
     <ion-slide *ngIf="listQuestTarde.length > 0">
-      <h2>Slide 2</h2>
+      <ion-title>Tarde</ion-title>  
+      <div *ngFor="let questTarde of listQuestTarde">
+        <ion-card style="border: 1px #ff8300 solid;">
+          <ion-list>
+            <ion-item>
+              {{questTarde.titulo}}
+              <button ion-button item-end icon-only clear>
+                <ion-icon name="more" color="danger"></ion-icon>
+              </button>
+            </ion-item>
+            <ion-item>
+              Horario: {{questTarde.horario}}
+            </ion-item>
+          </ion-list>       
+        </ion-card>
+      </div>
     </ion-slide>
   
     <ion-slide *ngIf="listQuestNoite.length > 0">
-      <h2>Slide 3</h2>
+      <ion-title>Noite</ion-title>  
+      <div *ngFor="let questNoite of listQuestNoite">
+        <ion-card style="border: 1px #ff8300 solid;">
+          <ion-list>
+            <ion-item>
+              {{questNoite.titulo}}
+              <button ion-button item-end icon-only clear>
+                <ion-icon name="more" color="danger"></ion-icon>
+              </button>
+            </ion-item>
+            <ion-item>
+              Horario: {{questNoite.horario}}
+            </ion-item>
+          </ion-list>       
+        </ion-card>
+      </div>
     </ion-slide>
   
   </ion-slides>

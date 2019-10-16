@@ -28,13 +28,17 @@ export class HomePage {
   listQuestNoite = [];
   checkMaxQtdNoite:boolean = false;
 
+  authUser:any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider) {
+
+    this.authUser = firebase.auth().currentUser;
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.getQuest();
   }
 
@@ -44,10 +48,14 @@ export class HomePage {
 
   getQuest(){
     this.utils.loadingShow();
-    let authUser = firebase.auth().currentUser;
+    
+    this.listQuestManha = [];
+    this.listQuestTarde = [];
+    this.listQuestNoite = [];
+    
     firebase.database().ref(`quests`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().usuario == btoa(authUser.email)){
+        if(childSnapshot.val().usuario == btoa(this.authUser.email)){
           if(childSnapshot.val().periodo.toLowerCase() == 'manha'){
             this.listQuestManha.push(childSnapshot.val());
           }else if(childSnapshot.val().periodo.toLowerCase() == 'tarde'){
