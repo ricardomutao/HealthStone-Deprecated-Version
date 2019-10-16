@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import * as firebase from 'firebase';
 import { User } from '../../models/user';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
+import { CreateAvatarPage } from '../create-avatar/create-avatar';
 
 /**
  * Generated class for the ProfilePage page.
@@ -39,7 +40,6 @@ export class ProfilePage{
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
           this.usuario = childSnapshot.val();
-          console.log('jklwkjwrgk', this.usuario);
           return true;
         }
       });
@@ -49,6 +49,9 @@ export class ProfilePage{
 
   dismiss(){
     this.navCtrl.pop();
+  }
+  goCreateAvatar(){
+    this.navCtrl.push(CreateAvatarPage.name);
   }
 
 }

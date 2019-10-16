@@ -1,0 +1,66 @@
+<!--
+  Generated template for the CreateAvatarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Definir avatar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item>
+    <div class="avatar-wrapper">
+        <ion-avatar>
+          <img [src]="url">
+        </ion-avatar>
+      </div>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Cabelo/Acessório superior</ion-label>
+    <ion-select id="topType" class="form-control" interface="popover" [(ngModel)]="avatar.hair">
+      <ion-option value="NoHair">NoHair</ion-option>
+      <ion-option value="Eyepatch">Eyepatch</ion-option>
+      <ion-option value="Hat">Hat</ion-option>
+      <ion-option value="Hijab">Hijab</ion-option>
+      <ion-option value="Turban">Turban</ion-option>
+      <ion-option value="WinterHat1">WinterHat1</ion-option>
+      <ion-option value="WinterHat2">WinterHat2</ion-option>
+      <ion-option value="WinterHat3">WinterHat3</ion-option>
+      <ion-option value="WinterHat4">WinterHat4</ion-option>
+      <ion-option value="LongHairBigHair">LongHairBigHair</ion-option>
+      <ion-option value="LongHairBob">LongHairBob</ion-option>
+      <ion-option value="LongHairBun">LongHairBun</ion-option>
+      <ion-option value="LongHairCurly">LongHairCurly</ion-option>
+      <ion-option value="LongHairCurvy">LongHairCurvy</ion-option>
+      <ion-option value="LongHairDreads">LongHairDreads</ion-option>
+      <ion-option value="LongHairFrida">LongHairFrida</ion-option>
+      <ion-option value="LongHairFro">LongHairFro</ion-option>
+      <ion-option value="LongHairFroBand">LongHairFroBand</ion-option>
+      <ion-option value="LongHairNotTooLong">LongHairNotTooLong</ion-option>
+      <ion-option value="LongHairShavedSides">LongHairShavedSides</ion-option>
+      <ion-option value="LongHairMiaWallace">LongHairMiaWallace</ion-option>
+      <ion-option value="LongHairStraight">LongHairStraight</ion-option>
+      <ion-option value="LongHairStraight2">LongHairStraight2</ion-option>
+      <ion-option value="LongHairStraightStrand">LongHairStraightStrand</ion-option>
+      <ion-option value="ShortHairDreads01">ShortHairDreads01</ion-option>
+      <ion-option value="ShortHairDreads02">ShortHairDreads02</ion-option>
+      <ion-option value="ShortHairFrizzle">ShortHairFrizzle</ion-option>
+      <ion-option value="ShortHairShaggyMullet">ShortHairShaggyMullet</ion-option>
+      <ion-option value="ShortHairShortCurly">ShortHairShortCurly</ion-option>
+      <ion-option value="ShortHairShortFlat">ShortHairShortFlat</ion-option>
+      <ion-option value="ShortHairShortRound">ShortHairShortRound</ion-option>
+      <ion-option value="ShortHairShortWaved">ShortHairShortWaved</ion-option>
+      <ion-option value="ShortHairSides">ShortHairSides</ion-option>
+      <ion-option value="ShortHairTheCaesar">ShortHairTheCaesar</ion-option>
+      <ion-option value="ShortHairTheCaesarSidePart">ShortHairTheCaesarSidePart</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
