@@ -161,6 +161,7 @@ export class CreateQuestPage{
     this.quest.id = btoa(data.getTime().toString());
     this.quest.dificuldade = this.starRating;
     this.quest.horario = this.time;
+    this.quest.titulo = this.titulo;
     
     this.alert = this.alertController.create({
       subTitle:'',
