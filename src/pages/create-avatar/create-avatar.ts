@@ -15,11 +15,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CreateAvatarPage {
 
-  avatar = {hair: "ShortHairShortWaved"};
+  avatar = {hair: "ShortHairShortCurly"};
 
-  avatarSelecionado = "topType="+this.avatar.hair;
+  avatarSelecionado;
 
-  url = `https://avataaars.io/?${this.avatarSelecionado}`
+  url;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,) {
   }
@@ -28,9 +28,19 @@ export class CreateAvatarPage {
 
 
   ionViewDidLoad() {
+    this.avatarSelecionado = "topType="+this.avatar.hair;
+    this.url = `https://avataaars.io/?${this.avatarSelecionado}`
   }
 
+  teste(){
+    console.log(this.url);
+    console.log(this.avatar)
+  }
 
+  updateAvatar(){
+    this.avatarSelecionado = "topType="+this.avatar.hair;
+    this.url = `https://avataaars.io/?${this.avatarSelecionado}`
+  }
 
 
 }

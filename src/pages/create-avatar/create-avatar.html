@@ -16,7 +16,7 @@
 <ion-content padding>
 
   <ion-item>
-    <div class="avatar-wrapper">
+    <div class="avatar-wrapper" (click)="teste()">
         <ion-avatar>
           <img [src]="url">
         </ion-avatar>
@@ -25,7 +25,7 @@
 
   <ion-item>
     <ion-label>Cabelo/Acessório superior</ion-label>
-    <ion-select id="topType" class="form-control" interface="popover" [(ngModel)]="avatar.hair">
+    <ion-select id="topType" class="form-control" interface="popover" [(ngModel)]="avatar.hair" (ionBlur)="updateAvatar()">
       <ion-option value="NoHair">NoHair</ion-option>
       <ion-option value="Eyepatch">Eyepatch</ion-option>
       <ion-option value="Hat">Hat</ion-option>
