@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
+import { PopOverHomePage } from '../pop-over-home/pop-over-home';
+import { Quest } from '../../models/quest';
 /**
  * Generated class for the HomePage page.
  *
@@ -33,7 +35,8 @@ export class HomePage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public popoverCtrl: PopoverController) {
 
     this.authUser = firebase.auth().currentUser;
   }
@@ -68,6 +71,14 @@ export class HomePage {
       this.utils.loadingHide();
     });
 
+  }
+
+  presentPopover(quest:Quest) {
+    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest});
+    popover.present();
+    popover.onDidDismiss(() => {
+      this.getQuest();
+    });
   }
 
 }

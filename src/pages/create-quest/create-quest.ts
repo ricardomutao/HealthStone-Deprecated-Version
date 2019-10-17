@@ -52,7 +52,6 @@ export class CreateQuestPage{
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertCtrl: AlertController,
-    public alertController: AlertController,
     public utils: UtilsServiceProvider,
     public creatQuestService: CreatQuestServiceProvider) {
   }
@@ -158,12 +157,12 @@ export class CreateQuestPage{
     this.quest.dias = this.dias;
     this.quest.usuario = btoa(this.usuario);
     this.quest.dataCriacao = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
-    this.quest.id = btoa(data.getTime().toString());
+    this.quest.id = data.getTime().toString();
     this.quest.dificuldade = this.starRating;
     this.quest.horario = this.time;
     this.quest.titulo = this.titulo;
     
-    this.alert = this.alertController.create({
+    this.alert = this.alertCtrl.create({
       subTitle:'',
       buttons: [
         { text: 'Ok',
