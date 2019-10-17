@@ -274,12 +274,11 @@ export class CreateQuestPage{
     }
   }
 
-  changeSlide(){
-    if(this.slides.isEnd()){
-      this.slides.slidePrev();
-    }else if(this.slides.isBeginning()){
-      this.slides.slideNext();
-    }
+  changeSlideForward(){
+    this.slides.slideNext();
+  }
+  changeSlideBack(){
+    this.slides.slidePrev();
   }
 
 }
