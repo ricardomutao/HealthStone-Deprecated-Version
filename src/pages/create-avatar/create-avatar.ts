@@ -18,6 +18,7 @@ export class CreateAvatarPage {
   avatar = {
     hair: "ShortHairShortCurly",
     clothes: "ShirtCrewNeck",
+    beard: "Blank",
   };
 
   url;
@@ -39,8 +40,9 @@ export class CreateAvatarPage {
   //Função que atualiza o avatar em tempo real
   updateAvatar(){
     this.url = 'https://avataaars.io/?'
-                  + '&topType='   	+ this.avatar.hair +
-                  + '&clotheType='  + this.avatar.clothes 
+                  + '&topType='   	   + this.avatar.hair 
+                  + '&clotheType='     + this.avatar.clothes 
+                  + '&facialHairType=' + this.avatar.beard
                   
                   ;
   }

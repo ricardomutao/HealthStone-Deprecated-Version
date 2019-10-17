@@ -80,6 +80,19 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Barba</ion-label>
+    <ion-select id="facialHairType" class="form-control" interface="popover" [(ngModel)]="avatar.beard" (ionBlur)="updateAvatar()">
+      <ion-option value="Blank">Blank</ion-option>
+      <ion-option value="BeardMedium">BeardMedium</ion-option>
+      <ion-option value="BeardLight">BeardLight</ion-option>
+      <!-- <ion-option value="BeardMagestic">BeardMagestic</ion-option> --> <!-- Barba bugada na API, testar posteriormente se o problema persiste -->
+      <ion-option value="MoustacheFancy">MoustacheFancy</ion-option>
+      <ion-option value="MoustacheMagnum">MoustacheMagnum</ion-option>
+    </ion-select>
+  </ion-item>
+
+
   <!-- LEMBRETE: Botar uns *ngIf para hora de colocar itens que só aparecem dependendo dos outros -->
 
 </ion-content>
