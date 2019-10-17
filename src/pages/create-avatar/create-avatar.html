@@ -16,6 +16,7 @@
 <ion-content padding>
 
   <ion-item>
+    <!-- Função teste de caráter provisório -->
     <div class="avatar-wrapper" (click)="teste()">
         <ion-avatar>
           <img [src]="url">
@@ -24,7 +25,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Cabelo/Acessório superior</ion-label>
+    <ion-label>Superior</ion-label>
     <ion-select id="topType" class="form-control" interface="popover" [(ngModel)]="avatar.hair" (ionBlur)="updateAvatar()">
       <ion-option value="NoHair">NoHair</ion-option>
       <ion-option value="Eyepatch">Eyepatch</ion-option>
@@ -63,4 +64,35 @@
       <ion-option value="ShortHairTheCaesarSidePart">ShortHairTheCaesarSidePart</ion-option>
     </ion-select>
   </ion-item>
+
+  <ion-item>
+    <ion-label>Roupas</ion-label>
+    <ion-select id="clotheType" class="form-control" interface="popover" [(ngModel)]="avatar.clothes" (ionBlur)="updateAvatar()">
+      <ion-option value="BlazerShirt">BlazerShirt</ion-option>
+      <ion-option value="BlazerSweater">BlazerSweater</ion-option>
+      <ion-option value="CollarSweater">CollarSweater</ion-option>
+      <ion-option value="GraphicShirt">GraphicShirt</ion-option>
+      <ion-option value="Hoodie">Hoodie</ion-option>
+      <ion-option value="Overall">Overall</ion-option>
+      <ion-option value="ShirtCrewNeck">ShirtCrewNeck</ion-option>
+      <ion-option value="ShirtScoopNeck">ShirtScoopNeck</ion-option>
+      <ion-option value="ShirtVNeck">ShirtVNeck</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Barba</ion-label>
+    <ion-select id="facialHairType" class="form-control" interface="popover" [(ngModel)]="avatar.beard" (ionBlur)="updateAvatar()">
+      <ion-option value="Blank">Blank</ion-option>
+      <ion-option value="BeardMedium">BeardMedium</ion-option>
+      <ion-option value="BeardLight">BeardLight</ion-option>
+      <!-- <ion-option value="BeardMagestic">BeardMagestic</ion-option> --> <!-- Barba bugada na API, testar posteriormente se o problema persiste -->
+      <ion-option value="MoustacheFancy">MoustacheFancy</ion-option>
+      <ion-option value="MoustacheMagnum">MoustacheMagnum</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <!-- LEMBRETE: Botar uns *ngIf para hora de colocar itens que só aparecem dependendo dos outros -->
+
 </ion-content>

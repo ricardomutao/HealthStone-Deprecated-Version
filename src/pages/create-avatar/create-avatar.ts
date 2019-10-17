@@ -15,31 +15,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CreateAvatarPage {
 
-  avatar = {hair: "ShortHairShortCurly"};
-
-  avatarSelecionado;
+  avatar = {
+    hair: "ShortHairShortCurly",
+    clothes: "ShirtCrewNeck",
+    beard: "Blank",
+  };
 
   url;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,) {
   }
 
-  
-
 
   ionViewDidLoad() {
-    this.avatarSelecionado = "topType="+this.avatar.hair;
-    this.url = `https://avataaars.io/?${this.avatarSelecionado}`
+    this.updateAvatar();
   }
 
+  //Função provisória para carater de testes
   teste(){
     console.log(this.url);
     console.log(this.avatar)
   }
 
+  //Função que atualiza o avatar em tempo real
   updateAvatar(){
-    this.avatarSelecionado = "topType="+this.avatar.hair;
-    this.url = `https://avataaars.io/?${this.avatarSelecionado}`
+    this.url = 'https://avataaars.io/?'
+                  + '&topType='   	   + this.avatar.hair 
+                  + '&clotheType='     + this.avatar.clothes 
+                  + '&facialHairType=' + this.avatar.beard
+                  
+                  ;
   }
 
 

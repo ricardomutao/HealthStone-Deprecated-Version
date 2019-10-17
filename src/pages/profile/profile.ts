@@ -34,6 +34,7 @@ export class ProfilePage{
     
   }
 
+  //Função para capturar usuário atual no database com base no Authentication
   findUserDatabase(){
     let authUser = firebase.auth().currentUser;
     firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
@@ -47,9 +48,12 @@ export class ProfilePage{
     return false;
   }
 
+  //Função para fechar a tela atual
   dismiss(){
     this.navCtrl.pop();
   }
+
+  //Função que redireciona para tela de criação de avatares
   goCreateAvatar(){
     this.navCtrl.push(CreateAvatarPage.name);
   }
