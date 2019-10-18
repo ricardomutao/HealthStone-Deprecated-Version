@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
@@ -21,7 +21,8 @@ export class MenuComponent {
 
   constructor( 
     public navCtrl: NavController,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public navParams: NavParams) {
   }
 
   logOut(){
