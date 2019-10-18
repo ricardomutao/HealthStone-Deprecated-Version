@@ -76,8 +76,10 @@ export class HomePage {
   presentPopover(quest:Quest) {
     const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest});
     popover.present();
-    popover.onDidDismiss(() => {
-      this.getQuest();
+    popover.onDidDismiss((retorno) => {
+      if(retorno != null && retorno.excluido){
+        this.getQuest();
+      }
     });
   }
 

@@ -26,9 +26,8 @@
   </div>
 
   <form (ngSubmit)="showConfirm()" #formulario="ngForm">
-    <ion-slides #Slides (ionSlideDidChange)="changeTab()" speed="1000" spaceBetween="20">
+    <ion-slides #Slides (ionSlideDidChange)="changeTab()" (ionSlideWillChange)="changeTab()" speed="1000">
       <ion-slide>
-        
         <ion-card>
           <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
           <ion-list style="overflow-y: scroll;max-height: 137px;">
