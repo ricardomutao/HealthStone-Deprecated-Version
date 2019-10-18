@@ -20,7 +20,7 @@
     </div>
   
     <div>
-      <ion-slides #Slides (ionSlideDidChange)="changeTab()" speed="1000" spaceBetween="20">
+      <ion-slides #Slides (ionSlideDidChange)="changeTab()" (ionSlideWillChange)="changeTab()" speed="1000">
         <ion-slide>
           
           <div *ngIf="questAlimentos.length > 0">   
