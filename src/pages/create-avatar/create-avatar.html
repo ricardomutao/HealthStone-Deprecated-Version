@@ -65,6 +65,82 @@
     </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="!notShowHairColor">
+      <ion-label>Cor cabelo</ion-label>
+      <ion-select id="hairColor" class="form-control" interface="popover" [(ngModel)]="avatar.hairColor" (ionBlur)="updateAvatar()">
+        <ion-option value="Auburn">Auburn</ion-option>
+        <ion-option value="Black">Black</ion-option>
+        <ion-option value="Blonde">Blonde</ion-option>
+        <ion-option value="BlondeGolden">BlondeGolden</ion-option>
+        <ion-option value="Brown">Brown</ion-option>
+        <ion-option value="BrownDark">BrownDark</ion-option>
+        <ion-option value="PastelPink">PastelPink</ion-option>
+        <ion-option value="Platinum">Platinum</ion-option>
+        <ion-option value="Red">Red</ion-option>
+        <ion-option value="SilverGray">SilverGray</ion-option>
+      </ion-select>
+  </ion-item>
+  
+  <ion-item *ngIf="!notShowHatColor">
+    <ion-label>Cor chapéu</ion-label>
+    <ion-select id="hatColor" class="form-control" interface="popover" [(ngModel)]="avatar.hatColor" (ionBlur)="updateAvatar()">
+      <ion-option value="Black">Black</ion-option>
+      <ion-option value="Blue01">Blue01</ion-option>
+      <ion-option value="Blue02">Blue02</ion-option>
+      <ion-option value="Blue03">Blue03</ion-option>
+      <ion-option value="Gray01">Gray01</ion-option>
+      <ion-option value="Gray02">Gray02</ion-option>
+      <ion-option value="Heather">Heather</ion-option>
+      <ion-option value="PastelBlue">PastelBlue</ion-option>
+      <ion-option value="PastelGreen">PastelGreen</ion-option>
+      <ion-option value="PastelOrange">PastelOrange</ion-option>
+      <ion-option value="PastelRed">PastelRed</ion-option>
+      <ion-option value="PastelYellow">PastelYellow</ion-option>
+      <ion-option value="Pink">Pink</ion-option>
+      <ion-option value="Red">Red</ion-option>
+      <ion-option value="White">White</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="!notShowBeard">
+    <ion-label>Barba</ion-label>
+    <ion-select id="facialHairType" class="form-control" interface="popover" [(ngModel)]="avatar.beard" (ionBlur)="updateAvatar()">
+      <ion-option value="Blank">Blank</ion-option>
+      <ion-option value="BeardMedium">BeardMedium</ion-option>
+      <ion-option value="BeardLight">BeardLight</ion-option>
+      <!-- <ion-option value="BeardMagestic">BeardMagestic</ion-option> --> <!-- Barba bugada na API, testar posteriormente se o problema persiste -->
+      <ion-option value="MoustacheFancy">MoustacheFancy</ion-option>
+      <ion-option value="MoustacheMagnum">MoustacheMagnum</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="!notShowBeardColor">
+    <ion-label>Cor barba</ion-label>
+    <ion-select id="facialHairColor" class="form-control" interface="popover" [(ngModel)]="avatar.beardColor" (ionBlur)="updateAvatar()">
+      <ion-option value="Auburn">Auburn</ion-option>
+      <ion-option value="Black">Black</ion-option>
+      <ion-option value="Blonde">Blonde</ion-option>
+      <ion-option value="BlondeGolden">BlondeGolden</ion-option>
+      <ion-option value="Brown">Brown</ion-option>
+      <ion-option value="BrownDark">BrownDark</ion-option>
+      <ion-option value="Platinum">Platinum</ion-option>
+      <ion-option value="Red">Red</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="!notShowAccessories">
+    <ion-label>Acessórios</ion-label>
+    <ion-select id="accessoriesType" class="form-control" interface="popover" [(ngModel)]="avatar.accessories" (ionBlur)="updateAvatar()">
+      <ion-option value="Blank">Blank</ion-option>
+      <ion-option value="Kurt">Kurt</ion-option>
+      <ion-option value="Prescription01">Prescription01</ion-option>
+      <ion-option value="Prescription02">Prescription02</ion-option>
+      <ion-option value="Round">Round</ion-option>
+      <ion-option value="Sunglasses">Sunglasses</ion-option>
+      <ion-option value="Wayfarers">Wayfarers</ion-option>
+    </ion-select>
+  </ion-item>
+
   <ion-item>
     <ion-label>Roupas</ion-label>
     <ion-select id="clotheType" class="form-control" interface="popover" [(ngModel)]="avatar.clothes" (ionBlur)="updateAvatar()">
@@ -80,19 +156,108 @@
     </ion-select>
   </ion-item>
 
-  <ion-item>
-    <ion-label>Barba</ion-label>
-    <ion-select id="facialHairType" class="form-control" interface="popover" [(ngModel)]="avatar.beard" (ionBlur)="updateAvatar()">
-      <ion-option value="Blank">Blank</ion-option>
-      <ion-option value="BeardMedium">BeardMedium</ion-option>
-      <ion-option value="BeardLight">BeardLight</ion-option>
-      <!-- <ion-option value="BeardMagestic">BeardMagestic</ion-option> --> <!-- Barba bugada na API, testar posteriormente se o problema persiste -->
-      <ion-option value="MoustacheFancy">MoustacheFancy</ion-option>
-      <ion-option value="MoustacheMagnum">MoustacheMagnum</ion-option>
+  <ion-item *ngIf="!notShowFabric">
+    <ion-label>Cor roupa</ion-label>
+    <ion-select id="clotheColor" class="form-control" interface="popover" [(ngModel)]="avatar.colorFabric" (ionBlur)="updateAvatar()">
+      <ion-option value="Black">Black</ion-option>
+      <ion-option value="Blue01">Blue01</ion-option>
+      <ion-option value="Blue02">Blue02</ion-option>
+      <ion-option value="Blue03">Blue03</ion-option>
+      <ion-option value="Gray01">Gray01</ion-option>
+      <ion-option value="Gray02">Gray02</ion-option>
+      <ion-option value="Heather">Heather</ion-option>
+      <ion-option value="PastelBlue">PastelBlue</ion-option>
+      <ion-option value="PastelGreen">PastelGreen</ion-option>
+      <ion-option value="PastelOrange">PastelOrange</ion-option>
+      <ion-option value="PastelRed">PastelRed</ion-option>
+      <ion-option value="PastelYellow">PastelYellow</ion-option>
+      <ion-option value="Pink">Pink</ion-option>
+      <ion-option value="Red">Red</ion-option>
+      <ion-option value="White">White</ion-option>
     </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="!notShowGraphic">
+    <ion-label>Estampa</ion-label>
+    <ion-select id="graphicType" class="form-control" interface="popover" [(ngModel)]="avatar.graphic" (ionBlur)="updateAvatar()">
+      <ion-option value="Bat">Bat</ion-option>
+      <ion-option value="Cumbia">Cumbia</ion-option>
+      <ion-option value="Deer">Deer</ion-option>
+      <ion-option value="Diamond">Diamond</ion-option>
+      <ion-option value="Hola">Hola</ion-option>
+      <ion-option value="Pizza">Pizza</ion-option>
+      <ion-option value="Resist">Resist</ion-option>
+      <ion-option value="Selena">Selena</ion-option>
+      <ion-option value="Bear">Bear</ion-option>
+      <ion-option value="SkullOutline">SkullOutline</ion-option>
+      <ion-option value="Skull">Skull</ion-option>
+    </ion-select>
+  </ion-item>
 
-  <!-- LEMBRETE: Botar uns *ngIf para hora de colocar itens que só aparecem dependendo dos outros -->
+  <ion-item>
+    <ion-label>Olhos</ion-label>
+    <ion-select id="eyeType" class="form-control" interface="popover" [(ngModel)]="avatar.eye" (ionBlur)="updateAvatar()">
+      <ion-option value="Close">Close</ion-option>
+      <ion-option value="Cry">Cry</ion-option>
+      <ion-option value="Default">Default</ion-option>
+      <ion-option value="Dizzy">Dizzy</ion-option>
+      <ion-option value="EyeRoll">EyeRoll</ion-option>
+      <ion-option value="Happy">Happy</ion-option>
+      <ion-option value="Hearts">Hearts</ion-option>
+      <ion-option value="Side">Side</ion-option>
+      <ion-option value="Squint">Squint</ion-option>
+      <ion-option value="Surprised">Surprised</ion-option>
+      <ion-option value="Wink">Wink</ion-option>
+      <ion-option value="WinkWacky">WinkWacky</ion-option>
+    </ion-select>
+  </ion-item>
 
+  <ion-item>
+    <ion-label>Sombrancelhas</ion-label>
+    <ion-select id="eyebrowType" class="form-control" interface="popover" [(ngModel)]="avatar.eyebrow" (ionBlur)="updateAvatar()">
+      <ion-option value="Angry">Angry</ion-option>
+      <ion-option value="AngryNatural">AngryNatural</ion-option>
+      <ion-option value="Default">Default</ion-option>
+      <ion-option value="DefaultNatural">DefaultNatural</ion-option>
+      <ion-option value="FlatNatural">FlatNatural</ion-option>
+      <ion-option value="RaisedExcited">RaisedExcited</ion-option>
+      <ion-option value="RaisedExcitedNatural">RaisedExcitedNatural</ion-option>
+      <ion-option value="SadConcerned">SadConcerned</ion-option>
+      <ion-option value="SadConcernedNatural">SadConcernedNatural</ion-option>
+      <ion-option value="UnibrowNatural">UnibrowNatural</ion-option>
+      <ion-option value="UpDown">UpDown</ion-option>
+      <ion-option value="UpDownNatural">UpDownNatural</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Boca</ion-label>
+    <ion-select id="mouthType" class="form-control" interface="popover" [(ngModel)]="avatar.mouth" (ionBlur)="updateAvatar()">
+      <ion-option value="Concerned">Concerned</ion-option>
+      <ion-option value="Default">Default</ion-option>
+      <ion-option value="Disbelief">Disbelief</ion-option>
+      <ion-option value="Eating">Eating</ion-option>
+      <ion-option value="Grimace">Grimace</ion-option>
+      <ion-option value="Sad">Sad</ion-option>
+      <ion-option value="ScreamOpen">ScreamOpen</ion-option>
+      <ion-option value="Serious">Serious</ion-option>
+      <ion-option value="Smile">Smile</ion-option>
+      <ion-option value="Tongue">Tongue</ion-option>
+      <ion-option value="Twinkle">Twinkle</ion-option>
+      <ion-option value="Vomit">Vomit</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Pele</ion-label>
+    <ion-select id="skinColor" class="form-control" interface="popover" [(ngModel)]="avatar.skin" (ionBlur)="updateAvatar()">
+      <ion-option value="Tanned">Tanned</ion-option>
+      <ion-option value="Yellow">Yellow</ion-option>
+      <ion-option value="Pale">Pale</ion-option>
+      <ion-option value="Light">Light</ion-option>
+      <ion-option value="Brown">Brown</ion-option>
+      <ion-option value="DarkBrown">DarkBrown</ion-option>
+      <ion-option value="Black">Black</ion-option>
+    </ion-select>
+    </ion-item>
 </ion-content>
