@@ -20,7 +20,7 @@
     </div>
   
     <div>
-      <ion-slides #Slides (ionSlideDidChange)="changeTab()" (ionSlideWillChange)="changeTab()" speed="1000">
+      <ion-slides #Slides (ionSlideWillChange)="changeTab()">
         <ion-slide>
           
           <div *ngIf="questAlimentos.length > 0">   
@@ -32,6 +32,9 @@
                   </ion-item>
                   <ion-item>
                     Quantidade: {{qAlimento.qtd}} ({{qAlimento.alimento.unidade}})
+                  </ion-item>
+                  <ion-item>
+                    Kcal Total: {{(((qAlimento.alimento.kcal)/(qAlimento.alimento.baseQtd)).toFixed(2)*qAlimento.qtd).toFixed(2)}}
                   </ion-item>
                 </ion-list>     
               </ion-card>

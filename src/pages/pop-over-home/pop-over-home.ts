@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, Alert } from 'ionic-angular';
-import { Quest } from '../../models/quest';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ViewQuestPage } from '../view-quest/view-quest';
@@ -19,7 +18,7 @@ import { ViewQuestPage } from '../view-quest/view-quest';
 })
 export class PopOverHomePage {
 
-  param:Quest;
+  param:any;
 
   alert: Alert;
 

@@ -1,3 +1,11 @@
 page-create-quest {
 
+    .normal-scroll{
+        overflow-y: scroll;
+        max-height: 17rem;
+    }
+    .fullscreen-scroll{
+        overflow-y: scroll;
+        max-height: 32rem;
+    }
 }

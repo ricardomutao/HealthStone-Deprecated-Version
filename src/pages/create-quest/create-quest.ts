@@ -7,6 +7,7 @@ import { Quest } from '../../models/quest';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { CreatQuestServiceProvider } from '../../providers/creat-quest-service/creat-quest-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the CreateQuestPage page.
@@ -25,7 +26,7 @@ export class CreateQuestPage{
   @ViewChild(Slides) slides: Slides;
 
   alimentos: Alimento[] = [];
-  filterAlimentos: Alimento [];
+  filterAlimentos: Alimento [] = [];
   questAlimentos: QuestAlimentos[] = [];
 
   tab:string = 'alimentos';
@@ -67,6 +68,7 @@ export class CreateQuestPage{
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
+      this.filterAlimentos = this.alimentos;
       this.filterAlimentos = this.filterAlimentos.filter((item) => {
         return (item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
@@ -92,8 +94,6 @@ export class CreateQuestPage{
   
           that.alimentos.push(objAlimento);
         });
-
-        this.filterAlimentos = this.alimentos;
         
         this.utils.loadingHide();
       },
@@ -110,11 +110,12 @@ export class CreateQuestPage{
    
     const prompt = this.alertCtrl.create({
       title: 'Quantidade',
-      message: 'Coloque a quantidade do alimento selecionado. Unidade('+alimento.unidade+')',
+      message: 'Coloque a quantidade do alimento selecionado. Unidade('+alimento.unidade+').  ('+(alimento.kcal/alimento.baseQtd).toFixed(2)+' Kcal/'+alimento.unidade+') aproximadamente',
       inputs: [
         {
           name: 'qtd',
-          placeholder: 'Qtd.'
+          placeholder: 'Qtd.',
+          type:'number'
         },
       ],
       buttons: [
@@ -148,6 +149,7 @@ export class CreateQuestPage{
   criarQuest(){
 
     let data = new Date();
+    let kcalTotal = 0;
 
     this.usuario = firebase.auth().currentUser.email;
     this.quest = new Quest();
@@ -161,13 +163,21 @@ export class CreateQuestPage{
     this.quest.dificuldade = this.starRating;
     this.quest.horario = this.time;
     this.quest.titulo = this.titulo;
-    
+
+    this.questAlimentos.forEach(function(obj){
+      let op1 = (obj.alimento.kcal)/(obj.alimento.baseQtd);
+      let op2 = op1 * obj.qtd;
+      kcalTotal += op2;
+    });
+
+    this.quest.kcalTotal = kcalTotal.toFixed(2);
+
     this.alert = this.alertCtrl.create({
       subTitle:'',
       buttons: [
         { text: 'Ok',
           handler: () => {
-            this.navCtrl.pop();
+            this.navCtrl.setRoot(HomePage.name);
           }
         }
       ]
@@ -266,6 +276,7 @@ export class CreateQuestPage{
   }
 
   changeTab(){
+    this.filterAlimentos = [];
     if(this.slides.isEnd()){
       this.tab = 'detalhes';
     }else if(this.slides.isBeginning()){
@@ -273,11 +284,13 @@ export class CreateQuestPage{
     }
   }
 
-  changeSlideForward(){
-    this.slides.slideNext();
+  changeSlide(index){
+    this.filterAlimentos = [];
+    this.slides.slideTo(index);
   }
-  changeSlideBack(){
-    this.slides.slidePrev();
+
+  getAllAlimentos(){
+    this.filterAlimentos = this.alimentos;
   }
 
 }

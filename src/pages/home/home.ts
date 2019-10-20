@@ -19,16 +19,11 @@ import { Quest } from '../../models/quest';
 })
 export class HomePage {
 
-  tileMenu: string = 'Missões';
+  listQuestManha:Quest[] = [];
 
-  listQuestManha = [];
-  checkMaxQtdManha:boolean = false;
+  listQuestTarde:Quest[] = [];
 
-  listQuestTarde = [];
-  checkMaxQtdTarde:boolean = false;
-
-  listQuestNoite = [];
-  checkMaxQtdNoite:boolean = false;
+  listQuestNoite:Quest[] = [];
 
   authUser:any;
 

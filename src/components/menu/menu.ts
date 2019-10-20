@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
@@ -16,8 +16,6 @@ import { ProfilePage } from '../../pages/profile/profile';
   templateUrl: 'menu.html'
 })
 export class MenuComponent {
-
-  @Input() tileMenu: string = '';
 
   constructor( 
     public navCtrl: NavController,
