@@ -10,10 +10,7 @@
       Criar Missão
     </ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-
+  
   <div padding>
     <ion-segment [(ngModel)]="tab" color="greentheme">
       <ion-segment-button value="alimentos" (click)="changeSlide(0)">
@@ -24,6 +21,10 @@
       </ion-segment-button>
     </ion-segment>
   </div>
+  
+</ion-header>
+
+<ion-content>
 
   <form (ngSubmit)="showConfirm()" #formulario="ngForm">
     <ion-slides #Slides (ionSlideWillChange)="changeTab()">

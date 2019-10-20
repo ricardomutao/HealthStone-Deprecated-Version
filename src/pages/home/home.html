@@ -23,7 +23,7 @@
 
     <ion-slide *ngIf="listQuestManha.length > 0">
       <ion-title padding>Manhã</ion-title>  
-      <div style="overflow-y: scroll; max-height: 76vh;">
+      <div class="list-missoes">
         <div *ngFor="let questManha of listQuestManha">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
@@ -62,7 +62,7 @@
   
     <ion-slide *ngIf="listQuestTarde.length > 0">
       <ion-title padding>Tarde</ion-title>
-      <div style="overflow-y: scroll; max-height: 76vh;">  
+      <div class="list-missoes">  
         <div *ngFor="let questTarde of listQuestTarde">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
@@ -101,7 +101,7 @@
   
     <ion-slide *ngIf="listQuestNoite.length > 0">
       <ion-title padding>Noite</ion-title> 
-      <div style="overflow-y: scroll; max-height: 76vh;">
+      <div class="list-missoes">
         <div *ngFor="let questNoite of listQuestNoite">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
