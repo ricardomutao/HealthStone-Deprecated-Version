@@ -47,8 +47,6 @@ export class CreateQuestPage{
 
   alert: Alert;
 
-  data = new Date();
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -291,6 +289,9 @@ export class CreateQuestPage{
 
   getAllAlimentos(){
     this.filterAlimentos = this.alimentos;
+  }
+  checkBlur(){
+    
   }
 
 }

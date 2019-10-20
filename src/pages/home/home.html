@@ -23,13 +23,13 @@
 
     <ion-slide *ngIf="listQuestManha.length > 0">
       <ion-title padding>Manhã</ion-title>  
-      <div style="overflow-y: scroll; max-height: 50rem;">
+      <div style="overflow-y: scroll; max-height: 76vh;">
         <div *ngFor="let questManha of listQuestManha">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
               <ion-item>
                 {{questManha.titulo}}
-                <button ion-button item-end icon-only clear (click)="presentPopover(questManha)">
+                <button ion-button item-end icon-only clear (click)="presentPopover(questManha,$event)">
                   <ion-icon name="more" color="danger"></ion-icon>
                 </button>
               </ion-item>
@@ -50,7 +50,7 @@
                   activeColor = "#FE8400"
                   defaultColor = "#aaaaaa"
                   readonly = "true"
-                  fontSize = "32px"
+                  fontSize = "14px"
                   [rating] = "questManha.dificuldade">
                 </ionic3-star-rating>
               </ion-item>
@@ -62,13 +62,13 @@
   
     <ion-slide *ngIf="listQuestTarde.length > 0">
       <ion-title padding>Tarde</ion-title>
-      <div style="overflow-y: scroll; max-height: 50rem;">  
+      <div style="overflow-y: scroll; max-height: 76vh;">  
         <div *ngFor="let questTarde of listQuestTarde">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
               <ion-item>
                 {{questTarde.titulo}}
-                <button ion-button item-end icon-only clear (click)="presentPopover(questTarde)">
+                <button ion-button item-end icon-only clear (click)="presentPopover(questTarde,$event)">
                   <ion-icon name="more" color="danger"></ion-icon>
                 </button>
               </ion-item>
@@ -89,7 +89,7 @@
                   activeColor = "#FE8400"
                   defaultColor = "#aaaaaa"
                   readonly = "true"
-                  fontSize = "32px"
+                  fontSize = "14px"
                   [rating] = "questTarde.dificuldade">
                 </ionic3-star-rating>
               </ion-item>
@@ -101,13 +101,13 @@
   
     <ion-slide *ngIf="listQuestNoite.length > 0">
       <ion-title padding>Noite</ion-title> 
-      <div style="overflow-y: scroll; max-height: 50rem;">
+      <div style="overflow-y: scroll; max-height: 76vh;">
         <div *ngFor="let questNoite of listQuestNoite">
           <ion-card style="border: 1px #ff8300 solid;">
             <ion-list>
               <ion-item>
                 {{questNoite.titulo}}
-                <button ion-button item-end icon-only clear (click)="presentPopover(questNoite)">
+                <button ion-button item-end icon-only clear (click)="presentPopover(questNoite,$event)">
                   <ion-icon name="more" color="danger"></ion-icon>
                 </button>
               </ion-item>
@@ -128,7 +128,7 @@
                   activeColor = "#FE8400"
                   defaultColor = "#aaaaaa"
                   readonly = "true"
-                  fontSize = "32px"
+                  fontSize = "14px"
                   [rating] = "questNoite.dificuldade">
                 </ionic3-star-rating>
               </ion-item>
