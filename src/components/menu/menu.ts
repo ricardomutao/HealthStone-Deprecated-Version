@@ -4,6 +4,7 @@ import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ProfilePage } from '../../pages/profile/profile';
+import { HomePage } from '../../pages/home/home';
 
 /**
  * Generated class for the MenuComponent component.
@@ -39,6 +40,12 @@ export class MenuComponent {
 
   goProfile(){
     this.navCtrl.push(ProfilePage.name);
+  }
+
+  goQuests(){
+    if(this.navCtrl.getActive().id != 'HomePage'){
+      this.navCtrl.setRoot(HomePage.name);
+    }
   }
 
 
