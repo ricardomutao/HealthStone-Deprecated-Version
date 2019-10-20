@@ -23,7 +23,7 @@
       <ion-slides #Slides (ionSlideWillChange)="changeTab()">
         <ion-slide>
           
-          <div *ngIf="questAlimentos.length > 0">   
+          <div *ngIf="questAlimentos.length > 0" style="overflow-y: scroll; max-height: 45rem;">   
             <div *ngFor="let qAlimento of questAlimentos">
               <ion-card style="border: 1px #ff8300 solid;">
                 <ion-list>
