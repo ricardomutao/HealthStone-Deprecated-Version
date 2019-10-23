@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import firebase from 'firebase';
 
 /**
  * Generated class for the CreateAvatarPage page.
@@ -31,8 +32,10 @@ export class CreateAvatarPage {
     skin: "Light"
   };
 
+
   //A parte mais importante desta tela é a variável abaixo, que manda os dados para a api e retorna como imagem
   url;
+  usuario;
 
   //Inicialização das variáveis que definem quais opções aparecem na tela
   notShowBeard = false;
@@ -46,10 +49,14 @@ export class CreateAvatarPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,) {
+    this.usuario = navParams.get('user');
+    this.url = this.usuario.url;
+    console.log(this.usuario);
   }
 
 
   ionViewDidLoad() {
+    this.separaURL();
     this.updateAvatar();
   }
 
@@ -75,6 +82,7 @@ export class CreateAvatarPage {
                   + '&eyebrowType='     + this.avatar.eyebrow
                   + '&mouthType='       + this.avatar.mouth
                   + '&skinColor='       + this.avatar.skin
+                  + '&'
                   ; 
 
     //Chama as funções que validam os campos
@@ -83,6 +91,10 @@ export class CreateAvatarPage {
     this.validaCorChapeuCabelo();
     this.validaCorRoupaLogo();
     this.validaCorBarba();
+
+    this.usuario.url = this.url;
+
+    console.log(this.url);
 
   }
 
@@ -152,10 +164,77 @@ export class CreateAvatarPage {
 
   //Valida se a opção cor da barba pode ser alterada
   validaCorBarba(){
-    if(this.avatar.beard == "Blank"){
-      this.notShowBeardColor = true;
+    if(
+      this.avatar.beard == "Blank" || 
+      this.avatar.hair == "Hijab"
+    ){
+        this.notShowBeardColor = true;
     }else{
-      this.notShowBeardColor = false;
+        this.notShowBeardColor = false;
+    }
+  }
+
+
+  separaURL(){
+
+
+    let regexComercial = new RegExp('&([^&]+)', 'g');
+    
+    let atributo;
+
+    while ((atributo = regexComercial.exec(this.url))) { 				
+      
+
+      let regexIgual = new RegExp('([^=]+)', 'g');
+
+      let preIgual;
+      let posIgual;
+
+      preIgual = regexIgual.exec(atributo[1]);
+      posIgual = regexIgual.exec(atributo[1]);
+
+      switch(preIgual){
+        case 'topType':
+          this.avatar.hair = posIgual;
+          break;
+        case 'clotheType':
+          this.avatar.clothes = posIgual;
+          break;
+        case 'facialHairType':
+          this.avatar.beard = posIgual;
+          break;
+        case 'accessoriesType':
+          this.avatar.accessories = posIgual;
+          break;
+        case 'hairColor':
+          this.avatar.hairColor = posIgual;
+          break;
+        case 'hatColor':
+          this.avatar.hatColor = posIgual;
+          break;
+        case 'clotheColor':
+          this.avatar.colorFabric = posIgual;
+          break;
+        case 'graphicType':
+          this.avatar.graphic = posIgual;
+          break;
+        case 'facialHairColor':
+          this.avatar.beardColor = posIgual;
+          break;
+        case 'eyeType':
+          this.avatar.eye = posIgual;
+          break;
+        case 'eyebrowType':
+          this.avatar.eyebrow = posIgual;
+          break;
+        case 'mouthType':
+          this.avatar.mouth = posIgual;
+          break;
+        case 'skinColor':
+          this.avatar.skin = posIgual;
+          break;
+      }
+      
     }
   }
 

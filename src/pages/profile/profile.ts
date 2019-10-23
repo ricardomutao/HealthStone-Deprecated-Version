@@ -18,7 +18,7 @@ import { CreateAvatarPage } from '../create-avatar/create-avatar';
   templateUrl: 'profile.html',
 })
 export class ProfilePage{
-  usuario: User = {email:'', nomeCompleto:'', userNme:''};
+  usuario: User = {email:'', nomeCompleto:'', userNme:'', url:''};
   
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -55,7 +55,8 @@ export class ProfilePage{
 
   //Função que redireciona para tela de criação de avatares
   goCreateAvatar(){
-    this.navCtrl.push(CreateAvatarPage.name);
+    console.log(this.usuario);
+    this.navCtrl.push(CreateAvatarPage.name, {user: this.usuario});
   }
 
 }

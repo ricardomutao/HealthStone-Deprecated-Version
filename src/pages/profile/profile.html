@@ -16,7 +16,7 @@
   <ion-item no-lines>
     <div class="avatar-wrapper">
       <ion-avatar>
-        <img src="https://avataaars.io/?">
+        <img [src]="usuario.url">
       </ion-avatar>
   
       <button class="btn-alterar-avatar" ion-button icon-only round (click)="goCreateAvatar()">
