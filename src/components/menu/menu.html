@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" persistent="true">
   <ion-header>
     <ion-toolbar color="maintheme">
       <ion-title>Menu</ion-title>
@@ -14,7 +14,7 @@
         <ion-icon name="book" item-start></ion-icon>
         Missões
       </button>
-      <button ion-item>
+      <button ion-item (click)="goRewards()">
         <ion-icon name="logo-usd" item-start></ion-icon>
         Recompensas
       </button>

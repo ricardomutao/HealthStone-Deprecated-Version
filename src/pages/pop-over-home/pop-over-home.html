@@ -6,11 +6,14 @@
 -->
 <ion-content>
   <ion-list no-lines>
-    <button ion-item type="button">
+    <button ion-item type="button" (click)="concluirFinalizar()">
       Concluir e Finalizar
     </button>
-    <button ion-item type="button">
+    <button ion-item type="button" (click)="concluirManter()">
       Concluir e Manter
+    </button>
+    <button ion-item type="button" (click)="naoConcluido()">
+      Não Concluido
     </button>
     <button ion-item type="button" (click)="confirmRemove()">
       Excluir

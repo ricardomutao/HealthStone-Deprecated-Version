@@ -84,4 +84,58 @@ export class PopOverHomePage {
     this.viewCtrl.dismiss();
   }
 
+  concluirFinalizar(){
+    const confirm = this.alertCtrl.create({
+      title: 'Concluir e Finalizar Missão',
+      message: 'Tem certeza que deseja concluir e finalizar essa missão?',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    });
+    confirm.present(); 
+  }
+
+  concluirManter(){
+    const confirm = this.alertCtrl.create({
+      title: 'Confirmar e Manter Missão',
+      message: 'Tem certeza que deseja confirmar e manter essa missão?',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    });
+    confirm.present(); 
+  }
+
+  naoConcluido(){
+    const confirm = this.alertCtrl.create({
+      title: 'Missão não Concluida',
+      message: 'Tem certeza que deseja marcar essa missão como não concluida?',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    });
+    confirm.present(); 
+  }
+
 }

@@ -288,10 +288,9 @@ export class CreateQuestPage{
   }
 
   getAllAlimentos(){
-    this.filterAlimentos = this.alimentos;
-  }
-  checkBlur(){
-    
+    if(!this.filterAlimentos || this.filterAlimentos.length == 0){
+      this.filterAlimentos = this.alimentos;
+    }
   }
 
 }
