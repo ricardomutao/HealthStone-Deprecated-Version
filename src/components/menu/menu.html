@@ -5,7 +5,21 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+    <mat-card>
+      <mat-card-content>
+        <h2 class="example-h2">Result</h2>
+    
+        <section class="example-section">
+          <mat-progress-bar
+              class="example-margin"
+              [color]="color"
+              [mode]="mode"
+              [value]="value"
+              [bufferValue]="bufferValue">
+          </mat-progress-bar>
+        </section>
+      </mat-card-content>
+    </mat-card>
     <ion-list>
       <button ion-item (click)="goProfile()">
         <ion-icon name="person" item-start></ion-icon>

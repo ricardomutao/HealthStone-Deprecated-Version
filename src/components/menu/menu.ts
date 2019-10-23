@@ -18,6 +18,11 @@ import { ProfilePage } from '../../pages/profile/profile';
 export class MenuComponent {
 
   @Input() tileMenu: string = '';
+  color = '#000';
+  mode = 'determinate';
+  value = 80;
+  bufferValue = 75;
+
 
   constructor( 
     public navCtrl: NavController,
