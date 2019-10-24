@@ -26,7 +26,7 @@ export class ProfilePage{
     private utils: UtilsServiceProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.utils.loadingShow();
     this.findUserDatabase();
     this.utils.loadingHide();
