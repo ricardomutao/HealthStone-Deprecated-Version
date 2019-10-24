@@ -18,7 +18,7 @@ import { CreateAvatarPage } from '../create-avatar/create-avatar';
   templateUrl: 'profile.html',
 })
 export class ProfilePage{
-  usuario: User = {email:'', nomeCompleto:'', userNme:'', url:''};
+ usuario: User = {email:'', nomeCompleto:'', userNme:'', url:''};
   
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -40,7 +40,9 @@ export class ProfilePage{
     firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
+          this.usuario = {email:'', nomeCompleto:'', userNme:'', url:''};
           this.usuario = childSnapshot.val();
+          console.log("Recebe do banco: ", this.usuario);
           return true;
         }
       });
@@ -55,7 +57,7 @@ export class ProfilePage{
 
   //Função que redireciona para tela de criação de avatares
   goCreateAvatar(){
-    console.log(this.usuario);
+    console.log("Ta mandando pro outro lado: ", this.usuario);
     this.navCtrl.push(CreateAvatarPage.name, {user: this.usuario});
   }
 

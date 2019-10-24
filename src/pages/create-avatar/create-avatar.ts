@@ -16,8 +16,8 @@ import firebase from 'firebase';
 })
 export class CreateAvatarPage {
   //Objeto avatar: Aqui todas as características são inicializadas
-  avatar = {
-    hair: "ShortHairShortCurly",
+   avatar = {
+    hair: "Hat",
     clothes: "ShirtCrewNeck",
     beard: "Blank",
     accessories: "Blank",
@@ -35,7 +35,7 @@ export class CreateAvatarPage {
 
   //A parte mais importante desta tela é a variável abaixo, que manda os dados para a api e retorna como imagem
   url;
-  usuario;
+  private usuario2 = {email:'', nomeCompleto:'', userNme:'', url:''};
 
   //Inicialização das variáveis que definem quais opções aparecem na tela
   notShowBeard = false;
@@ -48,16 +48,20 @@ export class CreateAvatarPage {
   
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,) {
-    this.usuario = navParams.get('user');
-    this.url = this.usuario.url;
-    console.log(this.usuario);
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    
   }
 
 
   ionViewDidLoad() {
-    this.separaURL();
+    console.log("Passou pro didViewLoad");
     this.updateAvatar();
+    
+    this.usuario2 = this.navParams.get('user');
+    this.url = this.usuario2.url;
+    this.separaURL();
+    console.log("Do construtor(usuario): ", this.usuario2);
+    console.log("Do construtor(url): ", this.url);
   }
 
   //Função provisória para carater de testes
@@ -92,7 +96,7 @@ export class CreateAvatarPage {
     this.validaCorRoupaLogo();
     this.validaCorBarba();
 
-    this.usuario.url = this.url;
+    this.usuario2.url = this.url;
 
     console.log(this.url);
 
@@ -236,6 +240,8 @@ export class CreateAvatarPage {
       }
       
     }
+
+    console.log("Depois de separado: ", this.avatar);
   }
 
 
