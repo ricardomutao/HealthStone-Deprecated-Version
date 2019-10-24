@@ -27,15 +27,15 @@
   <ion-item>
     <ion-label>Superior</ion-label>
     <ion-select id="topType" class="form-control" interface="popover" [(ngModel)]="avatar.hair" (ionBlur)="updateAvatar()">
-      <ion-option value="NoHair">NoHair</ion-option>
-      <ion-option value="Eyepatch">Eyepatch</ion-option>
-      <ion-option value="Hat">Hat</ion-option>
-      <ion-option value="Hijab">Hijab</ion-option>
-      <ion-option value="Turban">Turban</ion-option>
-      <ion-option value="WinterHat1">WinterHat1</ion-option>
-      <ion-option value="WinterHat2">WinterHat2</ion-option>
-      <ion-option value="WinterHat3">WinterHat3</ion-option>
-      <ion-option value="WinterHat4">WinterHat4</ion-option>
+      <ion-option value="NoHair">Careca</ion-option>
+      <ion-option value="Eyepatch">Tapa-olho</ion-option>
+      <ion-option value="Hat">Chapéu</ion-option>
+      <ion-option value="Hijab">Burca</ion-option>
+      <ion-option value="Turban">Turbante</ion-option>
+      <ion-option value="WinterHat1">Chapéu de Inverno 1</ion-option>
+      <ion-option value="WinterHat2">Chapéu de Inverno 2</ion-option>
+      <ion-option value="WinterHat3">Chapéu de Inverno 3</ion-option>
+      <ion-option value="WinterHat4">Chapéu de Inverno 4</ion-option>
       <ion-option value="LongHairBigHair">LongHairBigHair</ion-option>
       <ion-option value="LongHairBob">LongHairBob</ion-option>
       <ion-option value="LongHairBun">LongHairBun</ion-option>
@@ -69,14 +69,14 @@
       <ion-label>Cor cabelo</ion-label>
       <ion-select id="hairColor" class="form-control" interface="popover" [(ngModel)]="avatar.hairColor" (ionBlur)="updateAvatar()">
         <ion-option value="Auburn">Auburn</ion-option>
-        <ion-option value="Black">Black</ion-option>
+        <ion-option value="Black">Preto</ion-option>
         <ion-option value="Blonde">Blonde</ion-option>
         <ion-option value="BlondeGolden">BlondeGolden</ion-option>
-        <ion-option value="Brown">Brown</ion-option>
-        <ion-option value="BrownDark">BrownDark</ion-option>
+        <ion-option value="Brown">Castanho</ion-option>
+        <ion-option value="BrownDark">Castanho-escuro</ion-option>
         <ion-option value="PastelPink">PastelPink</ion-option>
-        <ion-option value="Platinum">Platinum</ion-option>
-        <ion-option value="Red">Red</ion-option>
+        <ion-option value="Platinum">Platina</ion-option>
+        <ion-option value="Red">Ruivo</ion-option>
         <ion-option value="SilverGray">SilverGray</ion-option>
       </ion-select>
   </ion-item>
@@ -84,21 +84,21 @@
   <ion-item *ngIf="!notShowHatColor">
     <ion-label>Cor chapéu</ion-label>
     <ion-select id="hatColor" class="form-control" interface="popover" [(ngModel)]="avatar.hatColor" (ionBlur)="updateAvatar()">
-      <ion-option value="Black">Black</ion-option>
-      <ion-option value="Blue01">Blue01</ion-option>
-      <ion-option value="Blue02">Blue02</ion-option>
-      <ion-option value="Blue03">Blue03</ion-option>
-      <ion-option value="Gray01">Gray01</ion-option>
-      <ion-option value="Gray02">Gray02</ion-option>
+      <ion-option value="Black">Preto</ion-option>
+      <ion-option value="Blue01">Azul 1</ion-option>
+      <ion-option value="Blue02">Azul 2</ion-option>
+      <ion-option value="Blue03">Azul 3</ion-option>
+      <ion-option value="Gray01">Cinza 1</ion-option>
+      <ion-option value="Gray02">Cinza 2</ion-option>
       <ion-option value="Heather">Heather</ion-option>
       <ion-option value="PastelBlue">PastelBlue</ion-option>
       <ion-option value="PastelGreen">PastelGreen</ion-option>
       <ion-option value="PastelOrange">PastelOrange</ion-option>
       <ion-option value="PastelRed">PastelRed</ion-option>
       <ion-option value="PastelYellow">PastelYellow</ion-option>
-      <ion-option value="Pink">Pink</ion-option>
-      <ion-option value="Red">Red</ion-option>
-      <ion-option value="White">White</ion-option>
+      <ion-option value="Pink">Rosa</ion-option>
+      <ion-option value="Red">Vermelho</ion-option>
+      <ion-option value="White">Branco</ion-option>
     </ion-select>
   </ion-item>
 
@@ -261,7 +261,5 @@
     </ion-select>
   </ion-item>
 
-    <!-- <button (click)="gambira()">
-      Botaobosta
-    </button> -->
+  <button ion-button block (click)="salvarURL()" color="maintheme">Salvar</button>
 </ion-content>

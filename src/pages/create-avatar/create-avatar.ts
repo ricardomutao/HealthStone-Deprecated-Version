@@ -46,8 +46,6 @@ export class CreateAvatarPage {
   notShowGraphic = false;
   notShowBeardColor = false;
   
-
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     
   }
@@ -55,10 +53,11 @@ export class CreateAvatarPage {
 
   ionViewDidLoad() {
     console.log("Passou pro didViewLoad");
-    this.updateAvatar();
+    //this.updateAvatar();
     
     this.usuario2 = this.navParams.get('user');
     this.url = this.usuario2.url;
+    console.log("Antes mesmo", this.url);
     this.separaURL();
     console.log("Do construtor(usuario): ", this.usuario2);
     console.log("Do construtor(url): ", this.url);
@@ -68,6 +67,74 @@ export class CreateAvatarPage {
   teste(){
     console.log(this.url);
     console.log(this.avatar)
+  }
+
+  //Separa a URL para montar o objeto
+  separaURL(){
+
+    let regexComercial = new RegExp('&([^&]+)', 'g');
+    
+    let atributo;
+    
+    console.log("Antes de separaURL", this.url);
+
+    while ((atributo = regexComercial.exec(this.url))) { 				
+      
+      let regexIgual = new RegExp('([^=]+)', 'g');
+
+      let preIgual;
+      let posIgual;
+
+      preIgual = regexIgual.exec(atributo[1]);
+      posIgual = regexIgual.exec(atributo[1]);
+
+      switch(preIgual[1]){
+        case 'topType':
+          this.avatar.hair = posIgual[1];
+          break;
+        case 'clotheType':
+          this.avatar.clothes = posIgual[1];
+          break;
+        case 'facialHairType':
+          this.avatar.beard = posIgual[1];
+          break;
+        case 'accessoriesType':
+          this.avatar.accessories = posIgual[1];
+          break;
+        case 'hairColor':
+          this.avatar.hairColor = posIgual[1];
+          break;
+        case 'hatColor':
+          this.avatar.hatColor = posIgual[1];
+          break;
+        case 'clotheColor':
+          this.avatar.colorFabric = posIgual[1];
+          break;
+        case 'graphicType':
+          this.avatar.graphic = posIgual[1];
+          break;
+        case 'facialHairColor':
+          this.avatar.beardColor = posIgual[1];
+          break;
+        case 'eyeType':
+          this.avatar.eye = posIgual[1];
+          break;
+        case 'eyebrowType':
+          this.avatar.eyebrow = posIgual[1];
+          break;
+        case 'mouthType':
+          this.avatar.mouth = posIgual[1];
+          break;
+        case 'skinColor':
+          this.avatar.skin = posIgual[1];
+          break;
+      }
+      
+    }
+
+    this.chamaValidacoes();
+
+    console.log("Depois de separado: ", this.avatar);
   }
 
   //Função que atualiza o avatar em tempo real
@@ -89,17 +156,21 @@ export class CreateAvatarPage {
                   + '&'
                   ; 
 
-    //Chama as funções que validam os campos
+    this.chamaValidacoes();
+
+    //this.usuario2.url = this.url;
+
+    console.log(this.url);
+
+  }
+
+  //Chama as funções que validam os campos
+  chamaValidacoes(){
     this.validaBarba();
     this.validaAcessorio();
     this.validaCorChapeuCabelo();
     this.validaCorRoupaLogo();
     this.validaCorBarba();
-
-    this.usuario2.url = this.url;
-
-    console.log(this.url);
-
   }
 
   //Valida se a opção barba pode ser alterada
@@ -178,71 +249,22 @@ export class CreateAvatarPage {
     }
   }
 
+  salvarURL(){
+    // let usuarioAtual = firebase.database().ref().child("users").child(btoa(this.usuario2.email));
+    // usuarioAtual.update({url: this.url});
+    let usuarioAuth = (firebase.auth().currentUser.email).toLowerCase();
 
-  separaURL(){
-
-
-    let regexComercial = new RegExp('&([^&]+)', 'g');
-    
-    let atributo;
-
-    while ((atributo = regexComercial.exec(this.url))) { 				
-      
-
-      let regexIgual = new RegExp('([^=]+)', 'g');
-
-      let preIgual;
-      let posIgual;
-
-      preIgual = regexIgual.exec(atributo[1]);
-      posIgual = regexIgual.exec(atributo[1]);
-
-      switch(preIgual){
-        case 'topType':
-          this.avatar.hair = posIgual;
-          break;
-        case 'clotheType':
-          this.avatar.clothes = posIgual;
-          break;
-        case 'facialHairType':
-          this.avatar.beard = posIgual;
-          break;
-        case 'accessoriesType':
-          this.avatar.accessories = posIgual;
-          break;
-        case 'hairColor':
-          this.avatar.hairColor = posIgual;
-          break;
-        case 'hatColor':
-          this.avatar.hatColor = posIgual;
-          break;
-        case 'clotheColor':
-          this.avatar.colorFabric = posIgual;
-          break;
-        case 'graphicType':
-          this.avatar.graphic = posIgual;
-          break;
-        case 'facialHairColor':
-          this.avatar.beardColor = posIgual;
-          break;
-        case 'eyeType':
-          this.avatar.eye = posIgual;
-          break;
-        case 'eyebrowType':
-          this.avatar.eyebrow = posIgual;
-          break;
-        case 'mouthType':
-          this.avatar.mouth = posIgual;
-          break;
-        case 'skinColor':
-          this.avatar.skin = posIgual;
-          break;
-      }
-      
-    }
-
-    console.log("Depois de separado: ", this.avatar);
+    firebase.database().ref(`usuarios/${btoa(usuarioAuth)}`).update({url: this.url}).then(() =>{
+      console.log(btoa(this.usuario2.email));
+      console.log(this.url);
+      console.log('deu bom');
+    }).catch((err:Error) => {
+      console.log('deu ruim');
+    });
   }
+
+
+  
 
 
 }
