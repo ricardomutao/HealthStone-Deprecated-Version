@@ -1,3 +1,120 @@
 page-create-quest {
+    .segment-md-greentheme .segment-button{
+        color: #000000;
+        opacity: 1;
+        height: 100%;
+        padding: 15px;
+        border: none;
+    }
 
+    .segment-md-greentheme .segment-button.activated, .segment-md-greentheme .segment-button.segment-activated{
+        border: none;
+        color: #000000;
+        background-color: color($colors, light);
+        -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        transition: 0.2s;
+    }
+
+    ion-segment{
+        background-color: #b5b5b5;
+    }
+
+    .card-md{
+        margin: 30px 10px ;
+        border-radius: none;
+        width: calc(100% - 20px);
+        font-size: 1.4rem;
+        background-color: color($colors, light);
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);    
+    }
+
+    .searchbar-md .searchbar-input{
+        padding: 6px 55px;
+        border-radius: 0;
+        background-position: left 8px center;
+        height: auto;
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 3rem;
+        color: #191919;
+        background-color: color($colors, light);
+        border-bottom: 2px solid color($colors, dark);
+    }
+
+    .searchbar-md{
+        padding: 0;
+    }
+
+    .item-md{
+        color: color($colors, dark);
+        background-color: color($colors, light);
+    }
+
+    .item-md.item-select, .item-md.item-toggle{
+        padding-left: 0;
+        border-bottom: 1px solid #000;
+        margin: 20px 0;
+    }
+
+    .select-md{
+        background-color: color($colors, light);
+        width: 100%;
+        max-width: 100%;
+        padding: 13px 8px 13px 8px;
+    }
+
+    .item-toggle .toggle-md .toggle-inner{
+        background-color: color($colors, maintheme);
+    }
+
+    .item-toggle .toggle-md.toggle-checked .toggle-inner{
+        background-color: #1ca812;
+    }
+
+    .ion-ios-star{
+        color: color($colors, maintheme);
+    }
+
+    ionic3-star-rating .button-md{
+        color: color($colors, dark);
+    }
+
+    .item-input{
+        border-bottom: 1px solid #000;
+    }
+
+    .item-input.input-has-focus{
+        border-bottom: none;
+    }
+    
+    .item-md.item-toggle ion-label{
+        margin-left: 0px;
+    }
+
+    .list-header .label-md{
+        margin-left: 8px;
+    }
+
+    ion-item.item-datetime{
+        padding-left: 0;
+    }
+
+    ion-item.item-datetime ion-label{
+        font-weight: 500;
+    }
+
+    ion-item.item-toggle ion-label{
+        font-weight: 500;
+    }
+    
+    .input-wrapper ion-labe{
+        font-weight: 500;
+    }
+
+    .toggle-md .toggle-icon{
+        background-color: #ffffff;
+    }
 }

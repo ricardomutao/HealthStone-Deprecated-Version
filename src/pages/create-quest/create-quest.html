@@ -42,7 +42,7 @@
         <div *ngIf="questAlimentos.length > 0">
           <ion-title style="margin-top: 10%;">Selecionados:</ion-title>      
           <div *ngFor="let qAlimento of questAlimentos">
-            <ion-card style="border: 1px #ff8300 solid;">
+            <ion-card>
               <ion-list>
                 <ion-item>
                   {{qAlimento.alimento.descricao}}
@@ -68,13 +68,11 @@
             <ion-list inset>
 
               <ion-item>
-                <ion-label color="light">Título:</ion-label>
-                <ion-input type="text" clearInput autocomplete="on" placeholder="HealthStone" name="titulo" [(ngModel)]="titulo"></ion-input>
+                <ion-input type="text" clearInput autocomplete="on" placeholder="Título" name="titulo" [(ngModel)]="titulo"></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label color="light">Período</ion-label>
-                <ion-select [(ngModel)]="periodo" name="periodo">
+                <ion-select [(ngModel)]="periodo" name="periodo" placeholder="Período">
                   <ion-option value="manha">Manhã</ion-option>
                   <ion-option value="tarde">Tarde</ion-option>
                   <ion-option value="noite">Noite</ion-option>
@@ -82,8 +80,7 @@
               </ion-item>
         
               <ion-item>
-                <ion-label color="light">Dias</ion-label>
-                <ion-select [(ngModel)]="dias" multiple="true" name="dias">
+                <ion-select [(ngModel)]="dias" multiple="true" name="dias" placeholder="Dias">
                   <ion-option value="segunda">Segunda</ion-option>
                   <ion-option value="terca">Terça</ion-option>
                   <ion-option value="quarta">Quarta</ion-option>
@@ -95,19 +92,19 @@
               </ion-item>
 
               <ion-item>
-                <ion-label color="light">Horário</ion-label>
+                <ion-label color="dark">Horário</ion-label> 
                 <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="time" name="time"></ion-datetime>
               </ion-item>
 
               <ion-item>
-                <ion-label color="light">Evitar Comer</ion-label>
+                <ion-label color="dark">Evitar Comer</ion-label>
                 <ion-toggle checked="false" color="greentheme" [(ngModel)]="evitar" name="evitar"></ion-toggle>
               </ion-item>
             </ion-list>
 
             <ion-list>
               <ion-item>
-                <label color="light">Nivel de Dificuldade (1 a 5)</label>                
+                <label color="dark">Nivel de Dificuldade (1 a 5)</label>                
                 <ionic3-star-rating #rating 
                   activeIcon = "ios-star"
                   defaultIcon = "ios-star-outline"
