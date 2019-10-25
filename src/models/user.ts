@@ -3,5 +3,7 @@ export class User{
     nomeCompleto:string;
     userNme:string;
     url:string;
-
+    hp:number;
+    ticket:number;
+    level:number;
 }

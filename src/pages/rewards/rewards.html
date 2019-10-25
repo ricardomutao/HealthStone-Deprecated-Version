@@ -12,35 +12,16 @@
 </ion-header>
 
 <ion-content>
-
+  <label><ion-icon padding name="cash"></ion-icon>{{user.ticket}}</label>
   <ion-card style="border: 1px #ff8300 solid;">
     <ion-card-content>
       <ion-slides pager paginationType="fraction">
-        <ion-slide>
+        <ion-slide *ngFor="let img of listFiles; let x = index;">
           <ion-grid>
             <ion-row>
-              <ion-col col-4><ion-img (tap)="checkItem(1)" (press)="unCheckItem(1)" class="removeBack" [class.selectedBack]="item == 1 && check" width="100" height="100" src="assets/imgs/recompensas/Carne.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(2)" (press)="unCheckItem(2)" class="removeBack" [class.selectedBack]="item == 2 && check" width="100" height="100" src="assets/imgs/recompensas/Chicken.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(3)" (press)="unCheckItem(3)" class="removeBack" [class.selectedBack]="item == 3 && check" width="100" height="100" src="assets/imgs/recompensas/Chocolate.png"></ion-img></ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-4><ion-img (tap)="checkItem(4)" (press)="unCheckItem(4)" class="removeBack" [class.selectedBack]="item == 4 && check" width="100" height="100" src="assets/imgs/recompensas/Ovo.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(5)" (press)="unCheckItem(5)" class="removeBack" [class.selectedBack]="item == 5 && check" width="100" height="100" src="assets/imgs/recompensas/Refrigerante.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(6)" (press)="unCheckItem(6)" class="removeBack" [class.selectedBack]="item == 6 && check" width="100" height="100" src="assets/imgs/recompensas/cafe.png"></ion-img></ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-slide>
-        <ion-slide>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-4><ion-img (tap)="checkItem(7)" (press)="unCheckItem(7)" class="removeBack" [class.selectedBack]="item == 7 && check" width="100" height="100" src="assets/imgs/recompensas/Carne.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(8)" (press)="unCheckItem(8)" class="removeBack" [class.selectedBack]="item == 8 && check" width="100" height="100" src="assets/imgs/recompensas/Chicken.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(9)" (press)="unCheckItem(9)" class="removeBack" [class.selectedBack]="item == 9 && check" width="100" height="100" src="assets/imgs/recompensas/Chocolate.png"></ion-img></ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-4><ion-img (tap)="checkItem(10)" (press)="unCheckItem(10)" class="removeBack" [class.selectedBack]="item == 10 && check" width="100" height="100" src="assets/imgs/recompensas/Ovo.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(11)" (press)="unCheckItem(11)" class="removeBack" [class.selectedBack]="item == 11 && check" width="100" height="100" src="assets/imgs/recompensas/Refrigerante.png"></ion-img></ion-col>
-              <ion-col col-4><ion-img (tap)="checkItem(12)" (press)="unCheckItem(12)" class="removeBack" [class.selectedBack]="item == 12 && check" width="100" height="100" src="assets/imgs/recompensas/cafe.png"></ion-img></ion-col>
+              <ion-col col-4 *ngFor="let imgAux of listFiles[x]">
+                <img (tap)="checkItem(imgAux,true)" (press)="checkItem(imgAux,false)" [class.selectedBack]="item == imgAux && check" [src]="imgAux">
+              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-slide>
@@ -48,26 +29,8 @@
     </ion-card-content>
   </ion-card>
 
-
-  <!-- <ion-card style="border: 1px #ff8300 solid;">
-    <ion-card-content>
-      <ion-slides pager paginationType="fraction">
-        <ion-slide>
-          <ion-grid>
-            <ion-row *ngIf="">
-              <ion-col col-4 *ngFor="let i of listFiles;">
-                <ion-img (tap)="checkItem(1)" (press)="unCheckItem(1)" class="removeBack" [class.selectedBack]="item == 1 && check" width="100" height="100" src="assets/imgs/recompensas/Carne.png"></ion-img>
-              </ion-col>
-            </ion-row>
-        </ion-slide>
-      </ion-slides>
-    </ion-card-content>
-  </ion-card> -->
-
-
-
   <div padding>
-    <button ion-button block type="button" color="maintheme">Selecionar</button>
+    <button ion-button block type="button" color="maintheme" (click)="saveReward()">Selecionar</button>
   </div>
 
 </ion-content>
