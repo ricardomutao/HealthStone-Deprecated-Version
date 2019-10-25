@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
 import firebase from 'firebase';
 
 /**
@@ -46,10 +46,17 @@ export class CreateAvatarPage {
   notShowGraphic = false;
   notShowBeardColor = false;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  alert: Alert;
+  
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public alertCtrl: AlertController
+  ) {
     
   }
 
+  
 
   ionViewDidLoad() {
     console.log("Passou pro didViewLoad");
@@ -252,15 +259,55 @@ export class CreateAvatarPage {
   salvarURL(){
     // let usuarioAtual = firebase.database().ref().child("users").child(btoa(this.usuario2.email));
     // usuarioAtual.update({url: this.url});
+
+    this.alert = this.alertCtrl.create({
+      subTitle:'',
+      buttons: [
+        { text: 'Ok',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+
+
     let usuarioAuth = (firebase.auth().currentUser.email).toLowerCase();
 
     firebase.database().ref(`usuarios/${btoa(usuarioAuth)}`).update({url: this.url}).then(() =>{
-      console.log(btoa(this.usuario2.email));
-      console.log(this.url);
-      console.log('deu bom');
+
+      //firebase.storage().ref().child('avatares').put('http://avataaars.io/png?.png');
+
+      this.alert.setSubTitle('Avatar alterado com sucesso!');
+      this.alert.present();
+      
     }).catch((err:Error) => {
-      console.log('deu ruim');
+      this.alert.setSubTitle('Falha na alteração');
+      this.alert.present();
     });
+
+
+
+    
+  }
+
+  confirmaSalvar(){
+    const confirm = this.alertCtrl.create({
+      title: 'Confirmar Missão',
+      message: 'Tem certeza que deseja confirmar a alteração do avatar?',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.salvarURL();
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    });
+    confirm.present(); 
   }
 
 
