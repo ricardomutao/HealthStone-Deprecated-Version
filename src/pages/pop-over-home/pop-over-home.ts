@@ -41,13 +41,13 @@ export class PopOverHomePage {
       message: 'Tem certeza que deseja remover esta missão?',
       buttons: [
         {
+          text: 'Cancelar'
+        },
+        {
           text: 'Confirmar',
           handler: () => {
             this.removeQuest();
           }
-        },
-        {
-          text: 'Cancelar'
         }
       ]
     });
@@ -90,12 +90,12 @@ export class PopOverHomePage {
       message: 'Tem certeza que deseja concluir e finalizar essa missão?',
       buttons: [
         {
+          text: 'Cancelar'
+        },
+        {
           text: 'Confirmar',
           handler: () => {
           }
-        },
-        {
-          text: 'Cancelar'
         }
       ]
     });
@@ -108,12 +108,12 @@ export class PopOverHomePage {
       message: 'Tem certeza que deseja confirmar e manter essa missão?',
       buttons: [
         {
+          text: 'Cancelar'
+        },
+        {
           text: 'Confirmar',
           handler: () => {
           }
-        },
-        {
-          text: 'Cancelar'
         }
       ]
     });
@@ -126,12 +126,12 @@ export class PopOverHomePage {
       message: 'Tem certeza que deseja marcar essa missão como não concluida?',
       buttons: [
         {
+          text: 'Cancelar'
+        },
+        {
           text: 'Confirmar',
           handler: () => {
           }
-        },
-        {
-          text: 'Cancelar'
         }
       ]
     });

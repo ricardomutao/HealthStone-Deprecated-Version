@@ -259,13 +259,13 @@ export class CreateQuestPage{
       message: 'Tem certeza que deseja confirmar e finalizar a criação dessa missão?',
       buttons: [
         {
+          text: 'Cancelar'
+        },
+        {
           text: 'Confirmar',
           handler: () => {
             this.criarQuest();
           }
-        },
-        {
-          text: 'Cancelar'
         }
       ]
     });

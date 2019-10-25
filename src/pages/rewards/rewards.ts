@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { User } from '../../models/user';
+import { RecompUser } from '../../models/recomp-user';
 
 /**
  * Generated class for the RewardsPage page.
@@ -19,6 +20,7 @@ import { User } from '../../models/user';
 export class RewardsPage {
 
   user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
+  recompUser:RecompUser;
 
   check:boolean = false;
   item:any;
@@ -31,7 +33,8 @@ export class RewardsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -92,7 +95,7 @@ export class RewardsPage {
     });
   }
 
-  saveReward(){
+  confirmSaveReward(){
     if(!this.check){
       this.utils.creatToast('Você deve selecionar pelo menos uma recompensa');
       return false;
@@ -101,7 +104,45 @@ export class RewardsPage {
       this.utils.creatToast('Você não possui nenhuma ficha de recompensa');
       return false;
     }
-    
+
+    const confirm = this.alertCtrl.create({
+      title: 'Confirmar Recompensa',
+      message: 'Tem certeza que é essa recompensa que deseja?',
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.saveReward();
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+  }
+
+  saveReward(){
+    let data = new Date();
+
+    this.recompUser = new RecompUser();
+    this.recompUser.user = this.user.email;
+    this.recompUser.recompensa = this.item;
+    this.recompUser.id = data.getTime().toString();
+
+    this.utils.loadingShow();
+
+    firebase.database().ref(`recomp-user/${btoa(this.recompUser.id)}`).set(this.recompUser).then(() => {
+      this.check = false;
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
 }
