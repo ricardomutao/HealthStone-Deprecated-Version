@@ -1,5 +1,4 @@
 page-create-quest {
-<<<<<<< HEAD
     .segment-md-greentheme .segment-button{
         color: #000000;
         opacity: 1;
@@ -23,7 +22,6 @@ page-create-quest {
     }
 
     .card-md{
-        margin: 30px 10px ;
         border-radius: none;
         width: calc(100% - 20px);
         font-size: 1.4rem;
@@ -57,7 +55,7 @@ page-create-quest {
     .item-md.item-select, .item-md.item-toggle{
         padding-left: 0;
         border-bottom: 1px solid #000;
-        margin: 20px 0;
+        margin: 13px 0;
     }
 
     .select-md{
@@ -68,7 +66,7 @@ page-create-quest {
     }
 
     .item-toggle .toggle-md .toggle-inner{
-        background-color: color($colors, maintheme);
+        background-color: #cccccc;
     }
 
     .item-toggle .toggle-md.toggle-checked .toggle-inner{
@@ -118,8 +116,6 @@ page-create-quest {
     .toggle-md .toggle-icon{
         background-color: #ffffff;
     }
-}
-=======
     .normal-scroll{
         overflow-y: scroll;
         max-height: 30vh;
@@ -128,5 +124,11 @@ page-create-quest {
         overflow-y: scroll;
         max-height: 54vh;
     }
+
+    ion-app.md [padding]{
+        padding: 0;
+    }
+    .text-input-md{
+        margin: 8px;
+    }
 }
->>>>>>> 34b61b2e13dc9759c4b6fb86daa3fe370d93c0f9
