@@ -18,7 +18,7 @@ import { CreateAvatarPage } from '../create-avatar/create-avatar';
   templateUrl: 'profile.html',
 })
 export class ProfilePage{
-  usuario: User = {email:'', nomeCompleto:'', userNme:''};
+ usuario: User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
   
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -26,7 +26,7 @@ export class ProfilePage{
     private utils: UtilsServiceProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.utils.loadingShow();
     this.findUserDatabase();
     this.utils.loadingHide();
@@ -34,12 +34,15 @@ export class ProfilePage{
     
   }
 
+  //Função para capturar usuário atual no database com base no Authentication
   findUserDatabase(){
     let authUser = firebase.auth().currentUser;
     firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
+          this.usuario = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
           this.usuario = childSnapshot.val();
+          console.log("Recebe do banco: ", this.usuario);
           return true;
         }
       });
@@ -47,11 +50,15 @@ export class ProfilePage{
     return false;
   }
 
+  //Função para fechar a tela atual
   dismiss(){
     this.navCtrl.pop();
   }
+
+  //Função que redireciona para tela de criação de avatares
   goCreateAvatar(){
-    this.navCtrl.push(CreateAvatarPage.name);
+    console.log("Ta mandando pro outro lado: ", this.usuario);
+    this.navCtrl.push(CreateAvatarPage.name, {user: this.usuario});
   }
 
 }

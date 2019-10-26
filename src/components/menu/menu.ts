@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ProfilePage } from '../../pages/profile/profile';
+import { HomePage } from '../../pages/home/home';
+import { RewardsPage } from '../../pages/rewards/rewards';
 
 /**
  * Generated class for the MenuComponent component.
@@ -16,8 +18,6 @@ import { ProfilePage } from '../../pages/profile/profile';
   templateUrl: 'menu.html'
 })
 export class MenuComponent {
-
-  @Input() tileMenu: string = '';
 
   constructor( 
     public navCtrl: NavController,
@@ -41,6 +41,18 @@ export class MenuComponent {
 
   goProfile(){
     this.navCtrl.push(ProfilePage.name);
+  }
+
+  goQuests(){
+    if(this.navCtrl.getActive().id != 'HomePage'){
+      this.navCtrl.setRoot(HomePage.name);
+    }
+  }
+
+  goRewards(){
+    if(this.navCtrl.getActive().id != 'RewardsPage'){
+      this.navCtrl.push(RewardsPage.name);
+    }
   }
 
 

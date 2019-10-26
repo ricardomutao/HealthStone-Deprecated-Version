@@ -10,37 +10,38 @@
       Criar Missão
     </ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-
+  
   <div padding>
     <ion-segment [(ngModel)]="tab" color="greentheme">
-      <ion-segment-button value="alimentos" (click)="changeSlideBack()">
+      <ion-segment-button value="alimentos" (click)="changeSlide(0)">
         Alimentos
       </ion-segment-button>
-      <ion-segment-button value="detalhes" (click)="changeSlideForward()"> 
+      <ion-segment-button value="detalhes" (click)="changeSlide(1)"> 
         Mais Detalhes
       </ion-segment-button>
     </ion-segment>
   </div>
+  
+</ion-header>
+
+<ion-content>
 
   <form (ngSubmit)="showConfirm()" #formulario="ngForm">
-    <ion-slides #Slides (ionSlideDidChange)="changeTab()" speed="1000" spaceBetween="20">
+    <ion-slides #Slides (ionSlideWillChange)="changeTab()">
       <ion-slide>
-        
+    
         <ion-card>
-          <ion-searchbar (ionInput)="getItems($event)" placeholder="Pesquisar" autocomplete="on"></ion-searchbar>
-          <ion-list style="overflow-y: scroll;max-height: 137px;">
+          <ion-searchbar (ionInput)="getItems($event)" (ionFocus)="getAllAlimentos()" placeholder="Digite para Pesquisar" autocomplete="on"></ion-searchbar>
+          <ion-list style="overflow-y: scroll;max-height:25vh;" *ngIf="filterAlimentos.length > 0">
             <button ion-item *ngFor="let alimento of filterAlimentos" type="button" (click)="setQtd(alimento)">
               <ion-icon name="add" item-end></ion-icon>
               {{ alimento.descricao }}
             </button>
           </ion-list>
-        </ion-card>
+        </ion-card>    
 
-        <div *ngIf="questAlimentos.length > 0">
-          <ion-title style="margin-top: 10%;">Selecionados:</ion-title>      
+        <ion-title padding *ngIf="questAlimentos.length > 0">Selecionados</ion-title>    
+        <div class="normal-scroll" [class.fullscreen-scroll]="filterAlimentos.length == 0" *ngIf="questAlimentos.length > 0">  
           <div *ngFor="let qAlimento of questAlimentos">
             <ion-card>
               <ion-list>
@@ -52,6 +53,9 @@
                 </ion-item>
                 <ion-item>
                   Quantidade: {{qAlimento.qtd}} ({{qAlimento.alimento.unidade}})
+                </ion-item>
+                <ion-item>
+                  Kcal Total: {{(((qAlimento.alimento.kcal)/(qAlimento.alimento.baseQtd)).toFixed(2)*qAlimento.qtd).toFixed(2)}}
                 </ion-item>
               </ion-list>     
             </ion-card>

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, MenuController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
+import { PopOverHomePage } from '../pop-over-home/pop-over-home';
+import { Quest } from '../../models/quest';
 /**
  * Generated class for the HomePage page.
  *
@@ -17,29 +19,27 @@ import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 })
 export class HomePage {
 
-  tileMenu: string = 'Missões';
+  listQuestManha:Quest[] = [];
 
-  listQuestManha = [];
-  checkMaxQtdManha:boolean = false;
+  listQuestTarde:Quest[] = [];
 
-  listQuestTarde = [];
-  checkMaxQtdTarde:boolean = false;
-
-  listQuestNoite = [];
-  checkMaxQtdNoite:boolean = false;
+  listQuestNoite:Quest[] = [];
 
   authUser:any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public popoverCtrl: PopoverController,
+    public menuCtrl: MenuController) {
 
     this.authUser = firebase.auth().currentUser;
   }
 
   ionViewWillEnter() {
     this.getQuest();
+    this.menuCtrl.close();
   }
 
   goCreateQuest(){
@@ -68,6 +68,18 @@ export class HomePage {
       this.utils.loadingHide();
     });
 
+  }
+
+  presentPopover(quest:Quest,myEvent:any) {
+    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest});
+    popover.present({
+      ev: myEvent
+    });
+    popover.onDidDismiss((retorno) => {
+      if(retorno != null && retorno.excluido){
+        this.getQuest();
+      }
+    });
   }
 
 }

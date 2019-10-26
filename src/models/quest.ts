@@ -11,4 +11,5 @@ export class Quest{
     id:string;
     dificuldade:number;
     horario:string;
+    kcalTotal:string;
 }
