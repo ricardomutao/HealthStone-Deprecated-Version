@@ -90,6 +90,7 @@ export class RewardsPage {
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
           this.user = childSnapshot.val();
+          return true;
         }
       });
     });
