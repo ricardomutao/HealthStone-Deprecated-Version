@@ -257,8 +257,24 @@ export class CreateAvatarPage {
   }
 
   salvarURL(){
-    // let usuarioAtual = firebase.database().ref().child("users").child(btoa(this.usuario2.email));
-    // usuarioAtual.update({url: this.url});
+
+    // function getBase64Image(img) {
+    //   var canvas = document.createElement("canvas");
+    //   canvas.width = img.width;
+    //   canvas.height = img.height;
+    //   var ctx = canvas.getContext("2d");
+    //   ctx.drawImage(img, 0, 0);
+    //   var dataURL = canvas.toDataURL("image/png");
+    //   return dataURL.replace(/^data:image\/(png);base64,/, "");
+    // }
+    
+    // console.log("será?", document.getElementById("imgURL"))
+
+    //var base64 = getBase64Image(document.getElementById("imgURL"));
+    //var base64 = getBase64Image(this.testeURL);
+
+
+    //console.log("uhu", base64);
 
     this.alert = this.alertCtrl.create({
       subTitle:'',
@@ -276,7 +292,6 @@ export class CreateAvatarPage {
 
     firebase.database().ref(`usuarios/${btoa(usuarioAuth)}`).update({url: this.url}).then(() =>{
 
-      //firebase.storage().ref().child('avatares').put('http://avataaars.io/png?.png');
 
       this.alert.setSubTitle('Avatar alterado com sucesso!');
       this.alert.present();
