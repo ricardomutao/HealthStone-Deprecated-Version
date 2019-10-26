@@ -56,11 +56,11 @@ export class HomePage {
     firebase.database().ref(`quests`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().usuario == btoa(this.authUser.email)){
-          if(childSnapshot.val().periodo.toLowerCase() == 'manha'){
+          if((childSnapshot.val().periodo.toLowerCase() == 'manha') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
             this.listQuestManha.push(childSnapshot.val());
-          }else if(childSnapshot.val().periodo.toLowerCase() == 'tarde'){
+          }else if((childSnapshot.val().periodo.toLowerCase() == 'tarde') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
             this.listQuestTarde.push(childSnapshot.val());
-          }else{
+          }else if((childSnapshot.val().periodo.toLowerCase() == 'noite') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
             this.listQuestNoite.push(childSnapshot.val());
           }
         }

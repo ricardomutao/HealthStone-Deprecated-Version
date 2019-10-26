@@ -131,6 +131,7 @@ export class RewardsPage {
     this.recompUser = new RecompUser();
     this.recompUser.user = this.user.email;
     this.recompUser.recompensa = this.item;
+    this.recompUser.dataRecompensa = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
     this.recompUser.id = data.getTime().toString();
 
     this.utils.loadingShow();

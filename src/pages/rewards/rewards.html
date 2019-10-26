@@ -12,8 +12,9 @@
 </ion-header>
 
 <ion-content>
-  <label><ion-icon padding name="cash"></ion-icon>{{user.ticket}}</label>
-  <ion-card style="border: 1px #ff8300 solid;">
+  <ion-label padding-left>Fichas de Recompensa</ion-label>
+  <ion-label padding-left><ion-icon padding-right name="cash"></ion-icon>{{user.ticket}}</ion-label>
+  <ion-card style="border: 1px #ff8300 solid;" *ngIf="listFiles != null && listFiles.length != 0">
     <ion-card-content>
       <ion-slides pager paginationType="fraction">
         <ion-slide *ngFor="let img of listFiles; let x = index;">
@@ -29,8 +30,16 @@
     </ion-card-content>
   </ion-card>
 
-  <div padding>
+  <ion-buttons padding *ngIf="listFiles != null && listFiles.length != 0">
     <button ion-button block type="button" color="maintheme" (click)="confirmSaveReward()">Selecionar</button>
-  </div>
+  </ion-buttons>
+  
+  <ion-slides *ngIf="listFiles == null || listFiles.length == 0">
+    <ion-slide>
+      <h6 style="font-size: 12px;">SEM RECOMPENSAS POR AQUI</h6>
+      <img src="assets/imgs/itens_magicos.png">
+      <h6 style="font-size: 12px;">APENAS ITENS MÁGICOS</h6>
+    </ion-slide>
+  </ion-slides>
 
 </ion-content>
