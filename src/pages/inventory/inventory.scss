@@ -1,0 +1,23 @@
+page-inventory {
+    .segment-md-greentheme .segment-button{
+        color: #000000;
+        opacity: 1;
+        height: 100%;
+        padding: 15px;
+        border: none;
+    }
+
+    .segment-md-greentheme .segment-button.activated, .segment-md-greentheme .segment-button.segment-activated{
+        border: none;
+        color: #000000;
+        background-color: color($colors, light);
+        -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        transition: 0.2s;
+    }
+
+    ion-segment{
+        background-color: #b5b5b5;
+    }
+}

@@ -161,6 +161,7 @@ export class CreateQuestPage{
     this.quest.dificuldade = this.starRating;
     this.quest.horario = this.time;
     this.quest.titulo = this.titulo;
+    this.quest.status = 0;
 
     this.questAlimentos.forEach(function(obj){
       let op1 = (obj.alimento.kcal)/(obj.alimento.baseQtd);
