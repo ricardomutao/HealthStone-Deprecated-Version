@@ -5,11 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Definir avatar</ion-title>
+  <ion-navbar color="maintheme">
+    <ion-title>Definir Avatar</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -19,7 +17,7 @@
     <!-- Função teste de caráter provisório -->
     <div class="avatar-wrapper" (click)="teste()">
         <ion-avatar>
-          <img [src]="url">
+          <img id="imgURL" [src]="url">
         </ion-avatar>
       </div>
   </ion-item>
