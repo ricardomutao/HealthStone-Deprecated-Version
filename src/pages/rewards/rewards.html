@@ -14,25 +14,38 @@
 <ion-content>
   <ion-label padding-left>Fichas de Recompensa</ion-label>
   <ion-label padding-left><ion-icon padding-right name="cash"></ion-icon>{{user.ticket}}</ion-label>
-  <ion-card style="border: 1px #ff8300 solid;" *ngIf="listFiles != null && listFiles.length != 0">
-    <ion-card-content>
-      <ion-slides pager paginationType="fraction">
-        <ion-slide *ngFor="let img of listFiles; let x = index;">
-          <ion-grid>
-            <ion-row>
-              <ion-col col-4 *ngFor="let imgAux of listFiles[x]">
-                <img (tap)="checkItem(imgAux,true)" (press)="checkItem(imgAux,false)" [class.selectedBack]="item == imgAux && check" [src]="imgAux">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-slide>
-      </ion-slides>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-buttons padding *ngIf="listFiles != null && listFiles.length != 0">
-    <button ion-button block type="button" color="maintheme" (click)="confirmSaveReward()">Selecionar</button>
-  </ion-buttons>
+  <div *ngIf="listFiles != null && listFiles.length != 0">
+    <ion-card style="border: 1px #ff8300 solid;">
+      <ion-card-content>
+        <ion-slides pager paginationType="fraction">
+          <ion-slide *ngFor="let img of listFiles; let x = index;">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-4 *ngFor="let imgAux of listFiles[x]">
+                  <img (tap)="checkItem(imgAux,true)" (press)="checkItem(imgAux,false)" [class.selectedBack]="item == imgAux && check" [src]="imgAux">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
+        <form (ngSubmit)="confirmSaveReward()" #formulario="ngForm">
+          <ion-list>
+            <ion-list-header>
+              Data Programada
+            </ion-list-header>
+            <ion-item inset>
+              <ion-label>Data:</ion-label> 
+              <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
+            </ion-item>
+          </ion-list>
+        </form>
+    
+        <ion-fab bottom right>
+          <button ion-fab mini color="greentheme" (click)="formulario.ngSubmit.emit()"><ion-icon name="checkmark"></ion-icon></button>
+        </ion-fab>
+      </ion-card-content>
+    </ion-card>
+  </div>
   
   <ion-slides *ngIf="listFiles == null || listFiles.length == 0">
     <ion-slide>

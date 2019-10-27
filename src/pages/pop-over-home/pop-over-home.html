@@ -6,16 +6,16 @@
 -->
 <ion-content>
   <ion-list no-lines>
-    <button ion-item type="button" (click)="concluirFinalizar()">
+    <button *ngIf="!control" ion-item type="button" (click)="concluirFinalizar()">
       Concluir e Finalizar
     </button>
-    <button ion-item type="button" (click)="concluirManter()">
+    <button *ngIf="!control" ion-item type="button" (click)="concluirManter()">
       Concluir e Manter
     </button>
-    <button ion-item type="button" (click)="naoConcluido()">
+    <button *ngIf="!control" ion-item type="button" (click)="naoConcluido()">
       Não Concluido
     </button>
-    <button ion-item type="button" (click)="confirmRemove()">
+    <button *ngIf="!control || (control && remButtonShow)" ion-item type="button" (click)="confirmRemove()">
       Excluir
     </button>
     <button ion-item type="button" (click)="viewQuest()">

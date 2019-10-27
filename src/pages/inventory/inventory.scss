@@ -20,4 +20,13 @@ page-inventory {
     ion-segment{
         background-color: #b5b5b5;
     }
+
+    .limitView{
+        overflow-y: scroll; 
+        max-height: 78vh;
+    }
+
+    .minSizeSlide{
+        min-height: 65vh;
+    }
 }

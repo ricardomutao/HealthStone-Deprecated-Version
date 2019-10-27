@@ -22,6 +22,8 @@ export class RewardsPage {
   user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
   recompUser:RecompUser;
 
+  date:string = new Date().toISOString();
+
   check:boolean = false;
   item:any;
 
@@ -84,10 +86,10 @@ export class RewardsPage {
 
   }
 
-  getUser(){
+  async getUser(){
     let authUser = firebase.auth().currentUser;
-    firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
-      snapshot.forEach((childSnapshot: any) => {
+    await firebase.database().ref(`usuarios`).once('value', async (snapshot: any) => {
+     await snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
           this.user = childSnapshot.val();
           return true;
@@ -129,8 +131,9 @@ export class RewardsPage {
     let data = new Date();
 
     this.recompUser = new RecompUser();
-    this.recompUser.user = this.user.email;
+    this.recompUser.user = btoa(this.user.email);
     this.recompUser.recompensa = this.item;
+    this.recompUser.dataAgendada = (this.date.substr(0, 10).split('-').reverse().join('/'));
     this.recompUser.dataRecompensa = (data.toISOString().substr(0, 10).split('-').reverse().join('/'));
     this.recompUser.id = data.getTime().toString();
 
@@ -138,8 +141,14 @@ export class RewardsPage {
 
     firebase.database().ref(`recomp-user/${btoa(this.recompUser.id)}`).set(this.recompUser).then(() => {
       this.check = false;
-      this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
+
+      firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update({ticket: (this.user.ticket - 1)}).then(() =>{
+
+        this.getUser();
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
+
+      })
 
     }).catch((error: Error) => {
       this.utils.loadingHide();

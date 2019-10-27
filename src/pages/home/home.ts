@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
@@ -31,15 +31,13 @@ export class HomePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
-    public popoverCtrl: PopoverController,
-    public menuCtrl: MenuController) {
+    public popoverCtrl: PopoverController) {
 
     this.authUser = firebase.auth().currentUser;
   }
 
   ionViewWillEnter() {
     this.getQuest();
-    this.menuCtrl.close();
   }
 
   goCreateQuest(){
@@ -71,7 +69,7 @@ export class HomePage {
   }
 
   presentPopover(quest:Quest,myEvent:any) {
-    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest});
+    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest, pageControl: false, remButton: false});
     popover.present({
       ev: myEvent
     });

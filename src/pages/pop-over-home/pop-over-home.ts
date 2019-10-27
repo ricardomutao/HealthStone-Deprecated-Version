@@ -19,6 +19,8 @@ import { ViewQuestPage } from '../view-quest/view-quest';
 export class PopOverHomePage {
 
   param:any;
+  control:any;
+  remButtonShow:any;
 
   alert: Alert;
 
@@ -30,6 +32,8 @@ export class PopOverHomePage {
     public viewCtrl: ViewController,
     public utils: UtilsServiceProvider) {
       this.param = this.navParams.get('questSelected');
+      this.control = this.navParams.get('pageControl');
+      this.remButtonShow = this.navParams.get('remButton');
   }
 
   ionViewDidLoad() {

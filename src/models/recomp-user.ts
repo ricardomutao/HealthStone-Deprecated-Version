@@ -3,4 +3,5 @@ export class RecompUser{
     user:string;
     recompensa:string;
     dataRecompensa:string;
+    dataAgendada:string;
 }
