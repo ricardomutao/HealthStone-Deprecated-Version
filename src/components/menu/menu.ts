@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
@@ -19,9 +19,17 @@ import { InventoryPage } from '../../pages/inventory/inventory';
 })
 export class MenuComponent {
 
+
+  color = '#000';
+  mode = 'determinate';
+  value = 80;
+  bufferValue = 75;
+
+
   constructor( 
     public navCtrl: NavController,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public navParams: NavParams) {
   }
 
   logOut(){
