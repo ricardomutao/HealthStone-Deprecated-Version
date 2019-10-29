@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
 import { Quest } from '../../models/quest';
+import { User } from '../../models/user';
 /**
  * Generated class for the HomePage page.
  *
@@ -25,18 +26,23 @@ export class HomePage {
 
   listQuestNoite:Quest[] = [];
 
-  authUser:any;
+  user:User;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
     public popoverCtrl: PopoverController) {
-
-    this.authUser = firebase.auth().currentUser;
+    
   }
 
   ionViewWillEnter() {
+    
+    let loginControl = this.navParams.get('login');
+    if(loginControl){
+      this.user = this.navParams.get('user');
+    }
+    
     this.getQuest();
   }
 
@@ -45,6 +51,7 @@ export class HomePage {
   }
 
   getQuest(){
+    let authUser = firebase.auth().currentUser;
     this.utils.loadingShow();
     
     this.listQuestManha = [];
@@ -53,7 +60,7 @@ export class HomePage {
     
     firebase.database().ref(`quests`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().usuario == btoa(this.authUser.email)){
+        if(childSnapshot.val().usuario == btoa(authUser.email)){
           if((childSnapshot.val().periodo.toLowerCase() == 'manha') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
             this.listQuestManha.push(childSnapshot.val());
           }else if((childSnapshot.val().periodo.toLowerCase() == 'tarde') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){

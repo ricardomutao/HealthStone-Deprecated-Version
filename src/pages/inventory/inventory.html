@@ -33,9 +33,10 @@
         <ion-item-sliding #item *ngFor="let reward of listRewards">
           <ion-item>
             <ion-avatar item-start>
-              <img [src]="reward.recompensa">
+              <img [src]="reward.recompensa.img">
             </ion-avatar>
-            <h2>Data Agendada: {{reward.dataAgendada}}</h2>
+            <h3>Data Agendada: {{reward.dataAgendada}}</h3>
+            <h4>{{reward.recompensa.value}} Ficha(s) de recompensa</h4>
             <p>Data Adquirida: {{reward.dataRecompensa}}</p>
           </ion-item>
           <ion-item-options side="right">

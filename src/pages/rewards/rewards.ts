@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { User } from '../../models/user';
 import { RecompUser } from '../../models/recomp-user';
+import { Reward } from '../../models/reward';
 
 /**
  * Generated class for the RewardsPage page.
@@ -25,12 +26,11 @@ export class RewardsPage {
   date:string = new Date().toISOString();
 
   check:boolean = false;
-  item:any;
+  item:Reward;
 
   listFiles:any = [];
 
   maxSlides:number = 0;
-  arrAux = [];
 
   constructor(
     public navCtrl: NavController, 
@@ -49,40 +49,41 @@ export class RewardsPage {
     this.check = flag;
   }
 
-  async getFiles(){
+  getFiles(){
     let that = this;
+    let auxList = [];
     that.listFiles = [];
     this.utils.loadingShow();
-    var listRef = firebase.storage().ref().child('recompensas');
 
-     await listRef.listAll().then( async (res) => {
+    firebase.database().ref(`recompensas`).once('value', (snapshot: any) => {
 
-      var contador = 6;
-    
-      var arrAux = [];
-      var resAux = res;
+      snapshot.forEach( (childSnapshot: any) => {
+        auxList.push(childSnapshot.val());
+      });
 
-      for(let i = 0; i < resAux.items.length; i++){
-
-        await listRef.child(`${resAux.items[i].name}`).getDownloadURL().then((res) => {
-          arrAux.push(res);
-        });
-
-        if(i >= (contador-1) || ((i+1) == resAux.items.length)){
-          that.listFiles.push(arrAux);
-          contador = contador + 6;
-          arrAux = [];
+       if(auxList != null && auxList.length <= 6){
+        that.listFiles.push(auxList);
+       }else{
+        var contador = 6;
+        let auxListFiles = [];
+        for(let i = 0; i < auxList.length; i++){
+          auxListFiles.push(auxList[i]);
+          if(i >= (contador-1) || ((i+1) == auxList.length)){
+            that.listFiles.push(auxListFiles);
+            contador = contador + 6;
+            auxListFiles = [];
+          }
         }
+       }
 
-      }
+       this.utils.loadingHide();
 
-      that.utils.loadingHide();
-
-    }).catch(function(error) {
-      that.utils.loadingHide();
-      that.utils.creatSimpleAlert('Erro ao listar recompensas');
-      console.log(error);
-    });
+              
+     }).catch(function(error) {
+        that.utils.loadingHide();
+        that.utils.creatSimpleAlert('Erro ao listar recompensas');
+        console.log(error);
+      });
 
   }
 
@@ -103,8 +104,8 @@ export class RewardsPage {
       this.utils.creatToast('Você deve selecionar pelo menos uma recompensa');
       return false;
     }
-    if(this.user.ticket == 0){
-      this.utils.creatToast('Você não possui nenhuma ficha de recompensa');
+    if(this.item.value > this.user.ticket){
+      this.utils.creatToast('Você não possui fichas de recompensa suficientes');
       return false;
     }
 
@@ -142,7 +143,7 @@ export class RewardsPage {
     firebase.database().ref(`recomp-user/${btoa(this.recompUser.id)}`).set(this.recompUser).then(() => {
       this.check = false;
 
-      firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update({ticket: (this.user.ticket - 1)}).then(() =>{
+      firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update({ticket: (this.user.ticket - this.item.value)}).then(() =>{
 
         this.getUser();
         this.utils.loadingHide();

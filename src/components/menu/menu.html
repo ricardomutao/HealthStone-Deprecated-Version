@@ -5,22 +5,19 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <mat-card>
-      <mat-card-content>
-        <h2 class="example-h2">Result</h2>
-    
-        <section class="example-section">
-          <mat-progress-bar
-              class="example-margin"
-              [color]="color"
-              [mode]="mode"
-              [value]="value"
-              [bufferValue]="bufferValue">
-          </mat-progress-bar>
-        </section>
-      </mat-card-content>
-    </mat-card>
     <ion-list>
+      <ion-item *ngIf="user">
+        <ion-avatar item-start>
+          <img [src]="user.url">
+        </ion-avatar>
+        <mat-progress-bar
+          class="example-margin"
+          [color]="color"
+          [mode]="mode"
+          [value]="user.hp"
+          [bufferValue]="bufferValue">
+        </mat-progress-bar>
+      </ion-item>
       <button menuClose  ion-item (click)="goProfile()">
         <ion-icon name="person" item-start></ion-icon>
         Perfil

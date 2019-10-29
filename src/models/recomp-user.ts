@@ -1,7 +1,9 @@
+import { Reward } from "./reward";
+
 export class RecompUser{
     id:string;
     user:string;
-    recompensa:string;
+    recompensa:Reward;
     dataRecompensa:string;
     dataAgendada:string;
 }

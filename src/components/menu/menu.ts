@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
 import * as firebase from 'firebase';
@@ -6,6 +6,7 @@ import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ProfilePage } from '../../pages/profile/profile';
 import { RewardsPage } from '../../pages/rewards/rewards';
 import { InventoryPage } from '../../pages/inventory/inventory';
+import { User } from '../../models/user';
 
 /**
  * Generated class for the MenuComponent component.
@@ -19,10 +20,10 @@ import { InventoryPage } from '../../pages/inventory/inventory';
 })
 export class MenuComponent {
 
+  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
 
   color = '#000';
   mode = 'determinate';
-  value = 80;
   bufferValue = 75;
 
 
