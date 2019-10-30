@@ -37,10 +37,9 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    
-    let loginControl = this.navParams.get('login');
-    if(loginControl){
-      this.user = this.navParams.get('user');
+
+    if(this.navCtrl.last().component.name == 'LoginPage' || this.navCtrl.last().component.name == 'ProfilePage'){
+      this.getUser();
     }
     
     this.getQuest();
@@ -71,6 +70,9 @@ export class HomePage {
         }
       });
       this.utils.loadingHide();
+    }).catch((error:Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação!');
     });
 
   }
@@ -85,6 +87,20 @@ export class HomePage {
         this.getQuest();
       }
     });
+  }
+
+  getUser(){
+    let authUser = firebase.auth().currentUser;
+    firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
+      snapshot.forEach((childSnapshot: any) => {
+        if(childSnapshot.val().email == authUser.email){
+          this.user = childSnapshot.val();
+          return true;
+        }
+      });
+    }).catch((error:Error) => {
+      this.utils.creatSimpleAlert('Erro na operação!');
+    });;
   }
 
 }

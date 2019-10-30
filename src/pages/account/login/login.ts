@@ -49,17 +49,10 @@ export class LoginPage {
       this.utils.loadingShow();
 
       firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
-        let authUser = firebase.auth().currentUser;
-        firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
-          snapshot.forEach((childSnapshot: any) => {
-            if(childSnapshot.val().email == authUser.email){
-              this.utils.loadingHide();
-              this.navCtrl.setRoot(HomePage.name, {user: childSnapshot.val(), login: true});
-            }
-          });
-        });
+       
+        this.utils.loadingHide();
+        this.navCtrl.setRoot(HomePage.name);
         
-
       }).catch((error:Error) => {
         this.utils.loadingHide();
         this.utils.creatSimpleAlert('Erro na operação!');

@@ -76,6 +76,7 @@ export class RegisterPage {
       this.user.email = this.email.trim().toLowerCase();
       this.user.hp = 100;
       this.user.level = 1;
+      this.user.xp = 0;
       this.user.ticket = 0;
       this.user.url = "https://avataaars.io/?&topType=ShortHairShortCurly&clotheType=ShirtCrewNeck&facialHairType=Blank&accessoriesType=Blank&hairColor=Black&hatColor=Black&clotheColor=Black&graphicType=Bat&facialHairColor=Black&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light&";
 
