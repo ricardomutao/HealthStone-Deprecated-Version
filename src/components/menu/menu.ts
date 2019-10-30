@@ -6,7 +6,9 @@ import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ProfilePage } from '../../pages/profile/profile';
 import { RewardsPage } from '../../pages/rewards/rewards';
 import { InventoryPage } from '../../pages/inventory/inventory';
+
 import { User } from '../../models/user';
+import { style } from '@angular/core/src/animation/dsl';
 
 /**
  * Generated class for the MenuComponent component.
@@ -16,15 +18,20 @@ import { User } from '../../models/user';
  */
 @Component({
   selector: 'menu',
-  templateUrl: 'menu.html'
+  templateUrl: 'menu.html',
+  styles: ['menu.scss'],
 })
 export class MenuComponent {
 
   @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
 
-  color = '#000';
-  mode = 'determinate';
-  bufferValue = 75;
+  color_hp = 'primary';
+  mode_hp = 'determinate';
+  bufferValue_hp = 100;
+  color_xp = 'primary';
+  xp = '80';
+  mode_xp = 'determinate';
+  bufferValue_xp = 100;
 
 
   constructor( 
