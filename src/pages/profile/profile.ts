@@ -27,15 +27,13 @@ export class ProfilePage{
   }
 
   ionViewWillEnter() {
-    this.utils.loadingShow();
-    this.findUserDatabase();
-    this.utils.loadingHide();
+    this.findUserDatabase(); 
     //this.usuario = this.findUserDatabase(userAuth);
-    
   }
 
   //Função para capturar usuário atual no database com base no Authentication
   findUserDatabase(){
+    this.utils.loadingShow();
     let authUser = firebase.auth().currentUser;
     firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
@@ -43,9 +41,13 @@ export class ProfilePage{
           this.usuario = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
           this.usuario = childSnapshot.val();
           console.log("Recebe do banco: ", this.usuario);
+          this.utils.loadingHide();
           return true;
         }
       });
+    }).catch((error:Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação!');
     });
     return false;
   }

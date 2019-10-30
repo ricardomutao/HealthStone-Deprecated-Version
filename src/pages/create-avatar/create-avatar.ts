@@ -59,22 +59,16 @@ export class CreateAvatarPage {
   
 
   ionViewDidLoad() {
-    console.log("Passou pro didViewLoad");
-    //this.updateAvatar();
     
     this.usuario2 = this.navParams.get('user');
     this.url = this.usuario2.url;
-    console.log("Antes mesmo", this.url);
+    
     this.separaURL();
-    console.log("Do construtor(usuario): ", this.usuario2);
-    console.log("Do construtor(url): ", this.url);
+    
   }
 
   //Função provisória para carater de testes
-  teste(){
-    console.log(this.url);
-    console.log(this.avatar)
-  }
+  
 
   //Separa a URL para montar o objeto
   separaURL(){
