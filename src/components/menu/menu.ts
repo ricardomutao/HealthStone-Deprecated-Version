@@ -20,7 +20,7 @@ import { User } from '../../models/user';
 })
 export class MenuComponent {
 
-  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0};
+  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
 
   color = '#000';
   mode = 'determinate';

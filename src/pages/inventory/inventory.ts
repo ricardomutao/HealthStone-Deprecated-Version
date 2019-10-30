@@ -51,7 +51,9 @@ export class InventoryPage {
           this.listRewards.push(childSnapshot.val());
         }
       });
-    });
+    }).catch((error:Error) => {
+      this.utils.creatSimpleAlert('Erro na operação!');
+    });;
   }
 
   async getQuests(){
@@ -73,7 +75,9 @@ export class InventoryPage {
           }
         }
       });
-    });
+    }).catch((error:Error) => {
+      this.utils.creatSimpleAlert('Erro na operação!');
+    });;
   }
 
   removeReward(reward:RecompUser){

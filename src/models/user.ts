@@ -6,4 +6,5 @@ export class User{
     hp:number;
     ticket:number;
     level:number;
+    xp:number;
 }

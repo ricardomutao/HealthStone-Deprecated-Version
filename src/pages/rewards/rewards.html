@@ -18,11 +18,13 @@
     <ion-card style="border: 1px #ff8300 solid;">
       <ion-card-content>
         <ion-slides pager paginationType="fraction">
-          <ion-slide *ngFor="let reward of listFiles; let x = index;">
+          <ion-slide padding-bottom *ngFor="let reward of listFiles; let x = index;">
             <ion-grid padding-bottom>
               <ion-row>
-                <ion-col col-4 *ngFor="let imgAux of listFiles[x]">
-                  <img (tap)="checkItem(imgAux,true)" (press)="checkItem(imgAux,false)" [class.selectedBack]="item == imgAux && check" [src]="imgAux.img">
+                <ion-col col-4 (tap)="checkItem(imgAux,true)" (press)="checkItem(imgAux,false)" [class.selectedBack]="item == imgAux && check" *ngFor="let imgAux of listFiles[x]">
+                  <div class="row content-center">
+                    <img class="img-size" [src]="imgAux.img">
+                  </div>
                   <span style="font-size: 12px;">{{imgAux.value}}</span>
                 </ion-col>
               </ion-row>

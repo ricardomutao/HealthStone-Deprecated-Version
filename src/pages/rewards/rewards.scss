@@ -4,8 +4,21 @@ page-rewards {
         background-color: #263238;
     }
 
+    .img-size{
+        min-width: 30px;
+        max-width: 30px;
+        min-height: 30px;
+        max-height: 30px;
+    }
+
     ion-slide.swiper-slide {
         align-items: flex-start;
+    }
+
+    .content-center{
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
 }
