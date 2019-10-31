@@ -164,8 +164,8 @@ export class CreateQuestPage{
     this.quest.status = 0;
 
     this.questAlimentos.forEach(function(obj){
-      let op1 = (obj.alimento.kcal)/(obj.alimento.baseQtd);
-      let op2 = op1 * obj.qtd;
+      let op1 = parseFloat(((obj.alimento.kcal)/(obj.alimento.baseQtd)).toFixed(2));
+      let op2 = parseFloat((op1 * obj.qtd).toFixed(2));
       kcalTotal += op2;
     });
 
