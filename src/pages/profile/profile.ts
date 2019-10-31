@@ -18,7 +18,7 @@ import { CreateAvatarPage } from '../create-avatar/create-avatar';
   templateUrl: 'profile.html',
 })
 export class ProfilePage{
- usuario: User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
+ usuario: User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, xpMax: 0, hpMax: 0};
   
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -38,7 +38,7 @@ export class ProfilePage{
     firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
       snapshot.forEach((childSnapshot: any) => {
         if(childSnapshot.val().email == authUser.email){
-          this.usuario = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
+          this.usuario = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, hpMax: 0, xpMax: 0};
           this.usuario = childSnapshot.val();
           console.log("Recebe do banco: ", this.usuario);
           this.utils.loadingHide();

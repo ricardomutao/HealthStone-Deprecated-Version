@@ -8,7 +8,6 @@ import { RewardsPage } from '../../pages/rewards/rewards';
 import { InventoryPage } from '../../pages/inventory/inventory';
 
 import { User } from '../../models/user';
-import { style } from '@angular/core/src/animation/dsl';
 
 /**
  * Generated class for the MenuComponent component.
@@ -23,15 +22,13 @@ import { style } from '@angular/core/src/animation/dsl';
 })
 export class MenuComponent {
 
-  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
+  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, xpMax: 0, hpMax: 0};
 
   color_hp = 'primary';
   mode_hp = 'determinate';
-  bufferValue_hp = 100;
+  
   color_xp = 'primary';
-  xp = '80';
   mode_xp = 'determinate';
-  bufferValue_xp = 100;
 
 
   constructor( 

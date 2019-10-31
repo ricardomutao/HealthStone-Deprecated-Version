@@ -7,4 +7,6 @@ export class User{
     ticket:number;
     level:number;
     xp:number;
+    hpMax:number;
+    xpMax:number;
 }

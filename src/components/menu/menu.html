@@ -19,11 +19,11 @@
             [color]="color_hp"
             [mode]="mode_hp"
             [value]="user.hp"
-            [bufferValue]="bufferValue_hp">
+            [bufferValue]="user.hpMax">
           </mat-progress-bar>
         </div>
         <div style="text-align: right; font-size: 10px;">
-          {{user.hp}}/{{bufferValue_hp}}
+          {{user.hp}}/{{user.hpMax}}
         </div>
         <div style="font-size: 13px;">
           LVL {{user.level}}
@@ -34,11 +34,11 @@
             [color]="color_xp"
             [mode]="mode_xp"
             [value]="user.xp"
-            [bufferValue]="bufferValue_xp">
+            [bufferValue]="user.xpMax">
           </mat-progress-bar>
         </div>
         <div style="text-align: right; font-size: 10px;">
-          {{user.xp}}/{{bufferValue_xp}}
+          {{user.xp}}/{{user.xpMax}}
         </div>
       </ion-item>
       <button menuClose  ion-item (click)="goProfile()">

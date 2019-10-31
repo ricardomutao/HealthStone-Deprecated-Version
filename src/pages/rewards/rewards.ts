@@ -20,7 +20,7 @@ import { Reward } from '../../models/reward';
 })
 export class RewardsPage {
 
-  user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0};
+  user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, hpMax: 0, xpMax: 0};
   recompUser:RecompUser;
 
   date:string = new Date().toISOString();
