@@ -18,7 +18,7 @@
             class="example-margin"
             [color]="color_hp"
             [mode]="mode_hp"
-            [value]="user.hp"
+            [value]="(((user.hp)/(user.hpMax))*100)"
             [bufferValue]="user.hpMax">
           </mat-progress-bar>
         </div>
@@ -34,7 +34,7 @@
             [color]="color_xp"
             [mode]="mode_xp"
             [value]="user.xp"
-            [bufferValue]="user.xpMax">
+            [bufferValue]="(((user.xp)/(user.xpMax))*100)">
           </mat-progress-bar>
         </div>
         <div style="text-align: right; font-size: 10px;">
