@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController, PopoverController
 import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ViewQuestPage } from '../view-quest/view-quest';
+import { User } from '../../models/user';
+import { PopOverInfoPage } from '../pop-over-info/pop-over-info';
 
 /**
  * Generated class for the PopOverHomePage page.
@@ -24,6 +26,8 @@ export class PopOverHomePage {
 
   alert: Alert;
 
+  user:User;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,6 +37,7 @@ export class PopOverHomePage {
     public utils: UtilsServiceProvider) {
       this.param = this.navParams.get('questSelected');
       this.control = this.navParams.get('pageControl');
+      this.user = this.navParams.get('user');
       this.remButtonShow = this.navParams.get('remButton');
   }
 
@@ -66,7 +71,7 @@ export class PopOverHomePage {
       buttons: [
         { text: 'Ok',
           handler: () => {
-            this.viewCtrl.dismiss({excluido: true});
+            this.viewCtrl.dismiss({reload: true});
           }
         }
       ]
@@ -88,10 +93,10 @@ export class PopOverHomePage {
     this.viewCtrl.dismiss();
   }
 
-  concluirFinalizar(){
+  confirmConcluir(){
     const confirm = this.alertCtrl.create({
-      title: 'Concluir e Finalizar Missão',
-      message: 'Tem certeza que deseja concluir e finalizar essa missão?',
+      title: 'Concluir Missão',
+      message: 'Tem certeza que deseja concluir essa missão?',
       buttons: [
         {
           text: 'Cancelar'
@@ -99,6 +104,7 @@ export class PopOverHomePage {
         {
           text: 'Confirmar',
           handler: () => {
+            this.concluirMissao();
           }
         }
       ]
@@ -106,25 +112,40 @@ export class PopOverHomePage {
     confirm.present(); 
   }
 
-  concluirManter(){
-    const confirm = this.alertCtrl.create({
-      title: 'Confirmar e Manter Missão',
-      message: 'Tem certeza que deseja confirmar e manter essa missão?',
-      buttons: [
-        {
-          text: 'Cancelar'
-        },
-        {
-          text: 'Confirmar',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present(); 
+  concluirMissao(){
+    this.utils.loadingShow();
+    this.user.ticket += this.param.dificuldade;
+    this.user.xp += (this.param.dificuldade * 10);
+
+    if(this.user.xp >= this.user.xpMax){
+      this.user.level += 1;
+      this.user.hpMax += this.user.level * 0.5;
+      this.user.xpMax += 100 + Math.pow((this.user.level * 1.5), 2);
+    }
+
+    this.user.hp += (this.user.hp + (this.user.level * this.param.dificuldade)) > this.user.hpMax ? (this.user.hpMax - this.user.hp) : (this.user.level * this.param.dificuldade);
+
+    let objUpdate = {
+      ticket: this.user.ticket,
+      xp: this.user.xp,
+      level: this.user.level,
+      hpMax: this.user.hpMax,
+      xpMax: this.user.xpMax,
+      hp: this.user.hp
+    }
+
+    firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
+
+      this.utils.loadingHide();
+      this.confirmManterFinalizar(objUpdate);
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
-  naoConcluido(){
+  confirmNaoConcluido(){
     const confirm = this.alertCtrl.create({
       title: 'Missão não Concluida',
       message: 'Tem certeza que deseja marcar essa missão como não concluida?',
@@ -140,6 +161,46 @@ export class PopOverHomePage {
       ]
     });
     confirm.present(); 
+  }
+
+  confirmManterFinalizar(obj){
+    const confirm = this.alertCtrl.create({
+      title: 'Finalizar ou Manter',
+      message: 'Você deseja finalizar ou manter essa missão na lista de missões?',
+      buttons: [
+        {
+          text: 'Manter',
+          handler: () => {
+            this.changeStatusQuest(1,obj);
+          }
+        },
+        {
+          text: 'Finalizar',
+          handler: () => {
+            this.changeStatusQuest(2,obj);
+          }
+        }
+      ]
+    });
+    confirm.present(); 
+  }
+
+  changeStatusQuest(status,obj){
+    this.utils.loadingShow();
+    firebase.database().ref(`quests/${btoa(this.param.id)}`).update({status: status}).then(() =>{
+
+      obj.titlePopOver = 'Parabéns!';
+      this.utils.loadingHide();
+      this.viewCtrl.dismiss({reload: true, reloadUser: true});
+
+      const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
+      popover.present();
+
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
 }
