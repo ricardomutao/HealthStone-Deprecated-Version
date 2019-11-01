@@ -7,9 +7,16 @@
   <ion-content>
     <ion-list>
       <ion-item *ngIf="user">
-        <ion-avatar item-start>
-          <img [src]="user.url">
-        </ion-avatar>
+        <div menuClose class="mouse" (click)="goProfile()">
+          <div class="row noCentro">
+            <ion-avatar>
+              <img [src]="user.url">
+            </ion-avatar>
+          </div>
+          <div style="text-align: center; font-size: 15px; margin: 5px;">
+            Editar
+          </div>
+        </div>
         <div style="font-size: 13px;">
           Vida
         </div>
@@ -41,10 +48,6 @@
           {{user.xp}}/{{user.xpMax}}
         </div>
       </ion-item>
-      <button menuClose  ion-item (click)="goProfile()">
-        <ion-icon name="person" item-start></ion-icon>
-        Perfil
-      </button>
       <button menuClose  ion-item (click)="goInventory()">
         <ion-icon name="ios-archive" item-start></ion-icon>
         Inventário
@@ -53,12 +56,18 @@
         <ion-icon name="logo-usd" item-start></ion-icon>
         Recompensas
       </button>
+      <button menuClose  ion-item (click)="goGuide()">
+        <ion-icon name="help-circle" item-start></ion-icon>
+          Guia
+      </button>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
       <button menuClose  ion-item (click)="logOut()">
         <ion-icon name="exit" item-start></ion-icon>
         Sair
       </button>
-    </ion-list>
-  </ion-content>
+  </ion-footer>
 </ion-menu>
   
 <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
