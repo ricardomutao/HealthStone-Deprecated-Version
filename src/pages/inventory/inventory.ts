@@ -96,7 +96,7 @@ export class InventoryPage {
   }
 
   presentPopover(quest:Quest,myEvent:any, remButtonShow:any) {
-    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest, pageControl: true, remButton: remButtonShow});
+    const popover = this.popoverCtrl.create(PopOverHomePage.name, {questSelected: quest, pageControl: true, remButton: remButtonShow, user:null});
     popover.present({
       ev: myEvent
     });
