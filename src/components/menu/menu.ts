@@ -8,6 +8,7 @@ import { RewardsPage } from '../../pages/rewards/rewards';
 import { InventoryPage } from '../../pages/inventory/inventory';
 
 import { User } from '../../models/user';
+import { GuidePage } from '../../pages/guide/guide';
 
 /**
  * Generated class for the MenuComponent component.
@@ -68,5 +69,10 @@ export class MenuComponent {
     }
   }
 
+  goGuide(){
+    if(this.navCtrl.getActive().id != 'GuidePage'){
+      this.navCtrl.push(GuidePage.name);
+    }
+  }
 
 }
