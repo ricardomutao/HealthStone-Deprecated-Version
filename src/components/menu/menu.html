@@ -9,12 +9,12 @@
       <ion-item *ngIf="user">
         <div menuClose class="mouse" (click)="goProfile()">
           <div class="row noCentro">
-            <ion-avatar>
-              <img [src]="user.url">
+            <ion-avatar class="menuAvatar">
+              <img class="menuAvatar" [src]="user.url">
             </ion-avatar>
           </div>
           <div style="text-align: center; font-size: 15px; margin: 5px;">
-            Editar
+            Perfil
           </div>
         </div>
         <div style="font-size: 13px;">
