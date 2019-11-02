@@ -1,7 +1,7 @@
 {
-  "name": "healthStone",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "HealthStone",
+  "version": "0.5.0",
+  "author": "HealthStoners",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {

@@ -302,18 +302,18 @@ export class CreateAvatarPage {
 
   confirmaSalvar(){
     const confirm = this.alertCtrl.create({
-      title: 'Confirmar Missão',
+      title: 'Confirmar Alteração',
       message: 'Tem certeza que deseja confirmar a alteração do avatar?',
       buttons: [
+        {
+          text: 'Cancelar'
+        },
         {
           text: 'Confirmar',
           handler: () => {
             this.salvarURL();
           }
-        },
-        {
-          text: 'Cancelar'
-        }
+        }   
       ]
     });
     confirm.present(); 
