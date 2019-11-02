@@ -35,13 +35,13 @@ export class PopOverHomePage {
     public popoverCtrl: PopoverController,
     public viewCtrl: ViewController,
     public utils: UtilsServiceProvider) {
-      this.param = this.navParams.get('questSelected');
-      this.control = this.navParams.get('pageControl');
-      this.user = this.navParams.get('user');
-      this.remButtonShow = this.navParams.get('remButton');
   }
 
   ionViewDidLoad() {
+    this.param = this.navParams.get('questSelected');
+    this.control = this.navParams.get('pageControl');
+    this.user = this.navParams.get('user');
+    this.remButtonShow = this.navParams.get('remButton');
   }
 
   confirmRemove(){
@@ -157,11 +157,43 @@ export class PopOverHomePage {
         {
           text: 'Confirmar',
           handler: () => {
+            this.naoConcluirMissao();
           }
         }
       ]
     });
     confirm.present(); 
+  }
+
+  naoConcluirMissao(){
+    this.utils.loadingShow();
+
+    if(this.user.ticket > 0){
+      this.user.ticket -= 1;
+    }
+
+    this.user.hp -= Math.floor((this.user.level * this.param.dificuldade)*1.33);
+
+    if(this.user.hp <= 0){
+      this.user.hp = 0;
+      this.user.ticket = 0;
+    }
+
+    let objUpdate = {
+      ticket: this.user.ticket,
+      hpMax: this.user.hpMax,
+      hp: this.user.hp
+    }
+
+    firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
+
+      this.utils.loadingHide();
+      this.changeStatusQuest(2,objUpdate,'Que Pena!',true);
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
   confirmManterFinalizar(obj){
@@ -172,13 +204,13 @@ export class PopOverHomePage {
         {
           text: 'Manter',
           handler: () => {
-            this.changeStatusQuest(1,obj);
+            this.changeStatusQuest(1,obj,'Parabéns!',false);
           }
         },
         {
           text: 'Finalizar',
           handler: () => {
-            this.changeStatusQuest(2,obj);
+            this.changeStatusQuest(2,obj,'Parabéns!',false);
           }
         }
       ]
@@ -186,16 +218,16 @@ export class PopOverHomePage {
     confirm.present(); 
   }
 
-  changeStatusQuest(status,obj){
+  changeStatusQuest(status,obj,title,hideXp){
     this.utils.loadingShow();
     firebase.database().ref(`quests/${btoa(this.param.id)}`).update({status: status}).then(() =>{
 
-      obj.titlePopOver = 'Parabéns!';
+      obj.titlePopOver = title;
+      obj.hideXp = hideXp;
       this.utils.loadingHide();
-      this.viewCtrl.dismiss({reload: true, reloadUser: true});
-
       const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
       popover.present();
+      this.viewCtrl.dismiss({reload: true, reloadUser: true});
 
 
     }).catch((error: Error) => {

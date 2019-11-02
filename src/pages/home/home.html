@@ -25,7 +25,7 @@
       <ion-title padding>Manhã</ion-title>  
       <div class="list-missoes">
         <div *ngFor="let questManha of listQuestManha">
-          <ion-card style="border: 1px #ff8300 solid;">
+          <ion-card style="border: 1px #ff8300 solid;" (tap)="presentPopover(questManha,$event)">
             <ion-list>
               <ion-item>
                 {{questManha.titulo}}

@@ -38,7 +38,7 @@ export class HomePage {
 
   ionViewWillEnter() {
 
-    if(this.navCtrl.last().component.name == 'LoginPage' || this.navCtrl.last().component.name == 'ProfilePage'){
+    if(this.navCtrl.last().component.name == 'LoginPage' || this.navCtrl.last().component.name == 'ProfilePage' || this.navCtrl.last().component.name == 'CreateQuestPage'){
       this.getUser();
     }
     

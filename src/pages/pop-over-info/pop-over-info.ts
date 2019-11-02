@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class PopOverInfoPage {
 
   title:any;
+  hideXp:boolean = false;
 
   color_hp = 'primary';
   mode_hp = 'determinate';
@@ -36,6 +37,7 @@ export class PopOverInfoPage {
 
   ionViewDidLoad() {
     this.title = this.navParams.get('titlePopOver');
+    this.hideXp = this.navParams.get('hideXp');
   }
 
   ionViewDidEnter() {

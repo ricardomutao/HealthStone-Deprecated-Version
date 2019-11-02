@@ -24,7 +24,7 @@
         {{hp}}/{{hpMax}}
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="!hideXp">
       <div style="font-size: 13px;">
         LVL{{level}}
       </div>
