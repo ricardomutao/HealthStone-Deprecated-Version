@@ -188,7 +188,7 @@ export class PopOverHomePage {
     firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
 
       this.utils.loadingHide();
-      this.changeStatusQuest(2,objUpdate,'Que Pena!',true);
+      this.changeStatusQuest(3,objUpdate,'Que Pena!',true);
 
     }).catch((error: Error) => {
       this.utils.loadingHide();
