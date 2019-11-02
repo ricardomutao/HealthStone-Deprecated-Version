@@ -119,8 +119,9 @@ export class PopOverHomePage {
 
     if(this.user.xp >= this.user.xpMax){
       this.user.level += 1;
-      this.user.hpMax += this.user.level * 0.5;
-      this.user.xpMax += 100 + Math.pow((this.user.level * 1.5), 2);
+      this.user.xp = 0 + (this.user.xp - this.user.xpMax);
+      this.user.hpMax += Math.ceil(this.user.level * 0.5);
+      this.user.xpMax = Math.ceil(100 + Math.pow((this.user.level * 1.5), 2));
     }
 
     this.user.hp += (this.user.hp + (this.user.level * this.param.dificuldade)) > this.user.hpMax ? (this.user.hpMax - this.user.hp) : (this.user.level * this.param.dificuldade);
