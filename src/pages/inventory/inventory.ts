@@ -100,6 +100,12 @@ export class InventoryPage {
     popover.present({
       ev: myEvent
     });
+    popover.onDidDismiss((retorno) => {
+      if(retorno != null && retorno.reload){
+        this.getQuests();
+      }
+      
+    });
   }
 
 
