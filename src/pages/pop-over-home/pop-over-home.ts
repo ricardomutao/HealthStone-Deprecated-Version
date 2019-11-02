@@ -188,12 +188,39 @@ export class PopOverHomePage {
     firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
 
       this.utils.loadingHide();
-      this.changeStatusQuest(3,objUpdate,'Que Pena!',true);
+      this.confirmNaoConcluiAction(objUpdate);
+      
 
     }).catch((error: Error) => {
       this.utils.loadingHide();
       this.utils.creatSimpleAlert('Erro na operação');
     })
+  }
+
+  confirmNaoConcluiAction(obj){
+    const confirm = this.alertCtrl.create({
+      title: 'Tentar Novamente',
+      message: 'Você deseja tentar essa missão novamente ou desfaze-la?',
+      buttons: [
+        {
+          text: 'Desfazer',
+          handler: () => {
+            this.changeStatusQuest(3,obj,'Que Pena!',true);
+          }
+        },
+        {
+          text: 'Tentar Novamente',
+          handler: () => {
+            obj.titlePopOver = 'Que Pena!';
+            obj.hideXp = true;
+            const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
+            popover.present();
+            this.viewCtrl.dismiss({reload: true, reloadUser: true});
+          }
+        }
+      ]
+    });
+    confirm.present(); 
   }
 
   confirmManterFinalizar(obj){
