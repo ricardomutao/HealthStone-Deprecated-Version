@@ -26,43 +26,43 @@
 
 <ion-content>
 
-  <div class="limitView" [ngSwitch]="tab">
+  <div [ngSwitch]="tab">
 
     <div *ngSwitchCase="'recompensas'">
-      <ion-list *ngIf="listRewards != null && listRewards.length > 0"> 
-        <ion-item-sliding #item *ngFor="let reward of listRewards">
-          <ion-item>
-            <ion-avatar item-start>
-              <img [src]="reward.recompensa.img">
-            </ion-avatar>
-            <h3>Data Agendada: {{reward.dataAgendada}}</h3>
-            <h4>{{reward.recompensa.value}} Ficha(s) de recompensa</h4>
-            <p>Data Adquirida: {{reward.dataRecompensa}}</p>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="danger" (click)="removeReward(reward)">
-              <ion-icon name="ios-trash-outline"></ion-icon>
-              Remover
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-      <ion-row *ngIf="listRewards == null || listRewards.length == 0">
-        <ion-col col-3></ion-col>
-        <ion-col col-6 text-center>
+      <div class="limitViewRec">
+        <ion-list *ngIf="listRewards != null && listRewards.length > 0"> 
+          <ion-item-sliding #item *ngFor="let reward of listRewards">
+            <ion-item>
+              <ion-avatar item-start>
+                <img [src]="reward.recompensa.img">
+              </ion-avatar>
+              <h3>Data Agendada: {{reward.dataAgendada}}</h3>
+              <h4>{{reward.recompensa.value}} Ficha(s) de recompensa</h4>
+              <p>Data Adquirida: {{reward.dataRecompensa}}</p>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="danger" (click)="removeReward(reward)">
+                <ion-icon name="ios-trash-outline"></ion-icon>
+                Remover
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <div text-center *ngIf="listRewards == null || listRewards.length == 0">
           <h6 style="font-size: 12px;">SEM RECOMPENSAS</h6>
-          <img src="assets/imgs/itens_magicos.png">
+          <div class="centerView">
+            <img src="assets/imgs/itens_magicos.png">
+          </div>
           <h6 style="font-size: 12px;">APENAS ITENS MÁGICOS</h6>
-        </ion-col>
-        <ion-col col-3></ion-col>
-      </ion-row>  
+        </div>
+      </div>  
     </div> 
 
     <div *ngSwitchCase="'quests'">
       <ion-slides pager>
 
         <ion-slide>
-          <ion-title padding>Concluídas e Finalizadas</ion-title>  
+          <ion-title padding>Concluídas e Finalizadas</ion-title>
           <div class="minSizeSlide" *ngIf="listQuestDoneFinished != null && listQuestDoneFinished.length > 0">
             <div *ngFor="let questDoneFinished of listQuestDoneFinished">
               <ion-card style="border: 1px #ff8300 solid;">
@@ -103,10 +103,12 @@
             <img src="assets/imgs/itens_magicos.png">
             <h6 style="font-size: 12px;">APENAS ITENS MÁGICOS</h6>
           </div>
+         
         </ion-slide>
       
         <ion-slide>
           <ion-title padding>Concluidas e Mantidas</ion-title>
+      
           <div class="minSizeSlide" *ngIf="listQuestDone != null && listQuestDone.length > 0">  
             <div *ngFor="let questDone of listQuestDone">
               <ion-card style="border: 1px #ff8300 solid;">
@@ -147,10 +149,12 @@
             <img src="assets/imgs/itens_magicos.png">
             <h6 style="font-size: 12px;">APENAS ITENS MÁGICOS</h6>
           </div>
+          
         </ion-slide>
       
         <ion-slide>
-          <ion-title padding>Não Concluidas</ion-title> 
+          <ion-title padding>Não Concluidas</ion-title>
+     
           <div class="minSizeSlide" *ngIf="listQuestUndone != null && listQuestUndone.length > 0">
             <div *ngFor="let questUndone of listQuestUndone">
               <ion-card style="border: 1px #ff8300 solid;">
@@ -191,6 +195,7 @@
             <img src="assets/imgs/itens_magicos.png">
             <h6 style="font-size: 12px;">APENAS ITENS MÁGICOS</h6>
           </div>
+          
         </ion-slide>
 
       </ion-slides>

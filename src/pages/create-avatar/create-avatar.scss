@@ -14,4 +14,9 @@ page-create-avatar {
         }
 
     }
+
+    .limitView{
+        overflow-y: scroll; 
+        max-height: 36vh;
+    }
 }

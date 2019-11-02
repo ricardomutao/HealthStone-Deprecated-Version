@@ -6,9 +6,11 @@
 -->
 <ion-content>
   <ion-title padding>{{title}}</ion-title>
-  <ion-list>
+  <ion-list no-lines>
     <ion-item>
-      <h3 class="example-h2">Vida</h3>
+      <div style="font-size: 13px;">
+        Vida
+      </div>
       <div class="hp-bar">
         <mat-progress-bar
             class="example-margin"
@@ -18,6 +20,30 @@
             [bufferValue]="hpMax">
         </mat-progress-bar>
       </div>
+      <div style="text-align: right; font-size: 10px;">
+        {{hp}}/{{hpMax}}
+      </div>
+    </ion-item>
+    <ion-item>
+      <div style="font-size: 13px;">
+        LVL{{level}}
+      </div>
+      <div class="xp-bar">
+        <mat-progress-bar
+            class="example-margin"
+            [color]="color_xp"
+            [mode]="mode_xp"
+            [value]="((xp/xpMax)*100)"
+            [bufferValue]="xpMax">
+        </mat-progress-bar>
+      </div>
+      <div style="text-align: right; font-size: 10px;">
+        {{xp}}/{{xpMax}}
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="cash" item-start></ion-icon>
+      {{ticket}}
     </ion-item>
   </ion-list>
 </ion-content>

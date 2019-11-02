@@ -21,12 +21,21 @@ page-inventory {
         background-color: #b5b5b5;
     }
 
-    .limitView{
+    .minSizeSlide{
+        min-height: 68vh;
+        overflow-y: scroll; 
+        max-height: 68vh;
+    }
+
+    .limitViewRec{
         overflow-y: scroll; 
         max-height: 78vh;
     }
 
-    .minSizeSlide{
-        min-height: 65vh;
+    .centerView{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 }
