@@ -45,5 +45,10 @@
       <ion-icon name="cash" item-start></ion-icon>
       {{ticket}}
     </ion-item>
+    <ion-item *ngIf="flagMorto">
+      <div text-center text-wrap>
+        Você perdeu todos seus pontos de vida. Suas Fichas de recompensa foram zeradas!
+      </div>
+    </ion-item>
   </ion-list>
 </ion-content>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { User } from '../../models/user';
 import { RecompUser } from '../../models/recomp-user';
 import { Reward } from '../../models/reward';
+import { RewardServiceProvider } from '../../providers/reward-service/reward-service';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
 
 /**
  * Generated class for the RewardsPage page.
@@ -20,7 +21,7 @@ import { Reward } from '../../models/reward';
 })
 export class RewardsPage {
 
-  user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, hpMax: 0, xpMax: 0};
+  user:User;
   recompUser:RecompUser;
 
   date:string = new Date().toISOString();
@@ -30,17 +31,17 @@ export class RewardsPage {
 
   listFiles:any = [];
 
-  maxSlides:number = 0;
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public rewardService: RewardServiceProvider,
+    public accountService: AccountServiceProvider) {
+      this.user = this.navParams.get('user');
   }
 
   ionViewDidLoad() {
-    this.getUser();
     this.getFiles();
   }
 
@@ -50,55 +51,26 @@ export class RewardsPage {
   }
 
   getFiles(){
-    let that = this;
-    let auxList = [];
-    that.listFiles = [];
     this.utils.loadingShow();
 
-    firebase.database().ref(`recompensas`).once('value', (snapshot: any) => {
+    this.rewardService.getFiles().then((files)=> {
 
-      snapshot.forEach( (childSnapshot: any) => {
-        auxList.push(childSnapshot.val());
-      });
-
-       if(auxList != null && auxList.length <= 6){
-        that.listFiles.push(auxList);
-       }else{
-        var contador = 6;
-        let auxListFiles = [];
-        for(let i = 0; i < auxList.length; i++){
-          auxListFiles.push(auxList[i]);
-          if(i >= (contador-1) || ((i+1) == auxList.length)){
-            that.listFiles.push(auxListFiles);
-            contador = contador + 6;
-            auxListFiles = [];
-          }
-        }
-       }
-
-       this.utils.loadingHide();
-
+      this.listFiles = files;
+      this.utils.loadingHide();
               
-     }).catch(function(error) {
-        that.utils.loadingHide();
-        that.utils.creatSimpleAlert('Erro ao listar recompensas');
-        console.log(error);
-      });
+    }).catch(function(error) {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro ao listar recompensas');
+    });
 
   }
 
   async getUser(){
-    let authUser = firebase.auth().currentUser;
-    await firebase.database().ref(`usuarios`).once('value', async (snapshot: any) => {
-     await snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().email == authUser.email){
-          this.user = childSnapshot.val();
-          return true;
-        }
-      });
+    await this.accountService.getUser().then((user) => {
+      this.user = user;
     }).catch((error:Error) => {
-      this.utils.creatSimpleAlert('Erro na operação!');
-    });;
+      this.utils.creatSimpleAlert('Erro ao carregar usuário!');
+    });
   }
 
   confirmSaveReward(){
@@ -142,15 +114,13 @@ export class RewardsPage {
 
     this.utils.loadingShow();
 
-    firebase.database().ref(`recomp-user/${btoa(this.recompUser.id)}`).set(this.recompUser).then(() => {
+    this.rewardService.saveReward(this.recompUser).then(() => {
       this.check = false;
 
-      firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update({ticket: (this.user.ticket - this.item.value)}).then(() =>{
-
+      this.accountService.updateUser(this.user,{ticket: (this.user.ticket - this.item.value)}).then(() =>{
         this.getUser();
         this.utils.loadingHide();
         this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
-
       })
 
     }).catch((error: Error) => {

@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, PopoverController } from 'ionic-angular';
-import firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { RecompUser } from '../../models/recomp-user';
 import { Quest } from '../../models/quest';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
+import { RewardServiceProvider } from '../../providers/reward-service/reward-service';
+import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
 
 /**
  * Generated class for the InventoryPage page.
@@ -31,7 +32,9 @@ export class InventoryPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
-    public popoverCtrl: PopoverController) {
+    public popoverCtrl: PopoverController,
+    public rewardService: RewardServiceProvider,
+    public questService: QuestServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -42,55 +45,41 @@ export class InventoryPage {
   }
 
   async getReward(){
-    let authUser = firebase.auth().currentUser;
     this.listRewards = [];
 
-    await firebase.database().ref(`recomp-user`).once('value', async (snapshot: any) => {
-     await snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().user == btoa(authUser.email)){
-          this.listRewards.push(childSnapshot.val());
-        }
-      });
+    await this.rewardService.getRewards().then((rewards) => {
+      this.listRewards = rewards;
     }).catch((error:Error) => {
-      this.utils.creatSimpleAlert('Erro na operação!');
-    });;
+      this.utils.creatSimpleAlert('Erro ao listar as recompensas!');
+    });
   }
 
   async getQuests(){
-    let authUser = firebase.auth().currentUser;
     
     this.listQuestDone = [];
     this.listQuestUndone = [];
     this.listQuestDoneFinished = [];
     
-    await firebase.database().ref(`quests`).once('value', async (snapshot: any) => {
-      await snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().usuario == btoa(authUser.email)){
-          if(childSnapshot.val().status == 1){
-            this.listQuestDone.push(childSnapshot.val());
-          }else if(childSnapshot.val().status == 2){
-            this.listQuestDoneFinished.push(childSnapshot.val());
-          }else if(childSnapshot.val().status == 3){
-            this.listQuestUndone.push(childSnapshot.val());
-          }
-        }
-      });
+    await this.questService.getQuest().then((quests) => {
+      this.listQuestDone = quests.listQuestDone;
+      this.listQuestUndone = quests.listQuestUndone;
+      this.listQuestDoneFinished = quests.listQuestDoneFinished;
     }).catch((error:Error) => {
-      this.utils.creatSimpleAlert('Erro na operação!');
-    });;
+      this.utils.creatSimpleAlert('Erro ao listar as missões!');
+    });
   }
 
   removeReward(reward:RecompUser){
     this.utils.loadingShow();
 
-    firebase.database().ref(`recomp-user/${btoa(reward.id)}/`).remove().then(() => {
+    this.rewardService.removeReward(reward).then(() => {
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Recompensa removida com sucesso');
+      this.utils.creatSimpleAlert('Recompensa consumida com sucesso');
       this.getReward();
       
     }).catch((error: Error) => {
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro ao excluir recompensa');
+      this.utils.creatSimpleAlert('Erro ao consumir recompensa');
     });
 
   }

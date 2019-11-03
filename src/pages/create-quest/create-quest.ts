@@ -5,10 +5,9 @@ import { Alimento } from '../../models/alimento';
 import { QuestAlimentos } from '../../models/questAlimentos';
 import { Quest } from '../../models/quest';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
-import { CreatQuestServiceProvider } from '../../providers/creat-quest-service/creat-quest-service';
+import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HomePage } from '../home/home';
-
 /**
  * Generated class for the CreateQuestPage page.
  *
@@ -52,7 +51,7 @@ export class CreateQuestPage{
     public navParams: NavParams, 
     public alertCtrl: AlertController,
     public utils: UtilsServiceProvider,
-    public creatQuestService: CreatQuestServiceProvider) {
+    public questService: QuestServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -79,7 +78,7 @@ export class CreateQuestPage{
     this.utils.loadingShow();
     let that = this;
     //Pegando todos alimentos do banco de dados alimentado
-    this.creatQuestService.getAlimentos().subscribe(
+    this.questService.getAlimentos().subscribe(
       (alimento:any) => {
         alimento.forEach(function(obj){
 
@@ -145,6 +144,8 @@ export class CreateQuestPage{
   }
 
   criarQuest(){
+    
+    this.utils.loadingShow();
 
     let data = new Date();
     let kcalTotal = 0;
@@ -181,11 +182,8 @@ export class CreateQuestPage{
         }
       ]
     });
-    
-    this.utils.loadingShow();
 
-    firebase.database().ref(`quests/${btoa(this.quest.id)}`).set(this.quest).then(() => {
-
+    this.questService.saveQuest(this.quest.id,this.quest).then(() => {
       this.utils.loadingHide();
 
       this.alert.setSubTitle('Missão criada com sucesso!');
@@ -193,8 +191,7 @@ export class CreateQuestPage{
 
     }).catch((error: Error) => {
       this.utils.loadingHide();
-      this.alert.setSubTitle('Erro na operação!');
-      this.alert.present();
+      this.utils.creatSimpleAlert('Erro na operação!');
     })
     
   }

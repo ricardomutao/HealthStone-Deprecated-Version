@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Alert} from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { User } from '../../../models/user';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
+import { AccountServiceProvider } from '../../../providers/account-service/account-service';
 
 
 /**
@@ -36,11 +36,11 @@ export class RegisterPage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertController: AlertController,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public accountService: AccountServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
   }
 
   goLogin(){
@@ -70,6 +70,9 @@ export class RegisterPage {
     }else if(this.senha.length < 6){
       this.utils.creatToast('A senha deve ter no mínimo 6 caracteres!');
     }else{
+
+      this.utils.loadingShow();
+
       this.user = new User();
       this.user.nomeCompleto = this.nome;
       this.user.userNme = this.username;
@@ -93,24 +96,18 @@ export class RegisterPage {
           }
         ]
       });
-
-      this.utils.loadingShow();
       
-      firebase.auth().createUserWithEmailAndPassword(this.user.email, this.senha)
-      .then(() => {
-        //registrando dados complementares do usuario no path email na base64
-        //Para desconverter usar atob()
-        firebase.database().ref(`usuarios/${btoa(this.user.email)}`).set(this.user);
+      this.accountService.register(this.user.email,this.senha).then(() => {
 
-        this.utils.loadingHide();
-
-        this.alert.setSubTitle('Registrado com sucesso!');
-        this.alert.present();
+        this.accountService.saveUser(this.user.email,this.user).then(() => {
+          this.utils.loadingHide();
+          this.alert.setSubTitle('Registrado com sucesso!');
+          this.alert.present();
+        })
 
       }).catch((error:Error) => {
         this.utils.loadingHide();
-        this.alert.setSubTitle('Erro na operação!');
-        this.alert.present();
+        this.utils.creatSimpleAlert('Erro na operação!');
       })
 
     }

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, Alert } from 'ionic-angular';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ViewQuestPage } from '../view-quest/view-quest';
 import { User } from '../../models/user';
 import { PopOverInfoPage } from '../pop-over-info/pop-over-info';
+import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
 
 /**
  * Generated class for the PopOverHomePage page.
@@ -34,7 +35,9 @@ export class PopOverHomePage {
     public alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
     public viewCtrl: ViewController,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public questService: QuestServiceProvider,
+    public accountService: AccountServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -77,7 +80,7 @@ export class PopOverHomePage {
       ]
     });
 
-    firebase.database().ref(`quests/${btoa(this.param.id)}/`).remove().then(() => {
+    this.questService.removeQuest(this.param).then(() => {
       this.utils.loadingHide();
       this.alert.setSubTitle('Missão excluida com sucesso!');
       this.alert.present();
@@ -135,8 +138,7 @@ export class PopOverHomePage {
       hp: this.user.hp
     }
 
-    firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
-
+    this.accountService.updateUser(this.user,objUpdate).then(() =>{
       this.utils.loadingHide();
       this.confirmManterFinalizar(objUpdate);
 
@@ -185,11 +187,9 @@ export class PopOverHomePage {
       hp: this.user.hp
     }
 
-    firebase.database().ref(`usuarios/${btoa(this.user.email)}`).update(objUpdate).then(() =>{
-
+    this.accountService.updateUser(this.user,objUpdate).then(() =>{
       this.utils.loadingHide();
       this.confirmNaoConcluiAction(objUpdate);
-      
 
     }).catch((error: Error) => {
       this.utils.loadingHide();
@@ -205,13 +205,24 @@ export class PopOverHomePage {
         {
           text: 'Desfazer',
           handler: () => {
-            this.changeStatusQuest(3,obj,'Que Pena!',true);
+            let title = 'Que Pena!';
+            let flagMorto = false;
+            if(obj.hp == 0){
+              title = 'Você Perdeu!';
+              flagMorto = true;
+            }
+            this.changeStatusQuest(3,obj,title,true,flagMorto);
           }
         },
         {
           text: 'Tentar Novamente',
           handler: () => {
             obj.titlePopOver = 'Que Pena!';
+            obj.flagMorto = false;
+            if(obj.hp == 0){
+              obj.titlePopOver = 'Você Perdeu!';
+              obj.flagMorto = true;
+            }
             obj.hideXp = true;
             const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
             popover.present();
@@ -231,13 +242,13 @@ export class PopOverHomePage {
         {
           text: 'Manter',
           handler: () => {
-            this.changeStatusQuest(1,obj,'Parabéns!',false);
+            this.changeStatusQuest(1,obj,'Parabéns!',false,false);
           }
         },
         {
           text: 'Finalizar',
           handler: () => {
-            this.changeStatusQuest(2,obj,'Parabéns!',false);
+            this.changeStatusQuest(2,obj,'Parabéns!',false,false);
           }
         }
       ]
@@ -245,12 +256,13 @@ export class PopOverHomePage {
     confirm.present(); 
   }
 
-  changeStatusQuest(status,obj,title,hideXp){
+  changeStatusQuest(status,obj,title,hideXp,flagMorto){
     this.utils.loadingShow();
-    firebase.database().ref(`quests/${btoa(this.param.id)}`).update({status: status}).then(() =>{
+    this.questService.updateQuest(this.param,{status: status}).then(() =>{
 
       obj.titlePopOver = title;
       obj.hideXp = hideXp;
+      obj.flagMorto = flagMorto;
       this.utils.loadingHide();
       const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
       popover.present();

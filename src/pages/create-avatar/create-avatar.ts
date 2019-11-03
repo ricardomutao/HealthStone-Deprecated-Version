@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
-import firebase from 'firebase';
+import { User } from '../../models/user';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
+import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 
 /**
  * Generated class for the CreateAvatarPage page.
@@ -35,7 +37,7 @@ export class CreateAvatarPage {
 
   //A parte mais importante desta tela é a variável abaixo, que manda os dados para a api e retorna como imagem
   url;
-  private usuario2 = {email:'', nomeCompleto:'', userNme:'', url:''};
+  user:User;
 
   //Inicialização das variáveis que definem quais opções aparecem na tela
   notShowBeard = false;
@@ -51,17 +53,19 @@ export class CreateAvatarPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public accountService: AccountServiceProvider,
+    public utils: UtilsServiceProvider
   ) {
-    
+    this.user = this.navParams.get('user');
   }
 
   
 
   ionViewDidLoad() {
     
-    this.usuario2 = this.navParams.get('user');
-    this.url = this.usuario2.url;
+    
+    this.url = this.user.url;
     
     this.separaURL();
     
@@ -159,7 +163,7 @@ export class CreateAvatarPage {
 
     this.chamaValidacoes();
 
-    //this.usuario2.url = this.url;
+    //this.user.url = this.url;
 
     console.log(this.url);
 
@@ -270,6 +274,8 @@ export class CreateAvatarPage {
 
     //console.log("uhu", base64);
 
+    this.utils.loadingShow();
+
     this.alert = this.alertCtrl.create({
       subTitle:'',
       buttons: [
@@ -281,22 +287,16 @@ export class CreateAvatarPage {
       ]
     });
 
-
-    let usuarioAuth = (firebase.auth().currentUser.email).toLowerCase();
-
-    firebase.database().ref(`usuarios/${btoa(usuarioAuth)}`).update({url: this.url}).then(() =>{
-
-
+    this.accountService.updateUser(this.user,{url: this.url}).then(() =>{
+      this.utils.loadingHide();
       this.alert.setSubTitle('Avatar alterado com sucesso!');
       this.alert.present();
-      
-    }).catch((err:Error) => {
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
       this.alert.setSubTitle('Falha na alteração');
       this.alert.present();
-    });
-
-
-
+    })
     
   }
 
