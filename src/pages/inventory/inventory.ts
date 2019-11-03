@@ -6,7 +6,6 @@ import { Quest } from '../../models/quest';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
 import { RewardServiceProvider } from '../../providers/reward-service/reward-service';
 import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
-import { AccountServiceProvider } from '../../providers/account-service/account-service';
 
 /**
  * Generated class for the InventoryPage page.
@@ -35,21 +34,14 @@ export class InventoryPage {
     public utils: UtilsServiceProvider,
     public popoverCtrl: PopoverController,
     public rewardService: RewardServiceProvider,
-    public questService: QuestServiceProvider,
-    public accountService: AccountServiceProvider) {
+    public questService: QuestServiceProvider) {
   }
 
   ionViewDidLoad() {
     this.utils.loadingShow();
-    let connectionState = this.accountService.connectionState();
-    if(connectionState){
-      this.getReward();
-      this.getQuests();
-      this.utils.loadingHide();
-    }else{
-      this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+    this.getReward();
+    this.getQuests();
+    this.utils.loadingHide();
   }
 
   async getReward(){

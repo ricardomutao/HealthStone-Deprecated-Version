@@ -287,25 +287,16 @@ export class CreateAvatarPage {
       ]
     });
 
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.accountService.updateUser(this.user,{url: this.url}).then(() =>{
-        this.utils.loadingHide();
-        this.alert.setSubTitle('Avatar alterado com sucesso!');
-        this.alert.present();
-  
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.alert.setSubTitle('Falha na alteração');
-        this.alert.present();
-      })
-    }else{
+    this.accountService.updateUser(this.user,{url: this.url}).then(() =>{
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+      this.alert.setSubTitle('Avatar alterado com sucesso!');
+      this.alert.present();
 
-    
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.alert.setSubTitle('Falha na alteração');
+      this.alert.present();
+    })
     
   }
 
