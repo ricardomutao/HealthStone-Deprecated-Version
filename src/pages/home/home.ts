@@ -42,16 +42,8 @@ export class HomePage {
   }
 
   ionViewWillEnter() {  
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.getUser();
-      this.getQuest();
-    }else{
-      this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
-    
+    this.getUser();
+    this.getQuest();
   }
 
   goCreateQuest(){
@@ -60,33 +52,39 @@ export class HomePage {
 
   getQuest(){
     this.utils.loadingShow();
-
+    
     this.listQuestManha = [];
     this.listQuestTarde = [];
     this.listQuestNoite = [];
     this.listSlides = [];
-  
-    this.questService.getQuest().then((quests) => {
-      this.listQuestManha = quests.listManha;
-      this.listQuestTarde = quests.listTarde;
-      this.listQuestNoite = quests.listNoite;
 
-      if(this.listQuestManha && this.listQuestManha.length > 0){
-        this.listSlides.push({title: 'Manhã', list: this.listQuestManha});
-      }
-      if(this.listQuestTarde && this.listQuestTarde.length > 0){
-        this.listSlides.push({title: 'Tarde', list: this.listQuestTarde});
-      }
-      if(this.listQuestNoite && this.listQuestNoite.length > 0){
-        this.listSlides.push({title: 'Noite', list: this.listQuestNoite});
-      }
+    let connectionState = this.accountService.connectionState();
 
-      this.utils.loadingHide();
-    }).catch((error:Error) => {
-      this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro na operação!');
-    });
+    if(connectionState){
+      this.questService.getQuest().then((quests) => {
+        this.listQuestManha = quests.listManha;
+        this.listQuestTarde = quests.listTarde;
+        this.listQuestNoite = quests.listNoite;
   
+        if(this.listQuestManha && this.listQuestManha.length > 0){
+          this.listSlides.push({title: 'Manhã', list: this.listQuestManha});
+        }
+        if(this.listQuestTarde && this.listQuestTarde.length > 0){
+          this.listSlides.push({title: 'Tarde', list: this.listQuestTarde});
+        }
+        if(this.listQuestNoite && this.listQuestNoite.length > 0){
+          this.listSlides.push({title: 'Noite', list: this.listQuestNoite});
+        }
+  
+        this.utils.loadingHide();
+      }).catch((error:Error) => {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro na operação!');
+      });
+    }else{
+      this.utils.loadingHide();
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
 
   }
 
