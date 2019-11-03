@@ -30,6 +30,7 @@ export class PopOverInfoPage {
   hpMax:any;
   xpMax:any;
   hp:any = 0;
+  flagMorto:any = false;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -38,6 +39,7 @@ export class PopOverInfoPage {
   ionViewDidLoad() {
     this.title = this.navParams.get('titlePopOver');
     this.hideXp = this.navParams.get('hideXp');
+    this.flagMorto = this.navParams.get('flagMorto');
   }
 
   ionViewDidEnter() {

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../../home/home';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
+import { AccountServiceProvider } from '../../../providers/account-service/account-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,7 +26,8 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public utils: UtilsServiceProvider) {
+    public utils: UtilsServiceProvider,
+    public accountService: AccountServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -48,8 +49,7 @@ export class LoginPage {
       
       this.utils.loadingShow();
 
-      firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
-       
+      this.accountService.logIn(this.email,this.senha).then(() => {
         this.utils.loadingHide();
         this.navCtrl.setRoot(HomePage.name);
         

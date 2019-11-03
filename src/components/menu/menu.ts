@@ -1,7 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../../pages/account/login/login';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { ProfilePage } from '../../pages/profile/profile';
 import { RewardsPage } from '../../pages/rewards/rewards';
@@ -9,6 +8,7 @@ import { InventoryPage } from '../../pages/inventory/inventory';
 
 import { User } from '../../models/user';
 import { GuidePage } from '../../pages/guide/guide';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
 
 /**
  * Generated class for the MenuComponent component.
@@ -23,7 +23,7 @@ import { GuidePage } from '../../pages/guide/guide';
 })
 export class MenuComponent {
 
-  @Input() user:User = {email:'', nomeCompleto:'', userNme:'', url:'', hp: 0, level: 0, ticket: 0, xp: 0, xpMax: 0, hpMax: 0};
+  @Input() user:User;
 
   color_hp = 'primary';
   mode_hp = 'determinate';
@@ -35,14 +35,15 @@ export class MenuComponent {
   constructor( 
     public navCtrl: NavController,
     public utils: UtilsServiceProvider,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public accountService: AccountServiceProvider) {
   }
 
   logOut(){
     
     this.utils.loadingShow();
 
-    firebase.auth().signOut().then(() => {
+    this.accountService.signOut().then(() => {
       
       this.utils.loadingHide();
       this.navCtrl.setRoot(LoginPage.name);
@@ -54,12 +55,14 @@ export class MenuComponent {
   }
 
   goProfile(){
-    this.navCtrl.push(ProfilePage.name);
+    if(this.navCtrl.getActive().id != 'ProfilePage'){
+      this.navCtrl.push(ProfilePage.name,{user: this.user});
+    }
   }
 
   goRewards(){
     if(this.navCtrl.getActive().id != 'RewardsPage'){
-      this.navCtrl.push(RewardsPage.name);
+      this.navCtrl.push(RewardsPage.name,{user: this.user});
     }
   }
 

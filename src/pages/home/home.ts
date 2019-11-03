@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
-import * as firebase from 'firebase';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
 import { Quest } from '../../models/quest';
 import { User } from '../../models/user';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
+import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
 /**
  * Generated class for the HomePage page.
  *
@@ -26,22 +27,22 @@ export class HomePage {
 
   listQuestNoite:Quest[] = [];
 
+  listSlides = [];
+
   user:User;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public utils: UtilsServiceProvider,
-    public popoverCtrl: PopoverController) {
+    public popoverCtrl: PopoverController,
+    public accountService: AccountServiceProvider,
+    public questService: QuestServiceProvider) {
     
   }
 
-  ionViewWillEnter() {
-
-    if(this.navCtrl.last().component.name == 'LoginPage' || this.navCtrl.last().component.name == 'ProfilePage' || this.navCtrl.last().component.name == 'CreateQuestPage'){
-      this.getUser();
-    }
-    
+  ionViewWillEnter() {  
+    this.getUser();
     this.getQuest();
   }
 
@@ -50,25 +51,28 @@ export class HomePage {
   }
 
   getQuest(){
-    let authUser = firebase.auth().currentUser;
     this.utils.loadingShow();
     
     this.listQuestManha = [];
     this.listQuestTarde = [];
     this.listQuestNoite = [];
+    this.listSlides = [];
     
-    firebase.database().ref(`quests`).once('value', (snapshot: any) => {
-      snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().usuario == btoa(authUser.email)){
-          if((childSnapshot.val().periodo.toLowerCase() == 'manha') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
-            this.listQuestManha.push(childSnapshot.val());
-          }else if((childSnapshot.val().periodo.toLowerCase() == 'tarde') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
-            this.listQuestTarde.push(childSnapshot.val());
-          }else if((childSnapshot.val().periodo.toLowerCase() == 'noite') && (childSnapshot.val().status == 0 || childSnapshot.val().status == 1)){
-            this.listQuestNoite.push(childSnapshot.val());
-          }
-        }
-      });
+    this.questService.getQuest().then((quests) => {
+      this.listQuestManha = quests.listManha;
+      this.listQuestTarde = quests.listTarde;
+      this.listQuestNoite = quests.listNoite;
+
+      if(this.listQuestManha && this.listQuestManha.length > 0){
+        this.listSlides.push({title: 'Manhã', list: this.listQuestManha});
+      }
+      if(this.listQuestTarde && this.listQuestTarde.length > 0){
+        this.listSlides.push({title: 'Tarde', list: this.listQuestTarde});
+      }
+      if(this.listQuestNoite && this.listQuestNoite.length > 0){
+        this.listSlides.push({title: 'Noite', list: this.listQuestNoite});
+      }
+
       this.utils.loadingHide();
     }).catch((error:Error) => {
       this.utils.loadingHide();
@@ -93,17 +97,11 @@ export class HomePage {
   }
 
   getUser(){
-    let authUser = firebase.auth().currentUser;
-    firebase.database().ref(`usuarios`).once('value', (snapshot: any) => {
-      snapshot.forEach((childSnapshot: any) => {
-        if(childSnapshot.val().email == authUser.email){
-          this.user = childSnapshot.val();
-          return true;
-        }
-      });
+    this.accountService.getUser().then((user) => {
+      this.user = user;
     }).catch((error:Error) => {
-      this.utils.creatSimpleAlert('Erro na operação!');
-    });;
+      this.utils.creatSimpleAlert('Erro ao carregar usuário!');
+    });
   }
 
 }

@@ -8,8 +8,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MyApp } from './app.component';
 import { LoginPageModule } from '../pages/account/login/login.module';
 import { UtilsServiceProvider } from '../providers/utils/utils-service';
-import { CreatQuestServiceProvider } from '../providers/creat-quest-service/creat-quest-service';
+import { QuestServiceProvider } from '../providers/quest-service/quest-service';
 import { HttpClientModule } from '@angular/common/http';
+import { AccountServiceProvider } from '../providers/account-service/account-service';
+import { RewardServiceProvider } from '../providers/reward-service/reward-service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { HttpClientModule } from '@angular/common/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilsServiceProvider,
-    CreatQuestServiceProvider
+    QuestServiceProvider,
+    AccountServiceProvider,
+    RewardServiceProvider
   ]
 })
 export class AppModule {}
