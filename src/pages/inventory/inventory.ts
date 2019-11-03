@@ -82,12 +82,12 @@ export class InventoryPage {
 
     this.rewardService.removeReward(reward).then(() => {
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Recompensa consumida com sucesso');
+      this.utils.creatSimpleAlert('Recompensa removida com sucesso');
       this.getReward();
       
     }).catch((error: Error) => {
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro ao consumir recompensa');
+      this.utils.creatSimpleAlert('Erro ao excluir recompensa');
     });
 
   }
