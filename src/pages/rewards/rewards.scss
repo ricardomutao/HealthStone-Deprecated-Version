@@ -1,5 +1,32 @@
 page-rewards {
 
+    ion-col.col {
+        color: color($colors, lightdark);
+    }
+    
+    .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+        left: 0;
+        bottom: 10px;
+        width: 100%;
+        color: color($colors, lightdark);
+    }
+    
+    .card-md {
+        margin: 10px;
+        border-radius: 2px;
+        width: calc(100% - 20px);
+        font-size: 1.4rem;
+        background-color: color($colors, light);
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+    
+    .list-header-md{
+        color: color($colors, lightdark);
+        border-top: 1px solid #191919;
+        background-color: color($colors, light);
+    }
+
     .selectedBack{
         background-color: #263238;
     }
@@ -21,4 +48,15 @@ page-rewards {
         align-items: center;
     }
 
+    .item-md{
+        background-color: transparent;
+    }
+
+    .datetime-text{
+        color: color($colors, lightdark);
+    }
+
+    .card-content-md{
+        margin-bottom: 15px;
+    }
 }

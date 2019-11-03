@@ -15,7 +15,7 @@
   <ion-label padding-left>Fichas de Recompensa</ion-label>
   <ion-label padding-left><ion-icon padding-right name="cash"></ion-icon>{{user.ticket}}</ion-label>
   <div *ngIf="listFiles != null && listFiles.length != 0">
-    <ion-card style="border: 1px #ff8300 solid;">
+    <ion-card>
       <ion-card-content>
         <ion-slides pager paginationType="fraction">
           <ion-slide padding-bottom *ngFor="let reward of listFiles; let x = index;">

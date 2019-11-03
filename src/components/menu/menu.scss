@@ -25,3 +25,25 @@
     max-width: 80px !important;  //any size
     max-height: 80px !important; //any size
 }
+
+ion-menu button.item.item-block.item-md:hover {
+    background-color: color($colors, maintheme);
+    transition: 0.4s;
+}
+
+ion-menu .list-md .item-block .item-inner{
+    border-bottom: none;
+}
+
+ion-menu .item-md{
+    background-color: color($colors, lightdark);
+}
+
+.menu-inner > ion-header, .menu-inner > ion-content, .menu-inner > ion-footer {
+    position: absolute;
+    border-top: 1px solid #ffffff2b;
+}
+
+ion-menu .item-md.item-block .item-inner{
+    border-bottom: none;
+}

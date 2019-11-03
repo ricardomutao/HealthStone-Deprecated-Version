@@ -6,4 +6,17 @@ page-home {
         overflow-y: scroll; 
         max-height: 76vh;
     }
+
+    .list-missoes .item-md {
+        background-color: color($colors, light);
+    }
+
+    .list-missoes .input-wrapper ion-label{
+        color: color($colors, lightdark);
+    }
+
+    .list-missoes .item-md .item-button[icon-only] ion-icon, .item-md .item-button[icon-only] {
+        padding: 0 1px;
+        color: color($colors, lightdark);
+    }
 }
