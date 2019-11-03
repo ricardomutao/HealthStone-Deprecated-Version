@@ -52,16 +52,21 @@ export class RewardsPage {
 
   getFiles(){
     this.utils.loadingShow();
+    let connectionState = this.accountService.connectionState();
+    if(connectionState){
+      this.rewardService.getFiles().then((files)=> {
 
-    this.rewardService.getFiles().then((files)=> {
-
-      this.listFiles = files;
-      this.utils.loadingHide();
-              
-    }).catch(function(error) {
+        this.listFiles = files;
         this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro ao listar recompensas');
-    });
+                
+      }).catch(function(error) {
+          this.utils.loadingHide();
+          this.utils.creatSimpleAlert('Erro ao listar recompensas');
+      });
+    }else{
+      this.utils.loadingHide();
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
 
   }
 
@@ -114,19 +119,27 @@ export class RewardsPage {
 
     this.utils.loadingShow();
 
-    this.rewardService.saveReward(this.recompUser).then(() => {
-      this.check = false;
+    let connectionState = this.accountService.connectionState();
 
-      this.accountService.updateUser(this.user,{ticket: (this.user.ticket - this.item.value)}).then(() =>{
-        this.getUser();
+    if(connectionState){
+      this.rewardService.saveReward(this.recompUser).then(() => {
+        this.check = false;
+  
+        this.accountService.updateUser(this.user,{ticket: (this.user.ticket - this.item.value)}).then(() =>{
+          this.getUser();
+          this.utils.loadingHide();
+          this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
+        })
+  
+      }).catch((error: Error) => {
         this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
+        this.utils.creatSimpleAlert('Erro na operação');
       })
-
-    }).catch((error: Error) => {
+    }else{
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro na operação');
-    })
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
+    
   }
 
 }

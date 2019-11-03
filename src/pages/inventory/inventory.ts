@@ -79,16 +79,23 @@ export class InventoryPage {
 
   removeReward(reward:RecompUser){
     this.utils.loadingShow();
+    let connectionState = this.accountService.connectionState();
+    if(connectionState){
+      this.rewardService.removeReward(reward).then(() => {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Recompensa consumida com sucesso');
+        this.getReward();
+        
+      }).catch((error: Error) => {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro ao consumir recompensa');
+      });
+    }else{
+      this.utils.loadingHide();
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
 
-    this.rewardService.removeReward(reward).then(() => {
-      this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Recompensa consumida com sucesso');
-      this.getReward();
-      
-    }).catch((error: Error) => {
-      this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro ao consumir recompensa');
-    });
+    
 
   }
 
