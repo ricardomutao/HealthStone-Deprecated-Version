@@ -80,23 +80,15 @@ export class PopOverHomePage {
       ]
     });
 
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.questService.removeQuest(this.param).then(() => {
-        this.utils.loadingHide();
-        this.alert.setSubTitle('Missão excluida com sucesso!');
-        this.alert.present();
-        
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro ao remover missão');
-      });
-    }else{
+    this.questService.removeQuest(this.param).then(() => {
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
-
+      this.alert.setSubTitle('Missão excluida com sucesso!');
+      this.alert.present();
+      
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro ao remover missão');
+    });
   }
 
   viewQuest(){
@@ -146,21 +138,14 @@ export class PopOverHomePage {
       hp: this.user.hp
     }
 
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.accountService.updateUser(this.user,objUpdate).then(() =>{
-        this.utils.loadingHide();
-        this.confirmManterFinalizar(objUpdate);
-  
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro na operação');
-      })
-    }else{
+    this.accountService.updateUser(this.user,objUpdate).then(() =>{
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+      this.confirmManterFinalizar(objUpdate);
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
   confirmNaoConcluido(){
@@ -202,23 +187,14 @@ export class PopOverHomePage {
       hp: this.user.hp
     }
 
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.accountService.updateUser(this.user,objUpdate).then(() =>{
-        this.utils.loadingHide();
-        this.confirmNaoConcluiAction(objUpdate);
-  
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro na operação');
-      })
-    }else{
+    this.accountService.updateUser(this.user,objUpdate).then(() =>{
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+      this.confirmNaoConcluiAction(objUpdate);
 
-    
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
   confirmNaoConcluiAction(obj){
@@ -282,29 +258,21 @@ export class PopOverHomePage {
 
   changeStatusQuest(status,obj,title,hideXp,flagMorto){
     this.utils.loadingShow();
+    this.questService.updateQuest(this.param,{status: status}).then(() =>{
 
-    let connectionState = this.accountService.connectionState();
-
-    if(connectionState){
-      this.questService.updateQuest(this.param,{status: status}).then(() =>{
-        obj.titlePopOver = title;
-        obj.hideXp = hideXp;
-        obj.flagMorto = flagMorto;
-        this.utils.loadingHide();
-        const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
-        popover.present();
-        this.viewCtrl.dismiss({reload: true, reloadUser: true});
-  
-  
-      }).catch((error: Error) => {
-        this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro na operação');
-      })
-    }else{
+      obj.titlePopOver = title;
+      obj.hideXp = hideXp;
+      obj.flagMorto = flagMorto;
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+      const popover = this.popoverCtrl.create(PopOverInfoPage.name, obj);
+      popover.present();
+      this.viewCtrl.dismiss({reload: true, reloadUser: true});
 
+
+    }).catch((error: Error) => {
+      this.utils.loadingHide();
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
 }

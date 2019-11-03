@@ -52,21 +52,16 @@ export class RewardsPage {
 
   getFiles(){
     this.utils.loadingShow();
-    let connectionState = this.accountService.connectionState();
-    if(connectionState){
-      this.rewardService.getFiles().then((files)=> {
 
-        this.listFiles = files;
-        this.utils.loadingHide();
-                
-      }).catch(function(error) {
-          this.utils.loadingHide();
-          this.utils.creatSimpleAlert('Erro ao listar recompensas');
-      });
-    }else{
+    this.rewardService.getFiles().then((files)=> {
+
+      this.listFiles = files;
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
+              
+    }).catch(function(error) {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro ao listar recompensas');
+    });
 
   }
 
@@ -119,27 +114,19 @@ export class RewardsPage {
 
     this.utils.loadingShow();
 
-    let connectionState = this.accountService.connectionState();
+    this.rewardService.saveReward(this.recompUser).then(() => {
+      this.check = false;
 
-    if(connectionState){
-      this.rewardService.saveReward(this.recompUser).then(() => {
-        this.check = false;
-  
-        this.accountService.updateUser(this.user,{ticket: (this.user.ticket - this.item.value)}).then(() =>{
-          this.getUser();
-          this.utils.loadingHide();
-          this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
-        })
-  
-      }).catch((error: Error) => {
+      this.accountService.updateUser(this.user,{ticket: (this.user.ticket - this.item.value)}).then(() =>{
+        this.getUser();
         this.utils.loadingHide();
-        this.utils.creatSimpleAlert('Erro na operação');
+        this.utils.creatSimpleAlert('Recompensa adquirida com sucesso');
       })
-    }else{
+
+    }).catch((error: Error) => {
       this.utils.loadingHide();
-      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
-    }
-    
+      this.utils.creatSimpleAlert('Erro na operação');
+    })
   }
 
 }
