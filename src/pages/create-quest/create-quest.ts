@@ -8,6 +8,7 @@ import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HomePage } from '../home/home';
+import { AccountServiceProvider } from '../../providers/account-service/account-service';
 /**
  * Generated class for the CreateQuestPage page.
  *
@@ -51,7 +52,8 @@ export class CreateQuestPage{
     public navParams: NavParams, 
     public alertCtrl: AlertController,
     public utils: UtilsServiceProvider,
-    public questService: QuestServiceProvider) {
+    public questService: QuestServiceProvider,
+    public accountService: AccountServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -183,16 +185,23 @@ export class CreateQuestPage{
       ]
     });
 
-    this.questService.saveQuest(this.quest.id,this.quest).then(() => {
-      this.utils.loadingHide();
+    let connectionState = this.accountService.connectionState();
 
-      this.alert.setSubTitle('Missão criada com sucesso!');
-      this.alert.present();
-
-    }).catch((error: Error) => {
+    if(connectionState){
+      this.questService.saveQuest(this.quest.id,this.quest).then(() => {
+        this.utils.loadingHide();
+  
+        this.alert.setSubTitle('Missão criada com sucesso!');
+        this.alert.present();
+  
+      }).catch((error: Error) => {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro na operação!');
+      })
+    }else{
       this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro na operação!');
-    })
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
     
   }
 

@@ -37,13 +37,24 @@ export class ProfilePage{
   //Função para capturar usuário atual no database com base no Authentication
   findUserDatabase(){
     this.utils.loadingShow();
-    this.accountService.getUser().then((user) => {
-      this.usuario = user;
+    
+
+    let connectionState = this.accountService.connectionState();
+
+    if(connectionState){
+      this.accountService.getUser().then((user) => {
+        this.usuario = user;
+        this.utils.loadingHide();
+      }).catch((error:Error) => {
+        this.utils.loadingHide();
+        this.utils.creatSimpleAlert('Erro ao carregar usuário!');
+      });
+    }else{
       this.utils.loadingHide();
-    }).catch((error:Error) => {
-      this.utils.loadingHide();
-      this.utils.creatSimpleAlert('Erro ao carregar usuário!');
-    });
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
+
+    
   }
 
   //Função que redireciona para tela de criação de avatares

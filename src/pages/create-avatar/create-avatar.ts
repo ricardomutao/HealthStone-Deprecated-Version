@@ -81,7 +81,7 @@ export class CreateAvatarPage {
     
     let atributo;
     
-    console.log("Antes de separaURL", this.url);
+    //console.log("Antes de separaURL", this.url);
 
     while ((atributo = regexComercial.exec(this.url))) { 				
       
@@ -139,7 +139,7 @@ export class CreateAvatarPage {
 
     this.chamaValidacoes();
 
-    console.log("Depois de separado: ", this.avatar);
+    //console.log("Depois de separado: ", this.avatar);
   }
 
   //Função que atualiza o avatar em tempo real
@@ -165,7 +165,7 @@ export class CreateAvatarPage {
 
     //this.user.url = this.url;
 
-    console.log(this.url);
+    //console.log(this.url);
 
   }
 
@@ -256,23 +256,6 @@ export class CreateAvatarPage {
 
   salvarURL(){
 
-    // function getBase64Image(img) {
-    //   var canvas = document.createElement("canvas");
-    //   canvas.width = img.width;
-    //   canvas.height = img.height;
-    //   var ctx = canvas.getContext("2d");
-    //   ctx.drawImage(img, 0, 0);
-    //   var dataURL = canvas.toDataURL("image/png");
-    //   return dataURL.replace(/^data:image\/(png);base64,/, "");
-    // }
-    
-    // console.log("será?", document.getElementById("imgURL"))
-
-    //var base64 = getBase64Image(document.getElementById("imgURL"));
-    //var base64 = getBase64Image(this.testeURL);
-
-
-    //console.log("uhu", base64);
 
     this.utils.loadingShow();
 
@@ -287,16 +270,25 @@ export class CreateAvatarPage {
       ]
     });
 
-    this.accountService.updateUser(this.user,{url: this.url}).then(() =>{
-      this.utils.loadingHide();
-      this.alert.setSubTitle('Avatar alterado com sucesso!');
-      this.alert.present();
+    let connectionState = this.accountService.connectionState();
 
-    }).catch((error: Error) => {
+    if(connectionState){
+      this.accountService.updateUser(this.user,{url: this.url}).then(() =>{
+        this.utils.loadingHide();
+        this.alert.setSubTitle('Avatar alterado com sucesso!');
+        this.alert.present();
+  
+      }).catch((error: Error) => {
+        this.utils.loadingHide();
+        this.alert.setSubTitle('Falha na alteração');
+        this.alert.present();
+      })
+    }else{
       this.utils.loadingHide();
-      this.alert.setSubTitle('Falha na alteração');
-      this.alert.present();
-    })
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
+
+    
     
   }
 

@@ -59,4 +59,13 @@ export class AccountServiceProvider {
     })
   }
 
+  public connectionState(): boolean {
+    let stateConnection = true;
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+      stateConnection = snap.val();   
+    });
+    return stateConnection;
+  }
+
 }

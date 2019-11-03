@@ -42,8 +42,16 @@ export class HomePage {
   }
 
   ionViewWillEnter() {  
-    this.getUser();
-    this.getQuest();
+    let connectionState = this.accountService.connectionState();
+
+    if(connectionState){
+      this.getUser();
+      this.getQuest();
+    }else{
+      this.utils.loadingHide();
+      this.utils.creatToast('Verifique sua conexão com a internet para prosseguir!');
+    }
+    
   }
 
   goCreateQuest(){
@@ -52,12 +60,12 @@ export class HomePage {
 
   getQuest(){
     this.utils.loadingShow();
-    
+
     this.listQuestManha = [];
     this.listQuestTarde = [];
     this.listQuestNoite = [];
     this.listSlides = [];
-    
+  
     this.questService.getQuest().then((quests) => {
       this.listQuestManha = quests.listManha;
       this.listQuestTarde = quests.listTarde;
@@ -78,6 +86,7 @@ export class HomePage {
       this.utils.loadingHide();
       this.utils.creatSimpleAlert('Erro na operação!');
     });
+  
 
   }
 
