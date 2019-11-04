@@ -95,7 +95,7 @@ export class CreateQuestPage{
         this.utils.loadingHide();
       },
       (err:HttpErrorResponse) => {
-        console.log(err);
+        //console.log(err);
         this.utils.loadingHide();
         this.utils.creatSimpleAlert('Erro ao listar os alimentos');
       }
