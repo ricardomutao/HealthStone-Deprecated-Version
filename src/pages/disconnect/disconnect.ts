@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { HomePage } from '../home/home';
-import { LoginPage } from '../account/login/login';
 
 /**
  * Generated class for the DisconnectPage page.

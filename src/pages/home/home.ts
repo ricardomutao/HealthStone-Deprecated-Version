@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, MenuController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
@@ -37,13 +37,18 @@ export class HomePage {
     public utils: UtilsServiceProvider,
     public popoverCtrl: PopoverController,
     public accountService: AccountServiceProvider,
-    public questService: QuestServiceProvider) {
+    public questService: QuestServiceProvider,
+    public menuCtrl: MenuController) {
     
   }
 
   ionViewWillEnter() {  
     this.getUser();
     this.getQuest();
+  }
+
+  ionViewDidEnter(){
+    this.menuCtrl.enable(true);
   }
 
   goCreateQuest(){

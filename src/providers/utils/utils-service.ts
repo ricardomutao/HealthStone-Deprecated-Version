@@ -29,7 +29,8 @@ export class UtilsServiceProvider {
 
   loadingShow(){
     this.loading = this.loadingController.create({
-      content: 'Aguarde...'
+      content: 'Aguarde...',
+      dismissOnPageChange: true
     });
     this.loading.present();
   }
