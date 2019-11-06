@@ -7,6 +7,7 @@ import { Quest } from '../../models/quest';
 import { User } from '../../models/user';
 import { AccountServiceProvider } from '../../providers/account-service/account-service';
 import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
+import firebase from 'firebase';
 /**
  * Generated class for the HomePage page.
  *
@@ -43,12 +44,9 @@ export class HomePage {
   }
 
   ionViewWillEnter() {  
+    this.menuCtrl.enable(true);
     this.getUser();
     this.getQuest();
-  }
-
-  ionViewDidEnter(){
-    this.menuCtrl.enable(true);
   }
 
   goCreateQuest(){
@@ -102,11 +100,15 @@ export class HomePage {
   }
 
   getUser(){
-    this.accountService.getUser().then((user) => {
-      this.user = user;
-    }).catch((error:Error) => {
-      this.utils.creatSimpleAlert('Erro ao carregar usuário!');
-    });
+    if(!(firebase.auth().currentUser)){
+      this.utils.alertFailedAuth('Você foi deslogado! Por favor realize o login novamente.');
+    }else{
+      this.accountService.getUser().then((user) => {
+        this.user = user;
+      }).catch((error:Error) => {
+        this.utils.creatSimpleAlert('Erro ao carregar usuário!');
+      });
+    } 
   }
 
 }

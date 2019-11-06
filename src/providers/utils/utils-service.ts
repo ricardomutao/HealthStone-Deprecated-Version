@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController, Alert, AlertController, Loading } from 'ionic-angular';
+import { ToastController, LoadingController, Alert, AlertController, Loading, NavController } from 'ionic-angular';
+import { LoginPage } from '../../pages/account/login/login';
 
 @Injectable()
 export class UtilsServiceProvider {
@@ -10,7 +11,8 @@ export class UtilsServiceProvider {
   constructor(
     public toastCtrl: ToastController,
     public loadingController: LoadingController,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public navCtrl: NavController) {
   }
 
   creatToast(msg){
@@ -45,6 +47,21 @@ export class UtilsServiceProvider {
       subTitle:msg,
       buttons: [
         { text: 'Ok'}
+      ]
+    });
+    alert.present();
+  }
+
+  alertFailedAuth(msg){
+    let alert: Alert;
+    alert = this.alertController.create({
+      subTitle:msg,
+      buttons: [
+        { text: 'Ok',
+          handler: () => {
+            this.navCtrl.setRoot(LoginPage.name);
+          }
+        }
       ]
     });
     alert.present();
