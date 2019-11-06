@@ -29,7 +29,11 @@ export class MyApp {
   private listenConnection(): void {
     this.network.onDisconnect()
       .subscribe(() => {
-        this.nav.setRoot(DisconnectPage.name, {page: this.nav.getActive().id});
+        
+        if(this.nav.getActive().id  != 'LoginPage' && this.nav.getActive().id  != 'RegisterPage'){
+          this.nav.setRoot(DisconnectPage.name);
+        }
+        
       });
   }
 }

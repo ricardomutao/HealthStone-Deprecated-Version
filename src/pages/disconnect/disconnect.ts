@@ -21,13 +21,7 @@ export class DisconnectPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public network: Network) {
     this.network.onConnect()
       .subscribe(() => {
-        let pageActive = this.navParams.get('page');
-        if(pageActive != 'LoginPage' && pageActive != 'RegisterPage'){
-          this.navCtrl.setRoot(HomePage.name);
-        }else{
-          this.navCtrl.setRoot(LoginPage.name);
-        }
-        
+        this.navCtrl.setRoot(HomePage.name); 
       });
   }
 
