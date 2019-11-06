@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, MenuController, Alert, AlertController } from 'ionic-angular';
 import { CreateQuestPage } from '../create-quest/create-quest';
 import { UtilsServiceProvider } from '../../providers/utils/utils-service';
 import { PopOverHomePage } from '../pop-over-home/pop-over-home';
@@ -8,6 +8,7 @@ import { User } from '../../models/user';
 import { AccountServiceProvider } from '../../providers/account-service/account-service';
 import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
 import firebase from 'firebase';
+import { LoginPage } from '../account/login/login';
 /**
  * Generated class for the HomePage page.
  *
@@ -32,6 +33,8 @@ export class HomePage {
 
   user:User;
 
+  alert: Alert;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -39,7 +42,8 @@ export class HomePage {
     public popoverCtrl: PopoverController,
     public accountService: AccountServiceProvider,
     public questService: QuestServiceProvider,
-    public menuCtrl: MenuController) {
+    public menuCtrl: MenuController,
+    public alertCtrl: AlertController) {
     
   }
 
@@ -101,7 +105,19 @@ export class HomePage {
 
   getUser(){
     if(!(firebase.auth().currentUser)){
-      this.utils.alertFailedAuth('Você foi deslogado! Por favor realize o login novamente.');
+      const confirm = this.alertCtrl.create({
+        title: 'Ops!',
+        message: 'Você foi deslogado! Por favor realize o login novamente.',
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+              this.navCtrl.setRoot(LoginPage.name);
+            }
+          }
+        ]
+      });
+      confirm.present();
     }else{
       this.accountService.getUser().then((user) => {
         this.user = user;
