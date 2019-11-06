@@ -12,6 +12,7 @@ import { QuestServiceProvider } from '../providers/quest-service/quest-service';
 import { HttpClientModule } from '@angular/common/http';
 import { AccountServiceProvider } from '../providers/account-service/account-service';
 import { RewardServiceProvider } from '../providers/reward-service/reward-service';
+import { Network } from '@ionic-native/network'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RewardServiceProvider } from '../providers/reward-service/reward-servic
     UtilsServiceProvider,
     QuestServiceProvider,
     AccountServiceProvider,
-    RewardServiceProvider
+    RewardServiceProvider,
+    Network
   ]
 })
 export class AppModule {}
