@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-import { HomePage } from '../home/home';
+import { LoginPage } from '../account/login/login';
 
 /**
  * Generated class for the DisconnectPage page.
@@ -20,7 +20,7 @@ export class DisconnectPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public network: Network) {
     this.network.onConnect()
       .subscribe(() => {
-        this.navCtrl.setRoot(HomePage.name); 
+        this.navCtrl.setRoot(LoginPage.name); 
       });
   }
 
