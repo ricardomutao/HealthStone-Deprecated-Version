@@ -15,20 +15,6 @@ export class AccountServiceProvider {
   constructor(public http: HttpClient) {
   }
 
-  public logIn(email, senha): Promise<any> {
-    return new Promise(resolve => {
-      firebase.auth().signInWithEmailAndPassword((email.trim()), senha)
-        .then(res => resolve(res))
-    })
-  }
-
-  public register(email, senha): Promise<any> {
-    return new Promise(resolve => {
-      firebase.auth().createUserWithEmailAndPassword(email, senha)
-        .then(res => resolve(res))
-    })
-  }
-
   public saveUser(email, user:User): Promise<any> {
     return new Promise(resolve => {
       firebase.database().ref(`usuarios/${btoa(email)}`).set(user)
