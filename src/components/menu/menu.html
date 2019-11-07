@@ -9,7 +9,7 @@
       <ion-item *ngIf="user">
         <div menuClose class="mouse" (click)="goProfile()">
           <div class="row noCentro">
-            <ion-avatar class="menuAvatar">
+            <ion-avatar class="menuAvatar" *ngIf="apiFailed == 1">
               <img class="menuAvatar" [src]="user.url">
             </ion-avatar>
           </div>

@@ -24,6 +24,7 @@ import { AccountServiceProvider } from '../../providers/account-service/account-
 export class MenuComponent {
 
   @Input() user:User;
+  
 
   color_hp = 'primary';
   mode_hp = 'determinate';
@@ -32,11 +33,20 @@ export class MenuComponent {
   mode_xp = 'determinate';
 
 
+  apiFailed = 1;
+
   constructor( 
     public navCtrl: NavController,
     public utils: UtilsServiceProvider,
     public navParams: NavParams,
     public accountService: AccountServiceProvider) {
+      
+      let that = this;
+      function fx(e) {
+        that.apiFailed = 2;
+        window.removeEventListener('error', fx, true);
+      }
+      window.addEventListener('error', fx, true);
   }
 
   logOut(){

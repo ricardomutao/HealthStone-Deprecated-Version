@@ -66,6 +66,40 @@ export class CreateAvatarPage {
     
     
     this.url = this.user.url;
+
+    let that = this;
+
+
+    //this.url = 'batata';
+
+    function fx(e) {
+      that.url = "assets/imgs/noavatar.png";
+      const confirm = that.alertCtrl.create({
+        title: 'Problema termporário',
+        message: 'Tente novamente em alguns minutos',
+        buttons: [
+          {
+            text: 'Voltar',
+            handler: () => {
+              window.removeEventListener('error', fx, true);
+              that.navCtrl.pop();
+              
+            
+              
+              
+            }
+          }   
+        ]
+      });
+      confirm.present(); 
+    
+      
+  }
+
+    
+
+
+    window.addEventListener('error', fx, true);
     
     this.separaURL();
     

@@ -118,6 +118,7 @@ export class HomePage {
   getUser(){
     this.accountService.getUser().then((user) => {
       this.user = user;
+      //this.user.url = 'batata';
     }).catch((error:Error) => {
       this.utils.creatSimpleAlert('Erro ao carregar usuário!');
     });

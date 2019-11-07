@@ -19,6 +19,9 @@ import { AccountServiceProvider } from '../../providers/account-service/account-
 })
 export class ProfilePage{
  usuario:User;
+ apiFailed = 1;
+
+ 
   
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -26,12 +29,23 @@ export class ProfilePage{
     private utils: UtilsServiceProvider,
     public accountService: AccountServiceProvider) {
       this.usuario = this.navParams.get('user');
+
+
+      //this.usuario.url = 'batata';
+      let that = this;
+      function fx(e) {
+        that.apiFailed = 2;
+        window.removeEventListener('error', fx, true);
+      }
+      window.addEventListener('error', fx, true);
   }
 
+  
   ionViewWillEnter() {
     if(this.navCtrl.last().component.name == 'CreateAvatarPage'){
+    //this.usuario.url = 'batata';
       this.findUserDatabase(); 
-    }
+    }  
   }
 
   //Função para capturar usuário atual no database com base no Authentication
