@@ -7,8 +7,7 @@ import { Quest } from '../../models/quest';
 import { User } from '../../models/user';
 import { AccountServiceProvider } from '../../providers/account-service/account-service';
 import { QuestServiceProvider } from '../../providers/quest-service/quest-service';
-import firebase from 'firebase';
-import { LoginPage } from '../account/login/login';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the HomePage page.
  *
@@ -43,12 +42,25 @@ export class HomePage {
     public accountService: AccountServiceProvider,
     public questService: QuestServiceProvider,
     public menuCtrl: MenuController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public network: Network) {
+      this.network.onDisconnect().subscribe(() => {
+        setTimeout(() => {
+          this.utils.creatToast('Falha na conexão');
+          this.utils.disconnectAlertShow();
+        }, 2000);
+      }) 
+
+      this.network.onConnect().subscribe(() => {
+        setTimeout(() => {
+          this.utils.creatToastSuccess('Reconectado!');
+          this.utils.disconnectAlertHide();
+        }, 2000);
+      }) 
     
   }
 
   ionViewWillEnter() {  
-    this.menuCtrl.enable(true);
     this.getUser();
     this.getQuest();
   }
@@ -104,27 +116,11 @@ export class HomePage {
   }
 
   getUser(){
-    if(!(firebase.auth().currentUser)){
-      const confirm = this.alertCtrl.create({
-        title: 'Ops!',
-        message: 'Você foi deslogado! Por favor realize o login novamente.',
-        buttons: [
-          {
-            text: 'Ok',
-            handler: () => {
-              this.navCtrl.setRoot(LoginPage.name);
-            }
-          }
-        ]
-      });
-      confirm.present();
-    }else{
-      this.accountService.getUser().then((user) => {
-        this.user = user;
-      }).catch((error:Error) => {
-        this.utils.creatSimpleAlert('Erro ao carregar usuário!');
-      });
-    } 
+    this.accountService.getUser().then((user) => {
+      this.user = user;
+    }).catch((error:Error) => {
+      this.utils.creatSimpleAlert('Erro ao carregar usuário!');
+    });
   }
 
 }

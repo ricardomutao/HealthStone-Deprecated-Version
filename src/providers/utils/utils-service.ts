@@ -27,10 +27,23 @@ export class UtilsServiceProvider {
     toast.present();
   }
 
+  creatToastSuccess(msg){
+    let toast = this.toastCtrl.create({
+      message: msg,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: 'Fechar',
+      cssClass: 'changeToastSuccess',
+      duration: 3000,
+      dismissOnPageChange: true
+
+    });
+    toast.present();
+  }
+
   loadingShow(){
     this.loading = this.loadingController.create({
-      content: 'Aguarde...',
-      dismissOnPageChange: true
+      content: 'Aguarde...'
     });
     this.loading.present();
   }
@@ -48,6 +61,19 @@ export class UtilsServiceProvider {
       ]
     });
     alert.present();
+  }
+
+  disconnectAlertShow(){
+    this.alert = this.alertController.create({
+      title:'Ops!',
+      message:'Parece que você se desconectou da internet! Aguardando reconexão...',
+      enableBackdropDismiss: false
+    });
+    this.alert.present();
+  }
+
+  disconnectAlertHide(){
+    this.alert.dismiss();
   }
 
 }

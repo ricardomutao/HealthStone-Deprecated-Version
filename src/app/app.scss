@@ -20,3 +20,10 @@
         background: color($colors, danger);
     }
 };
+
+.changeToastSuccess{
+    .toast-wrapper {
+        border-radius: 5px !important;
+        background: color($colors, secondary);
+    }
+};

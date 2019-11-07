@@ -50,8 +50,8 @@ export class LoginPage {
       
       this.utils.loadingShow();
       firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
-        this.utils.loadingHide();
         this.navCtrl.setRoot(HomePage.name);
+        this.utils.loadingHide();
         
       }).catch((error:Error) => {
         this.utils.loadingHide();
