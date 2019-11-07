@@ -43,12 +43,16 @@ export class PopOverInfoPage {
   }
 
   ionViewDidEnter() {
-    this.ticket = this.navParams.get('ticket');
-    this.xp = this.navParams.get('xp');
-    this.level = this.navParams.get('level');
-    this.hpMax = this.navParams.get('hpMax');
-    this.xpMax = this.navParams.get('xpMax');
-    this.hp = this.navParams.get('hp');
+    let that = this;
+
+    setTimeout(() => {
+      that.ticket = that.navParams.get('ticket');
+      that.xp = that.navParams.get('xp');
+      that.level = that.navParams.get('level');
+      that.hpMax = that.navParams.get('hpMax');
+      that.xpMax = that.navParams.get('xpMax');
+      that.hp = that.navParams.get('hp');
+    }, 500);
   }
 
 }
