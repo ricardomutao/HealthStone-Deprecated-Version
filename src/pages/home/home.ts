@@ -34,6 +34,8 @@ export class HomePage {
 
   alert: Alert;
 
+  statusNetwork:string = 'online';
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -46,15 +48,21 @@ export class HomePage {
     public network: Network) {
       this.network.onDisconnect().subscribe(() => {
         setTimeout(() => {
-          this.utils.creatToast('Falha na conexão');
-          this.utils.disconnectAlertShow();
+          if(this.statusNetwork == 'online'){
+            this.statusNetwork = 'offline';
+            this.utils.creatToast('Falha na conexão');
+            this.utils.disconnectAlertShow();
+          }
         }, 2000);
       }) 
 
       this.network.onConnect().subscribe(() => {
         setTimeout(() => {
-          this.utils.creatToastSuccess('Reconectado!');
-          this.utils.disconnectAlertHide();
+          if(this.statusNetwork == 'offline'){
+            this.statusNetwork = 'online';
+            this.utils.creatToastSuccess('Reconectado!');
+            this.utils.disconnectAlertHide();
+          }
         }, 2000);
       }) 
     
