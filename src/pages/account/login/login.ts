@@ -4,7 +4,6 @@ import { RegisterPage } from '../register/register';
 import { HomePage } from '../../home/home';
 import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
 import { AccountServiceProvider } from '../../../providers/account-service/account-service';
-import firebase from 'firebase';
 
 /**
  * Generated class for the LoginPage page.
@@ -49,7 +48,7 @@ export class LoginPage {
     }else{
       
       this.utils.loadingShow();
-      firebase.auth().signInWithEmailAndPassword((this.email.trim()), this.senha).then(() => {
+      this.accountService.login((this.email.trim()), this.senha).then(() => {
         this.navCtrl.setRoot(HomePage.name);
         this.utils.loadingHide();
         

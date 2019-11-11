@@ -19,7 +19,7 @@ export class RewardServiceProvider {
   public getFiles(): Promise<any> {
     let auxList = [];
     let listFiles = [];
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`recompensas`).once('value', (snapshot: any) => {
         snapshot.forEach( (childSnapshot: any) => {
           auxList.push(childSnapshot.val());
@@ -39,26 +39,26 @@ export class RewardServiceProvider {
           }
          }
          resolve(listFiles);
-      })
+      }).catch(err => reject(err))
     })
   }
 
   public saveReward(recompUser:RecompUser): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`recomp-user/${btoa(recompUser.id)}`).set(recompUser)
-        .then(res => resolve(res))
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
   public removeReward(recompUser:RecompUser): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`recomp-user/${btoa(recompUser.id)}/`).remove()
-        .then(res => resolve(res))
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
   public getRewards(): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       let authUser = firebase.auth().currentUser.email;
       let listRewards = [];
 
@@ -69,7 +69,7 @@ export class RewardServiceProvider {
           }
         });
         resolve(listRewards);
-      })
+      }).catch(err => reject(err))
     })
   }
 

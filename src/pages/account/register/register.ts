@@ -4,7 +4,6 @@ import { LoginPage } from '../login/login';
 import { User } from '../../../models/user';
 import { UtilsServiceProvider } from '../../../providers/utils/utils-service';
 import { AccountServiceProvider } from '../../../providers/account-service/account-service';
-import firebase from 'firebase';
 
 
 /**
@@ -97,7 +96,7 @@ export class RegisterPage {
           }
         ]
       });
-      firebase.auth().createUserWithEmailAndPassword(this.user.email, this.senha).then(() => {
+      this.accountService.register(this.user.email, this.senha).then(() => {
 
         this.accountService.saveUser(this.user.email,this.user).then(() => {
           this.utils.loadingHide();

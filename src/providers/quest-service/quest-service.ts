@@ -20,9 +20,9 @@ export class QuestServiceProvider {
   }
 
   public saveQuest(id, quest:Quest): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`quests/${btoa(id)}`).set(quest)
-        .then(res => resolve(res))
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
@@ -36,7 +36,7 @@ export class QuestServiceProvider {
       listQuestUndone: [],
       listQuestDoneFinished: []
     }
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`quests`).once('value', (snapshot: any) => {
         snapshot.forEach((childSnapshot: any) => {
           if(childSnapshot.val().usuario == btoa(authUser)){
@@ -61,21 +61,21 @@ export class QuestServiceProvider {
           }
         })
         resolve(quests);
-      })
+      }).catch(err => reject(err))
     })
   }
 
   public removeQuest(quest:Quest): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`quests/${btoa(quest.id)}/`).remove()
-        .then(res => resolve(res))
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
   public updateQuest(quest:Quest, obj): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise(function(resolve,reject) {
       firebase.database().ref(`quests/${btoa(quest.id)}`).update(obj)
-        .then(res => resolve(res))
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
