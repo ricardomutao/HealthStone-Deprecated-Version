@@ -6,11 +6,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/account/login/login';
 import { FIREBASE_CONFIG } from './enviroment'
 import * as firebase from 'firebase';
+import { HomePage } from '../pages/home/home';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -20,6 +21,12 @@ export class MyApp {
       splashScreen.hide();
     });
     firebase.initializeApp(FIREBASE_CONFIG);
+    let user = firebase.auth().currentUser;
+    if(user){
+      this.rootPage = HomePage;
+    }else{
+      this.rootPage = LoginPage;
+    }
   }
 
 }
